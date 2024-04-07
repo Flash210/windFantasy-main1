@@ -1,0 +1,133 @@
+import 'package:flutter/material.dart';
+import 'package:front/core/services/config.dart';
+import 'package:front/features/fantasy/Model/player.dart';
+import 'package:front/features/fantasy/Model/team.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+class PlayerProvider extends ChangeNotifier {
+  List<Player> players = [];
+  List<Player> _listForFilter = [];
+
+  List<Player> get listForFilter => _listForFilter;
+
+  set listForFilter(List<Player> value) {
+    _listForFilter = value;
+    // print("aaaaaaaaaa${value.map((e) => e.price)}");
+    // print("aaaaaaaaaa2${value.map((e) => e.position)}");
+
+    // print("aaaaaaaaaa3${value.map((e) => e.teamId)}");
+    notifyListeners();
+  }
+
+  //List<Player> get players => _players;
+
+// ! This method fetches all the players from the server
+
+  Future<List<Player>> fetchPlayerss() async {
+    final response = await http
+        .get(Uri.parse(AppConfig.kPlayerBaseUrl + AppConfig.kGetAllPlayers));
+    final jsonData = json.decode(response.body);
+    // logger.i(jsonData);
+
+    if (jsonData['success']) {
+      //logger.i(jsonData['data']);
+      final playersData = jsonData['data'] as List<dynamic>;
+      players =
+          playersData.map((playerData) => Player.fromJson(playerData)).toList();
+      notifyListeners();
+      return players;
+    }
+
+    return [];
+  }
+
+// ! This method fetches all  Teams from the server
+
+  List<Team> _teams = [];
+
+  List<Team> get teams => _teams;
+
+  Future<List<Team>> fetchTeams() async {
+    final response = await http
+        .get(Uri.parse(AppConfig.kTeamBaseUrl + AppConfig.kGetAllTeams));
+    final jsonData = json.decode(response.body);
+    // logger.i(jsonData);
+
+    if (jsonData['success']) {
+      //logger.i(jsonData['data']);
+      final teamsData = jsonData['data'] as List<dynamic>;
+      _teams = teamsData.map((teamData) => Team.fromJson(teamData)).toList();
+      notifyListeners();
+      return _teams;
+    }
+
+    return [];
+  }
+
+// ! selected players
+  Player? _selectedPlayer;
+  Map<String, Player> _selectedPlayersMap = {};
+
+  Map<String, Player> get selectedPlayersMap => _selectedPlayersMap;
+
+  set selectedPlayersMap(Map<String, Player> playersMap) {
+    _selectedPlayersMap = playersMap;
+    notifyListeners();
+  }
+
+  void addSelectedPlayerToMap({
+    required String position,
+    required Player player,
+  }) {
+    _selectedPlayersMap[position] = player;
+
+    //updateBudgetAndCheckTeam(player.price,maxSelectedTeams,team);
+    notifyListeners();
+  }
+
+  Player? get selectedPlayer => _selectedPlayer;
+
+  set selectedPlayer(Player? player) {
+    _selectedPlayer = player;
+    notifyListeners();
+  }
+
+  // !! filtred player from search
+  List<Player> filteredPlayers = [];
+
+  void updateFilteredPlayers(String value) {
+    filteredPlayers = players
+        .where((player) => player.name.toLowerCase().contains(value))
+        .toList();
+    notifyListeners();
+  }
+
+  //! update user bank budget and chekc team selected (max 3)
+
+  Map<String, int> _maxSelectedTeams = {};
+
+  bool checkMaxTeam({required String teamName}) {
+    if (_maxSelectedTeams.containsKey(teamName) &&
+        _maxSelectedTeams[teamName]! > 2) {
+      return false;
+    }
+    _maxSelectedTeams[teamName] = (_maxSelectedTeams[teamName] ?? 0) + 1;
+    notifyListeners();
+    return true;
+  }
+
+  // ! bank
+  int amount = 100;
+
+  bool amountSubstraction(int value, BuildContext context) {
+    if (amount < value) {
+      return false;
+    } else {
+      amount -= value;
+
+      notifyListeners();
+      return true;
+    }
+  }
+}
