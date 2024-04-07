@@ -167,7 +167,7 @@ class FixturesScreenState extends State<FixturesScreen> {
             } else {
               currentGameweek == 12 ? currentGameweek = 12 : currentGameweek--;
             }
-            
+            // increment ? currentGameweek++ : currentGameweek--;
           });
         },
       ),
