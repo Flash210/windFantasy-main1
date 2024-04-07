@@ -4,7 +4,6 @@ import 'package:front/features/fantasy/Model/team.dart';
 import 'package:front/features/filter/ViewModel/filter_provider.dart';
 
 Future<void> showTeamDialog(BuildContext context, List<Team> teams) async {
-  bool isSelected = false;
   return showDialog<void>(
     context: context,
     builder: (BuildContext context) {

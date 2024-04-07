@@ -7,6 +7,7 @@ import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/authentification/Model/user_model.dart';
 import 'package:front/features/authentification/ViewModel/auth_provider.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
+import 'package:front/features/fantasy/View/widgets/app_bar_widget.dart';
 
 import 'package:front/features/fantasy/View/widgets/team_section.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
@@ -39,7 +40,8 @@ class _FantasyScreenState extends State<FantasyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("+++++++++++++++${sl<TeamEditProvider>().showLeagugeTeamList.length}");
+    print(
+        "+++++++++++++++${sl<TeamEditProvider>().showLeagugeTeamList.length}");
 
     return Scaffold(
       body: Padding(
@@ -67,7 +69,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
                               fontWeight: FontWeight.w600),
                         )),
 
-                    buildAppBar(snapshot),
+                    buildAppBar(),
                     MySizedBox(
                       height: ScreenUtils.getHeight(context) * 0.033,
                     ),
@@ -161,34 +163,6 @@ class _FantasyScreenState extends State<FantasyScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  Row buildAppBar(AsyncSnapshot<UserModel?> snapshot) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        const DottedDashedLine(
-          height: 3,
-          width: 100,
-          axis: Axis.horizontal,
-          //dashColor: Colors.black,
-        ),
-        Text(
-          " Budget \$${snapshot.data!.data.bank}",
-          style: GoogleFonts.b612(
-            textStyle: TextStyle(
-                color: Colors.grey[700]!,
-                fontSize: 15,
-                fontWeight: FontWeight.w600),
-          ),
-        ),
-        const DottedDashedLine(
-          height: 3,
-          width: 100,
-          axis: Axis.horizontal,
-        ),
-      ],
     );
   }
 }

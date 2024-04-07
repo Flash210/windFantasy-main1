@@ -119,6 +119,7 @@ class PlayerProvider extends ChangeNotifier {
 
   // ! bank
   int amount = 100;
+  
 
   bool amountSubstraction(int value, BuildContext context) {
     if (amount < value) {

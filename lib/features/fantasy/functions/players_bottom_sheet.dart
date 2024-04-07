@@ -28,16 +28,11 @@ void showListOfPlayers222(
         (element) => !selc.contains(element.id),
       )
       .where((element) => isPositionValidForPlayer(element, positionPlayer))
+      .where((element) => element.price < sl<PlayerProvider>().amount)
       .toList(); // Copy all players initially
 
-  Map<String?, int> maxSelectedTeams = {};
-  for (var team in teams) {
-    maxSelectedTeams[team.name] = 0;
-  }
-
-  print("Pos is $positionPlayer");
-  print(
-      " sl<PlayerProvider>().listForFilter.length${sl<PlayerProvider>().listForFilter.length}");
+  /*print(
+      " sl<PlayerProvider>().listForFilter.length${sl<PlayerProvider>().listForFilter.length}");*/
   String searchCriteria = 'Search by Player Name'; // Default search criteria
 
   showModalBottomSheet(
@@ -164,7 +159,7 @@ void showListOfPlayers222(
                           width: 66,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: player.position == MyRes.kGoalKepper
+                            color: player.position == MyRes.kMidfilder
                                 ? Colors.blue
                                 : player.position == MyRes.kDefender
                                     ? Colors.green

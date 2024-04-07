@@ -1,52 +1,40 @@
 
-// FutureBuilder<UserModel?> buildAppBar() {
-//     return FutureBuilder(
-//       future: _userModel,
-//       builder: (context, snapshot) {
-//         if (snapshot.hasData) {
-//           return Column(
-//             crossAxisAlignment: CrossAxisAlignment.center,
-//             children: [
-//               Text(snapshot.data!.data.teamName,
-//                   style: GoogleFonts.raviPrakash(
-//                     textStyle: const TextStyle(
-//                         color: MyColors.kBlue,
-//                         fontSize: 30,
-//                         fontWeight: FontWeight.w600),
-//                   )),
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                 children: [
-//                   const DottedDashedLine(
-//                     height: 3,
-//                     width: 100,
-//                     axis: Axis.horizontal,
-//                     //dashColor: Colors.black,
-//                   ),
-//                   Text(
-//                     " Budget \$${snapshot.data!.data.bank}",
-//                     style: GoogleFonts.b612(
-//                       textStyle: TextStyle(
-//                           color: Colors.grey[700]!,
-//                           fontSize: 15,
-//                           fontWeight: FontWeight.w600),
-//                     ),
-//                   ),
-//                   const DottedDashedLine(
-//                     height: 3,
-//                     width: 100,
-//                     axis: Axis.horizontal,
-//                     //dashColor: Colors.black,
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           );
-//         } else if (snapshot.hasError) {
-//           return Center(child: Text('Error: ${snapshot.error}'));
-//         } else {
-//           return const CircularProgressIndicator(); // Placeholder for loading state
-//         }
-//       },
-//     );
-//   }
+  import 'package:dotted_dashed_line/dotted_dashed_line.dart';
+import 'package:flutter/material.dart';
+import 'package:front/core/common_widget/custom_text.dart';
+import 'package:front/features/fantasy/ViewModel/player_provider.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+Row buildAppBar() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        const DottedDashedLine(
+          height: 3,
+          width: 100,
+          axis: Axis.horizontal,
+          //dashColor: Colors.black,
+        ),
+        Consumer<PlayerProvider>(
+          builder: (context, playerProvider, _) {
+
+       return  MyCustomText(text: 
+            playerProvider.amount.toString(),
+            style: GoogleFonts.b612(
+              textStyle: TextStyle(
+                  color: Colors.grey[700]!,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600),
+            ));
+          }
+          ),
+        
+        const DottedDashedLine(
+          height: 3,
+          width: 100,
+          axis: Axis.horizontal,
+        ),
+      ],
+    );
+  }

@@ -1,4 +1,3 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/constants/colors.dart';
@@ -77,7 +76,7 @@ class FixturesScreenState extends State<FixturesScreen> {
                             //   ),
                             // ),
                             title: Container(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                   color: MyColors.kSecondaryColor,
                                   borderRadius: BorderRadius.circular(8),

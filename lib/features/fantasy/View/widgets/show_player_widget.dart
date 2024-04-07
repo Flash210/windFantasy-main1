@@ -1,8 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
-import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 
 // ! build player icon and name
 buildShowPlayer(
@@ -14,8 +12,6 @@ buildShowPlayer(
     children: [
       GestureDetector(
         onTap: () async {
-          final List<Player> listOfPlayersFromApi =
-              await sl<PlayerProvider>().fetchPlayerss();
 
           // playersSelected != 15
           //     ? showListOfPlayers222(context: context, positionPlayer: position)
@@ -95,8 +91,6 @@ buildShowBenchPlayer(
     children: [
       GestureDetector(
         onTap: () async {
-          final List<Player> listOfPlayersFromApi =
-              await sl<PlayerProvider>().fetchPlayerss();
           // playersSelected != 15
           //     ? showListOfPlayers222(context: context, positionPlayer: position)
           //     : Navigator.push(
