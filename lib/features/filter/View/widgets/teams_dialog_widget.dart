@@ -3,7 +3,7 @@ import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/team.dart';
 import 'package:front/features/filter/ViewModel/filter_provider.dart';
 
-Future<void> showTeamDialog(BuildContext context, List<Team> teams) async {
+Future<void> showTeamDialog(BuildContext context, List<Team> teams, {required String position}) async {
   return showDialog<void>(
     context: context,
     builder: (BuildContext context) {
@@ -28,7 +28,7 @@ Future<void> showTeamDialog(BuildContext context, List<Team> teams) async {
 
                     sl<FilterProvider>().fillListTeamF(team);
 
-                    sl<FilterProvider>().filterPlayerByTeamsF();
+                    sl<FilterProvider>().filterPlayerByTeamsF(position:position);
                   },
                   // trailing: Checkbox(
                   //   value: isSelected,

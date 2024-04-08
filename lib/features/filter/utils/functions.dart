@@ -43,7 +43,7 @@ Container buildApplyFilterBtn({required String positon}) {
 
 // ! the first filter by team
 
-Container buildFilterByTeam(BuildContext context) {
+Container buildFilterByTeam(BuildContext context, {required String position}) {
   return Container(
     padding: const EdgeInsets.all(3.0),
     decoration: const BoxDecoration(
@@ -61,7 +61,7 @@ Container buildFilterByTeam(BuildContext context) {
         IconButton(
             onPressed: () async {
               final List<Team> teams = await sl<PlayerProvider>().fetchTeams();
-              showTeamDialog(context, teams);
+              showTeamDialog(context, teams,position:changePositonFrom(position: position));
             },
             icon: const Icon(Icons.arrow_forward))
       ],
@@ -140,7 +140,7 @@ Container builFilterByPositions({required position}) {
           : Container());
 }
 
-Container buildFilterByPrice() {
+Container buildFilterByPrice({required String postion}) {
   return Container(
     decoration: const BoxDecoration(
       color: MyColors.kWhite,
@@ -165,7 +165,7 @@ Container buildFilterByPrice() {
               provider.values = newValues;
 
               sl<FilterProvider>().filterPlayerByPriceF(
-                  provider.values.start.toInt(), provider.values.end.toInt());
+                  provider.values.start.toInt(), provider.values.end.toInt(),position: changePositonFrom(position: postion));
             },
             labels: RangeLabels(
               provider.values.start.round().toString(),

@@ -43,9 +43,9 @@ class FilteredPageState extends State<FilteredPage> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            buildFilterByTeam(context),
+            buildFilterByTeam(context,position:widget.position),
             const SizedBox(height: 5),
-            buildFilterByPrice(),
+            buildFilterByPrice(postion:widget.position),
             const SizedBox(height: 5),
             builFilterByPositions(position:widget.position),
             buildApplyFilterBtn(positon:widget.position),

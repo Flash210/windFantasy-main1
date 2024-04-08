@@ -12,7 +12,7 @@ class FilterProvider with ChangeNotifier {
 
   set values(RangeValues newValues) {
     _values = newValues;
-    notifyListeners(); 
+    notifyListeners();
   }
 
   // void updateValues(RangeValues newValues) {
@@ -47,13 +47,17 @@ class FilterProvider with ChangeNotifier {
 
   List<Player> get filteredPlayerByTeams => _filteredPlayerByTeams;
 
-  void filterPlayerByTeamsF() async {
+  void filterPlayerByTeamsF({required String position}) async {
     final List<Player> allPlayers = await sl<PlayerProvider>().fetchPlayerss();
     List<int?> teamIds = _filledListTeam.map((team) => team.id).toList();
 
     // Filter players based on team ids
-    _filteredPlayerByTeams =
-        allPlayers.where((player) => teamIds.contains(player.teamId)).toList();
+    _filteredPlayerByTeams = allPlayers
+        .where((player) => teamIds.contains(player.teamId))
+        .where((element) => element.position == position)
+        .toList();
+
+    notifyListeners();
 
     notifyListeners();
   }
@@ -66,12 +70,14 @@ class FilterProvider with ChangeNotifier {
 
   List<Player> get filteredPlayerByPrice => _filteredPlayerByPrice;
 
-  void filterPlayerByPriceF(int minPrice, int maxPrice) {
+  void filterPlayerByPriceF(int minPrice, int maxPrice,
+      {required String position}) {
     final List<Player> allPlayers = sl<PlayerProvider>().players;
 
     // Filter players based on price range
     _filteredPlayerByPrice = allPlayers
         .where((player) => player.price >= minPrice && player.price <= maxPrice)
+        .where((element) => element.position == position)
         .toList();
 
     notifyListeners();
