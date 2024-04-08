@@ -169,7 +169,21 @@ class TeamEditProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  //! save team name and player name :
+  String _teamName = "";
 
+  String get teamName => _teamName;
+  String _playerName = "";
+  String get playerName => _playerName;
+  int _playerPrice = 0;
+  int get playerPrice => _playerPrice;
 
- 
+  void saveTeamPlayerInfos(
+      {required String teamNameAttribute,
+      required String playerNameAtrribute,required playerPrice}) {
+    _teamName = teamNameAttribute;
+    _playerName = playerNameAtrribute;
+    _playerPrice = playerPrice;
+    notifyListeners();
+  }
 }

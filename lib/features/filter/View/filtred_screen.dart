@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/custom_text.dart';
-import 'package:front/features/fantasy/Model/player.dart';
 
 import 'package:front/features/filter/utils/functions.dart';
 import 'package:front/generated/l10n.dart';
 
 class FilteredPage extends StatefulWidget {
-  final List<Player> listOfPlayers;
+
+  final String position;
+ 
   const FilteredPage({
-    super.key,
-    required this.listOfPlayers,
+    super.key, required this.position,
+    
   });
 
   @override
@@ -46,8 +47,8 @@ class FilteredPageState extends State<FilteredPage> {
             const SizedBox(height: 5),
             buildFilterByPrice(),
             const SizedBox(height: 5),
-            builFilterByPositions(),
-            buildApplyFilterBtn(),
+            builFilterByPositions(position:widget.position),
+            buildApplyFilterBtn(positon:widget.position),
           ],
         ),
       ),

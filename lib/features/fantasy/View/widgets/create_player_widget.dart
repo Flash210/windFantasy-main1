@@ -1,7 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
+import 'package:front/features/fantasy/ViewModel/player_provider.dart';
+import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
 import 'package:front/features/fantasy/functions/players_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 
 // ! build player icon and name
 buildPlayer(
@@ -12,6 +16,21 @@ buildPlayer(
   return Column(
     children: [
       GestureDetector(
+        onDoubleTap: () {
+          String ch = sl<TeamEditProvider>().teamName;
+          int amount = sl<PlayerProvider>().amount;
+          // ! remove player from screen
+          Provider.of<PlayerProvider>(context, listen: false)
+              .deleteFromSelectedPlayerToMap();
+          //! remove team from map constraint
+          sl<PlayerProvider>().checkMaxTeam(teamName: ch, longPress: true);
+          sl<PlayerProvider>().resetcheckMaxTeam();
+          //! return the previous amount to user
+          amount < 100
+              ? sl<PlayerProvider>().amountSubstraction(
+                  value: sl<TeamEditProvider>().playerPrice, longPress: true)
+              : null;
+        },
         onTap: () {
           showListOfPlayers222(context: context, positionPlayer: position);
         },

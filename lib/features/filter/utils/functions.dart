@@ -8,11 +8,12 @@ import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:front/features/filter/View/widgets/teams_dialog_widget.dart';
 import 'package:front/features/filter/View/widgets/widgets.dart';
 import 'package:front/features/filter/ViewModel/filter_provider.dart';
+import 'package:front/features/filter/utils/functions2.dart';
 import 'package:front/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
-//! the bottom button hwitch will apply the 3 filters
-Container buildApplyFilterBtn() {
+//! the bottom button witch will apply the 3 filters
+Container buildApplyFilterBtn({required String positon}) {
   return Container(
     margin: const EdgeInsets.only(top: 50.0),
     alignment: Alignment.bottomCenter,
@@ -25,7 +26,8 @@ Container buildApplyFilterBtn() {
       return InkWell(
         onTap: () {
           provider.filterByThreeLists(provider.filteredPlayerByPosition,
-              provider.filteredPlayerByTeams, provider.filteredPlayerByPrice);
+              provider.filteredPlayerByTeams, provider.filteredPlayerByPrice,
+              position: changePositonFrom(position:positon));
         },
         child: MyCustomText(
           text: provider.filtredByThreeLists.isNotEmpty
@@ -83,58 +85,59 @@ Padding buildResetText({required BuildContext context}) {
 
 //*
 
-Container builFilterByPositions() {
+Container builFilterByPositions({required position}) {
   return Container(
-    decoration: const BoxDecoration(
-      color: MyColors.kWhite,
-    ),
-    child: Consumer<FilterProvider>(builder: (context, provider, _) {
-      return Column(
-        children: [
-          // ! ******** Stiker check Box ********
+      decoration: const BoxDecoration(
+        color: MyColors.kWhite,
+      ),
+      child: checkPositonFrom(position)
+          ? Consumer<FilterProvider>(builder: (context, provider, _) {
+              return Column(
+                children: [
+                  // ! ******** Stiker check Box ********
 
-          checkboxListTitleWidget(
-              title: S.of(context).Forward,
-              isPlayerSelected: provider.isStrikerSelected,
-              onChanged: (value) {
-                sl<FilterProvider>().filterPlayersByPosition(
-                    MyRes.kForward, provider.isStrikerSelected);
-                provider.updateIsStrikerSelected(value!);
-              }),
+                  checkboxListTitleWidget(
+                      title: S.of(context).Forward,
+                      isPlayerSelected: provider.isStrikerSelected,
+                      onChanged: (value) {
+                        sl<FilterProvider>().filterPlayersByPosition(
+                            MyRes.kForward, provider.isStrikerSelected);
+                        provider.updateIsStrikerSelected(value!);
+                      }),
 
-          // ! ********** Midfielder check Box **********
-          checkboxListTitleWidget(
-              title: S.of(context).Midfildier,
-              isPlayerSelected: provider.isMidfielderSelected,
-              onChanged: (value) {
-                sl<FilterProvider>().filterPlayersByPosition(
-                    MyRes.kMidfilder, provider.isMidfielderSelected);
-                provider.updateIsMidfielderSelected(value!);
-              }),
+                  // ! ********** Midfielder check Box **********
+                  checkboxListTitleWidget(
+                      title: S.of(context).Midfildier,
+                      isPlayerSelected: provider.isMidfielderSelected,
+                      onChanged: (value) {
+                        sl<FilterProvider>().filterPlayersByPosition(
+                            MyRes.kMidfilder, provider.isMidfielderSelected);
+                        provider.updateIsMidfielderSelected(value!);
+                      }),
 
-          // ! ********** Defender check Box **********
-          checkboxListTitleWidget(
-              title: S.of(context).Defender,
-              isPlayerSelected: provider.isDefenderSelected,
-              onChanged: (value) {
-                sl<FilterProvider>().filterPlayersByPosition(
-                    MyRes.kDefender, provider.isDefenderSelected);
-                provider.updateIsDefenderSelected(value!);
-              }),
+                  // ! ********** Defender check Box **********
+                  checkboxListTitleWidget(
+                      title: S.of(context).Defender,
+                      isPlayerSelected: provider.isDefenderSelected,
+                      onChanged: (value) {
+                        sl<FilterProvider>().filterPlayersByPosition(
+                            MyRes.kDefender, provider.isDefenderSelected);
+                        provider.updateIsDefenderSelected(value!);
+                      }),
 
-          //! ******* GoalKepper box ******
-          checkboxListTitleWidget(
-              title: S.of(context).GoalKepper,
-              isPlayerSelected: provider.isGoalkeeperSelected,
-              onChanged: (value) {
-                sl<FilterProvider>().filterPlayersByPosition(
-                    MyRes.kGoalKepper, provider.isGoalkeeperSelected);
-                provider.updateIsGoalkeeperSelected(value!);
-              }),
-        ],
-      );
-    }),
-  );
+                  //! ******* GoalKepper box ******
+                  checkboxListTitleWidget(
+                      title: S.of(context).GoalKepper,
+                      isPlayerSelected: provider.isGoalkeeperSelected,
+                      onChanged: (value) {
+                        sl<FilterProvider>().filterPlayersByPosition(
+                            MyRes.kGoalKepper, provider.isGoalkeeperSelected);
+                        provider.updateIsGoalkeeperSelected(value!);
+                      }),
+                ],
+              );
+            })
+          : Container());
 }
 
 Container buildFilterByPrice() {

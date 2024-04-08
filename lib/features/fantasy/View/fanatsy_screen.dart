@@ -1,4 +1,3 @@
-import 'package:dotted_dashed_line/dotted_dashed_line.dart';
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/my_costum_sizedbox.dart';
 import 'package:front/core/constants/colors.dart';

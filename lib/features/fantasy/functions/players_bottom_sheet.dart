@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:front/core/common_widget/custom_text.dart';
-import 'package:front/core/constants/app_constants.dart';
+
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/team.dart';
+import 'package:front/features/fantasy/View/widgets/bottom_sheet_widgets.dart';
 import 'package:front/features/fantasy/functions/is_player_position.dart';
 import 'package:front/features/filter/View/filtred_screen.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
@@ -81,7 +81,7 @@ void showListOfPlayers222(
                             context,
                             MaterialPageRoute(
                               builder: (context) => FilteredPage(
-                                listOfPlayers: listOfPlayersFromApi,
+                                position:positionPlayer,
                               ),
                             ),
                           );
@@ -106,77 +106,7 @@ void showListOfPlayers222(
                           logo: '',
                         ),
                       );
-                      return ListTile(
-                        onTap: () {
-                          bool maxTeam = sl<PlayerProvider>()
-                              .checkMaxTeam(teamName: team.name!);
-
-                          bool enoughMoeny = sl<PlayerProvider>()
-                              .amountSubstraction(player.price, context);
-
-                          print("flouss " +
-                              sl<PlayerProvider>().amount.toString());
-
-                          if (enoughMoeny && maxTeam) {
-                            context
-                                .read<PlayerProvider>()
-                                .addSelectedPlayerToMap(
-                                    position: positionPlayer, player: player);
-                            Navigator.pop(context);
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: maxTeam == false
-                                    ? const MyCustomText(
-                                        text: "Max team Selection reached ")
-                                    : const MyCustomText(
-                                        text: 'You don\'t have enough money'),
-                                backgroundColor: Colors.red,
-                              ),
-                            );
-                            Navigator.pop(context);
-                          }
-                          {}
-                        },
-                        leading: Image.network(team.logo!),
-                        title: Column(
-                          children: [
-                            // Text(player.name),
-                            MyCustomText(text: player.name),
-                            const SizedBox(width: 10),
-                            MyCustomText(
-                              text: '£${player.price}m',
-                              style: const TextStyle(
-                                color: Colors.green,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                        trailing: Container(
-                          alignment: Alignment.center,
-                          height: 30,
-                          width: 66,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: player.position == MyRes.kMidfilder
-                                ? Colors.blue
-                                : player.position == MyRes.kDefender
-                                    ? Colors.green
-                                    : player.position == MyRes.kForward
-                                        ? const Color.fromARGB(
-                                            255, 138, 126, 21)
-                                        : Colors.red,
-                          ),
-                          child: MyCustomText(
-                            text: player.position,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      );
+                      return buildBottomSheetListTitle(team, player, context, positionPlayer);
                     }),
                   ),
                 ),
@@ -188,3 +118,4 @@ void showListOfPlayers222(
     },
   );
 }
+

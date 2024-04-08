@@ -81,9 +81,19 @@ class PlayerProvider extends ChangeNotifier {
     required Player player,
   }) {
     _selectedPlayersMap[position] = player;
+    print("Length of a map ${_selectedPlayersMap.length}");
 
-    //updateBudgetAndCheckTeam(player.price,maxSelectedTeams,team);
     notifyListeners();
+  }
+
+  void deleteFromSelectedPlayerToMap() {
+    if (_selectedPlayersMap.isNotEmpty) {
+      // Get the last key added to the map
+      String lastKey = _selectedPlayersMap.keys.last;
+      // Remove the last item from the map
+      _selectedPlayersMap.remove(lastKey);
+      notifyListeners();
+    }
   }
 
   Player? get selectedPlayer => _selectedPlayer;
@@ -107,7 +117,7 @@ class PlayerProvider extends ChangeNotifier {
 
   Map<String, int> _maxSelectedTeams = {};
 
-  bool checkMaxTeam({required String teamName}) {
+  bool checkMaxTeam({required String teamName, required bool longPress}) {
     if (_maxSelectedTeams.containsKey(teamName) &&
         _maxSelectedTeams[teamName]! > 2) {
       return false;
@@ -117,18 +127,37 @@ class PlayerProvider extends ChangeNotifier {
     return true;
   }
 
+  void resetcheckMaxTeam() {
+    if (_maxSelectedTeams.isNotEmpty) {
+      // Get the last key added to the map
+      String lastKey = _maxSelectedTeams.keys.last;
+      // Remove the last item from the map
+      _maxSelectedTeams.remove(lastKey);
+      print("Player was deleted Yes ");
+      notifyListeners();
+    }
+  }
+
   // ! bank
   int amount = 100;
-  
 
-  bool amountSubstraction(int value, BuildContext context) {
-    if (amount < value) {
-      return false;
-    } else {
-      amount -= value;
-
+  bool amountSubstraction({required int value, required bool longPress}) {
+    if (longPress) {
+      amount == 100 ? amount = 100 : amount += value;
+      // amount += value;
+      print("Amount ${amount}");
+      // Add the value if it's a long press
       notifyListeners();
-      return true;
+      return true; // Indicate success for long press action
+    } else {
+      if (amount < value) {
+        return false; // Indicate insufficient funds for tap action
+      } else {
+        amount == 0 ? amount = 0 : amount -= value;
+        // amount -= value;
+        notifyListeners();
+        return true; // Indicate success for tap action
+      }
     }
   }
 }
