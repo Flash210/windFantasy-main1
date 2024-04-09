@@ -12,44 +12,40 @@ class Testt extends StatefulWidget {
 }
 
 class _TesttState extends State<Testt> {
-  List<ShowTeam> showFantasyTeam = [];
-
   @override
   void initState() {
     super.initState();
-    // Add any initialization logic here
-    showFantasyTeam =
-        Provider.of<ShowTeamProvider>(context, listen: false).showFantasyTeam;
   }
 
   @override
   Widget build(BuildContext context) {
-    print("Building" + showFantasyTeam.length.toString());
-    print("lll" +
-        Provider.of<ShowTeamProvider>(context)
-            .showFantasyTeam
-            .length
-            .toString());
     return Scaffold(
         appBar: AppBar(
           title: Text("Team"),
         ),
-        body: Consumer<ShowTeamProvider>(
-          builder: (context, value, _) => ListView.builder(
-            itemCount: value.showFantasyTeam.length,
-            itemBuilder: (context, index) {
-              print(value.getPlayerName(2));
-              return ListTile(
-                title: Text("mmm"),
-                //  subtitle: Text(showFantasyTeam[index].playerId!.toString()),
-              );
-            },
-          ),
+        body: Column(
+          children: [
+            ElevatedButton(
+                onPressed: () async {
+                  final l = sl<ShowTeamProvider>().fetchTeams();
+                  print(l);
+                },
+                child: Text("CLick Here ")),
+            // Consumer<ShowTeamProvider>(
+            //   builder: (context, value, _) => ListView.builder(
+            //     itemCount: value.showTeam.length,
+            //     itemBuilder: (context, index) {
+            //       print(value.getPlayerName(2));
+            //       return ListTile(
+            //         title: Text("mmm"),
+            //         //  subtitle: Text(showFantasyTeam[index].playerId!.toString()),
+            //       );
+            //     },
+            //   ),
+            // ),
+          ],
         ));
   }
-
-
-         
 
   // playersList() async {
   //   return players = await sl<PlayerProvider>().fetchPlayerss();

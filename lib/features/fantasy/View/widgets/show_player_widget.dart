@@ -15,8 +15,6 @@ buildShowPlayer(
       GestureDetector(
         onTap: () {
           //  List<ShowTeam> list = sl<ShowTeamProvider>().showFantasyTeam;
-          print("List " +
-              sl<ShowTeamProvider>().showFantasyTeam.length.toString());
 
           // playersSelected != 15
           //     ? showListOfPlayers222(context: context, positionPlayer: position)

@@ -13,39 +13,74 @@ import 'package:logger/logger.dart';
 class ShowTeamProvider extends ChangeNotifier {
   Logger logger = Logger();
 
-  List<ShowTeam> showFantasyTeam = [];
-  Future<List<ShowTeam>> fetchAndSetFantasyTeam() async {
-    try {
-      final String? token = await sl<TokenManager>().getToken();
-      final response = await http.get(
-        Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/32"),
+  List<ShowTeam> showTeam = [];
+
+  //List<ShowTeam> get showTeam => _showTeam;
+
+  Future<List<ShowTeam>> fetchTeams() async {
+    final String? token = await sl<TokenManager>().getToken();
+    final response = await http.get(
+        Uri.parse("http://192.168.196.55:3001/api/users/getUserTeam/32"),
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json'
-        },
-      );
+        });
+    final jsonData = json.decode(response.body);
+    // logger.i(jsonData);
 
-      if (response.statusCode == 200) {
-        final jsonData = json.decode(response.body);
-
-        final fanatsyData = jsonData['data'] as List<dynamic>;
-        showFantasyTeam =
-            fanatsyData.map((teamData) => ShowTeam.fromJson(teamData)).toList();
-    
-        print(showFantasyTeam.length);
+    if (response.statusCode == 200) {
+      try {
+        final data = jsonData['data'] as List<dynamic>;
+        showTeam = data.map((teamData) => ShowTeam.fromJson(teamData)).toList();
+        print(showTeam.length);
         notifyListeners();
-        print("Fantasy Showed Successfully");
-
-        return showFantasyTeam;
-      } else {
-        print('Failed to load fantasy team data: ${response.statusCode}');
-        throw Exception('Failed to load fantasy team data');
+        return showTeam;
+      } catch (e) {
+        print("Error processing JSON data: $e");
+        // Handle the error as needed, such as logging or displaying an error message to the user
+        return [];
       }
-    } catch (e) {
-      print('Error fetching fantasy team data: $e');
-      throw Exception('Error fetching fantasy team data');
+    } else {
+      print("Error processing JSON data: $jsonData");
+      // Handle the error as needed, such as logging or displaying an error message to the user
     }
+
+    return [];
   }
+
+  // List<ShowTeam> showFantasyTeam = [];
+  // Future<List<ShowTeam>> fetchAndSetFantasyTeam() async {
+  //   try {
+  //     final String? token = await sl<TokenManager>().getToken();
+  //     final response = await http.get(
+  //       Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/32"),
+  //       headers: {
+  //         'Authorization': 'Bearer $token',
+  //         'Content-Type': 'application/json'
+  //       },
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       final jsonData = json.decode(response.body);
+
+  //       final fanatsyData = jsonData['data'] as List<dynamic>;
+  //       showFantasyTeam =
+  //           fanatsyData.map((teamData) => ShowTeam.fromJson(teamData)).toList();
+
+  //       print(showFantasyTeam.length);
+  //       notifyListeners();
+  //       print("Fantasy Showed Successfully");
+
+  //       return showFantasyTeam;
+  //     } else {
+  //       print('Failed to load fantasy team data: ${response.statusCode}');
+  //       throw Exception('Failed to load fantasy team data');
+  //     }
+  //   } catch (e) {
+  //     print('Error fetching fantasy team data: $e');
+  //     throw Exception('Error fetching fantasy team data');
+  //   }
+  // }
 
   // List<ShowTeam> showFantasyTeam = [];
 
