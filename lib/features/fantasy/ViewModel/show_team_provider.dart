@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:front/core/services/config.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/core/services/token_manager.dart';
 import 'package:front/features/fantasy/Model/player.dart';

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/core/services/config.dart';
+import 'package:front/core/services/injection_container.dart';
+import 'package:front/core/services/token_manager.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/team.dart';
 import 'package:http/http.dart' as http;
@@ -22,27 +24,60 @@ class PlayerProvider extends ChangeNotifier {
   //List<Player> get players => _players;
 
 // ! This method fetches all the players from the server
+
   List<Player> playerss = [];
-
   Future<List<Player>> fetchPlayerss() async {
-    final response = await http
-        .get(Uri.parse(AppConfig.kPlayerBaseUrl + AppConfig.kGetAllPlayers));
-    final jsonData = json.decode(response.body);
-    // logger.i(jsonData);
+    final String? token = await sl<TokenManager>().getToken();
 
-    if (jsonData['success']) {
-      //logger.i(jsonData['data']);
-      final playersData = jsonData['data'] as List<dynamic>;
-      playerss =
-          playersData.map((playerData) => Player.fromJson(playerData)).toList();
-      print("Players provider" + playerss.length.toString());
-      notifyListeners();
-      return playerss;
+    final response = await http.get(
+        Uri.parse(AppConfig.kPlayerBaseUrl + AppConfig.kGetAllPlayers),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json'
+        });
+    final jsonData = json.decode(response.body);
+
+    if (response.statusCode == 200) {
+      try {
+        final data = jsonData['data'] as List<dynamic>;
+        playerss = data.map((teamData) => Player.fromJson(teamData)).toList();
+        print(playerss.length);
+        notifyListeners();
+        return playerss;
+      } catch (e) {
+        print("Error processing JSON data: $e");
+        // Handle the error as needed, such as logging or displaying an error message to the user
+        return [];
+      }
+    } else {
+      print("Error processing JSON data: $jsonData");
+      // Handle the error as needed, such as logging or displaying an error message to the user
     }
-    print("Players provider" + playerss.length.toString());
 
     return [];
   }
+
+  // List<Player> playerss = [];
+
+  // Future<List<Player>> fetchPlayerss() async {
+  //   final response = await http
+  //       .get(Uri.parse(AppConfig.kPlayerBaseUrl + AppConfig.kGetAllPlayers));
+  //   final jsonData = json.decode(response.body);
+  //   // logger.i(jsonData);
+
+  //   if (jsonData['success']) {
+  //     //logger.i(jsonData['data']);
+  //     final playersData = jsonData['data'] as List<dynamic>;
+  //     playerss =
+  //         playersData.map((playerData) => Player.fromJson(playerData)).toList();
+  //     print("Players provider" + playerss.length.toString());
+  //     notifyListeners();
+  //     return playerss;
+  //   }
+  //   print("Players provider" + playerss.length.toString());
+
+  //   return [];
+  // }
 
 // ! This method fetches all  Teams from the server
 
