@@ -99,6 +99,21 @@ buildBenchPlayer(
   return Column(
     children: [
       GestureDetector(
+        onDoubleTap: () {
+          String ch = sl<TeamEditProvider>().teamName;
+          int amount = sl<PlayerProvider>().amount;
+          // ! remove player from screen
+          Provider.of<PlayerProvider>(context, listen: false)
+              .deleteFromSelectedPlayerToMap();
+          //! remove team from map constraint
+          sl<PlayerProvider>().checkMaxTeam(teamName: ch, longPress: true);
+          sl<PlayerProvider>().resetcheckMaxTeam();
+          //! return the previous amount to user
+          amount < 100
+              ? sl<PlayerProvider>().amountSubstraction(
+                  value: sl<TeamEditProvider>().playerPrice, longPress: true)
+              : null;
+        },
         onTap: () {
           showListOfPlayers222(context: context, positionPlayer: position);
         },

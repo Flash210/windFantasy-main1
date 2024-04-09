@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
+import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 
 // ! build player icon and name
 buildShowPlayer(
@@ -11,7 +13,10 @@ buildShowPlayer(
   return Column(
     children: [
       GestureDetector(
-        onTap: () async {
+        onTap: () {
+          //  List<ShowTeam> list = sl<ShowTeamProvider>().showFantasyTeam;
+          print("List " +
+              sl<ShowTeamProvider>().showFantasyTeam.length.toString());
 
           // playersSelected != 15
           //     ? showListOfPlayers222(context: context, positionPlayer: position)

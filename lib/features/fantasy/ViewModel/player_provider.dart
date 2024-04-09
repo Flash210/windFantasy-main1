@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class PlayerProvider extends ChangeNotifier {
-  List<Player> players = [];
   List<Player> _listForFilter = [];
 
   List<Player> get listForFilter => _listForFilter;
@@ -23,6 +22,7 @@ class PlayerProvider extends ChangeNotifier {
   //List<Player> get players => _players;
 
 // ! This method fetches all the players from the server
+  List<Player> playerss = [];
 
   Future<List<Player>> fetchPlayerss() async {
     final response = await http
@@ -33,11 +33,13 @@ class PlayerProvider extends ChangeNotifier {
     if (jsonData['success']) {
       //logger.i(jsonData['data']);
       final playersData = jsonData['data'] as List<dynamic>;
-      players =
+      playerss =
           playersData.map((playerData) => Player.fromJson(playerData)).toList();
+      print("Players provider" + playerss.length.toString());
       notifyListeners();
-      return players;
+      return playerss;
     }
+    print("Players provider" + playerss.length.toString());
 
     return [];
   }
@@ -107,7 +109,7 @@ class PlayerProvider extends ChangeNotifier {
   List<Player> filteredPlayers = [];
 
   void updateFilteredPlayers(String value) {
-    filteredPlayers = players
+    filteredPlayers = playerss
         .where((player) => player.name.toLowerCase().contains(value))
         .toList();
     notifyListeners();

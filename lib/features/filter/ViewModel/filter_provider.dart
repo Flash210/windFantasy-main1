@@ -72,7 +72,7 @@ class FilterProvider with ChangeNotifier {
 
   void filterPlayerByPriceF(int minPrice, int maxPrice,
       {required String position}) {
-    final List<Player> allPlayers = sl<PlayerProvider>().players;
+    final List<Player> allPlayers = sl<PlayerProvider>().playerss;
 
     // Filter players based on price range
     _filteredPlayerByPrice = allPlayers
@@ -90,7 +90,7 @@ class FilterProvider with ChangeNotifier {
   List<Player> get filteredPlayerByPosition => _filteredPlayersByPosition;
 
   void filterPlayersByPosition(String position, bool isChecked) {
-    final List<Player> allPlayers = sl<PlayerProvider>().players;
+    final List<Player> allPlayers = sl<PlayerProvider>().playerss;
 
     if (!isChecked) {
       _filteredPlayersByPosition +=
@@ -111,7 +111,7 @@ class FilterProvider with ChangeNotifier {
     _filteredPlayerByPrice = [];
     _filteredPlayersByPosition = [];
     filtredByThreeLists = [];
-    sl<PlayerProvider>().listForFilter = sl<PlayerProvider>().players;
+    sl<PlayerProvider>().listForFilter = sl<PlayerProvider>().playerss;
     _isDefenderSelected = false;
     _isMidfielderSelected = false;
     _isStrikerSelected = false;

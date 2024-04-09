@@ -20,29 +20,31 @@ class ShowTeam {
       this.userId,
       this.playerId});
 
+ factory ShowTeam.fromJson(Map<String, dynamic> json) {
+    return ShowTeam(
+      id: json['id'] ?? "",
+      playingInGameweeks: json['PlayingInGameweeks'] ?? "",
+      captain: json['captain'] ?? "",
+      viceCaptain: json['viceCaptain'] ?? "",
+      gameweeks: json['gameweeks'] ?? "",
+      createdAt: json['createdAt'] ?? "",
+      updatedAt: json['updatedAt'] ?? "",
+      userId: json['userId']  ?? "",
+      playerId: json['playerId'] ?? "",
+    );
+  }
 
-      factory ShowTeam.fromJson(Map<String, dynamic> json) => ShowTeam(
-        id: json["id"],
-        playingInGameweeks: json["playing_in_gameweeks"],
-        captain: json["captain"],
-        viceCaptain: json["vice_captain"],
-        gameweeks: json["gameweeks"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
-        userId: json["user_id"],
-        playerId: json["player_id"],
-      );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "playing_in_gameweeks": playingInGameweeks,
-    "captain": captain,
-    "vice_captain": viceCaptain,
-    "gameweeks": gameweeks,
-    "created_at": createdAt,
-    "updated_at": updatedAt,
-    "user_id": userId,
-    "player_id": playerId,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['PlayingInGameweeks'] = this.playingInGameweeks;
+    data['captain'] = this.captain;
+    data['viceCaptain'] = this.viceCaptain;
+    data['gameweeks'] = this.gameweeks;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['userId'] = this.userId;
+    data['playerId'] = this.playerId;
+    return data;
+  }
 }
-

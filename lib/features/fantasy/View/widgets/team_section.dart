@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/my_costum_sizedbox.dart';
 import 'package:front/core/constants/colors.dart';
@@ -9,9 +7,9 @@ import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/team_edit.dart';
 import 'package:front/features/fantasy/View/widgets/create_player_widget.dart';
 import 'package:front/features/fantasy/View/widgets/show_player_widget.dart';
+import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 
 // ! Team Section before Creation
 Column buildTeamSection(
@@ -75,38 +73,38 @@ Column buildTeamSection(
     const MySizedBox(height: 10),
 
     ElevatedButton(
-        onPressed: () async {
-          final String? token = await sl<TokenManager>().getToken();
+        onPressed: sl<PlayerProvider>().selectedPlayersMap.length == 15
+            ? () async {
+                final String? token = await sl<TokenManager>().getToken();
 
-          if (forwards.contains(0) ||
-              midfielders.contains(0) ||
-              defenders.contains(0) ||
-              goalkeepers.contains(0) ||
-              forwards.length != 4 ||
-              midfielders.length != 6 ||
-              defenders.length != 4 ||
-              goalkeepers.length != 1) {
-           
-          } else {
-            sl<TeamEditProvider>()
-                .createUserTeam(
+                // if (forwards.contains(0) ||
+                //     midfielders.contains(0) ||
+                //     defenders.contains(0) ||
+                //     goalkeepers.contains(0) ||
+                //     forwards.length != 4 ||
+                //     midfielders.length != 6 ||
+                //     defenders.length != 4 ||
+                //     goalkeepers.length != 1) {
+
+                // } else {
+                print("Button is activated ");
+                sl<TeamEditProvider>().createUserTeam(
                     TeamEdit(
                       forwards: forwards,
                       midfielders: midfielders,
                       defenders: defenders,
                       goalkeepers: goalkeepers,
-                      moneyRemaining: 50,
+                      moneyRemaining: sl<PlayerProvider>().amount,
                       playersSelected: 15,
                     ),
                     token);
-                
-          }
-          sl<TeamEditProvider>().changeIsCreatedState(true);
-        },
+
+         
+              }
+            : null,
         child: const Text(" Create Team"))
   ]);
 }
-
 
 //! Team Section after creation
 Column buildTeamSectionAfterCreation(
@@ -168,6 +166,5 @@ Column buildTeamSectionAfterCreation(
     ),
 
     const MySizedBox(height: 10),
-
   ]);
 }

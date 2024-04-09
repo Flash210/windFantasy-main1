@@ -23,6 +23,7 @@ Future<void> init() async {
 
    sl.registerSingleton<TeamEditProvider>(TeamEditProvider());
    sl.registerSingleton<FilterProvider>(FilterProvider());
+   sl.registerSingleton<ShowTeamProvider>(ShowTeamProvider());
    // depe link 
      sl.registerSingleton<DeepLinkHandler>(DeepLinkHandler());
 

@@ -6,6 +6,7 @@ import 'package:front/features/authentification/repository/auth_api_impl.dart';
 import 'package:front/features/authentification/repository/auth_repository.dart';
 import 'package:front/features/authentification/utils/deep_link.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
+import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
 import 'package:front/features/filter/ViewModel/filter_provider.dart';
 import 'package:front/features/fixtures/ViewModel/fixture_provider.dart';

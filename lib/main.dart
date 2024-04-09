@@ -4,6 +4,7 @@ import 'package:front/core/services/injection_container.dart';
 import 'package:front/core/services/router.dart';
 import 'package:front/features/authentification/ViewModel/auth_provider.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
+import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
 import 'package:front/features/filter/ViewModel/filter_provider.dart';
 import 'package:front/features/home%20screen/ViewModel/home_provider.dart';
@@ -39,6 +40,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => sl<PlayerProvider>()),
         ChangeNotifierProvider(create: (context) => sl<TeamEditProvider>()),
         ChangeNotifierProvider(create: (context) => sl<FilterProvider>()),
+        ChangeNotifierProvider(create: (context) => sl<ShowTeamProvider>()),
+
+
       ],
       child: Consumer<LanguageProvider>(
         builder: (context, languageProvider, _) {

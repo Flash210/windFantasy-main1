@@ -6,6 +6,7 @@ import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/authentification/Model/user_model.dart';
 import 'package:front/features/authentification/ViewModel/auth_provider.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
+import 'package:front/features/fantasy/View/test.dart';
 import 'package:front/features/fantasy/View/widgets/app_bar_widget.dart';
 
 import 'package:front/features/fantasy/View/widgets/team_section.dart';
@@ -133,16 +134,17 @@ class _FantasyScreenState extends State<FantasyScreen> {
                                       goalkeepers,
                                       moneyRemaining,
                                       playerSelected)
-                                  : buildTeamSectionAfterCreation(
-                                      slectedPlayerFromMap,
-                                      playerPositions,
-                                      context,
-                                      forwards,
-                                      midfielders,
-                                      defenders,
-                                      goalkeepers,
-                                      moneyRemaining,
-                                      playerSelected);
+                                  
+                              : buildTeamSectionAfterCreation(
+                                  slectedPlayerFromMap,
+                                  playerPositions,
+                                  context,
+                                  forwards,
+                                  midfielders,
+                                  defenders,
+                                  goalkeepers,
+                                  moneyRemaining,
+                                  playerSelected);
 
                               //return buildTeamSection(slectedPlayerFromMap, playerPositions, context, forwards, midfielders, defenders, goalkeepers, moneyRemaining, playersSelected);
                             },

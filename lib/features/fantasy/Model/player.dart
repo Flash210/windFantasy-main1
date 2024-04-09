@@ -17,6 +17,8 @@ class Player {
   final String updatedAt;
   final int teamId;
 
+  
+
   Player({
     required this.id,
     required this.name,
