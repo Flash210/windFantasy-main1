@@ -4,7 +4,7 @@ import 'package:front/core/services/injection_container.dart';
 import 'package:front/core/services/token_manager.dart';
 import 'package:front/features/authentification/View/auth_screen.dart';
 import 'package:front/features/entry%20point/entry_point.dart';
-import 'package:front/features/fantasy/View/fanatsy_screen.dart';
+import 'package:front/features/fantasy/View/fantasy_screen.dart';
 import 'package:front/features/home%20screen/View/edit_profile_screen.dart';
 import 'package:front/features/home%20screen/View/on_boarding_home.dart';
 import 'package:front/features/langauge/lanaguge_screen.dart';

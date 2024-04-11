@@ -46,15 +46,10 @@ class PlayerProvider extends ChangeNotifier {
   }
 
 // ! selected players
-  // Player? _selectedPlayer;
   Map<String, Player> _selectedPlayersMap = {};
 
   Map<String, Player> get selectedPlayersMap => _selectedPlayersMap;
 
-  // set selectedPlayersMap(Map<String, Player> playersMap) {
-  //   _selectedPlayersMap = playersMap;
-  //   notifyListeners();
-  // }
 
   void addSelectedPlayerToMap(
       {required String position, required Player player}) {
@@ -65,31 +60,13 @@ class PlayerProvider extends ChangeNotifier {
 
   void deleteFromSelectedPlayerToMap() {
     if (_selectedPlayersMap.isNotEmpty) {
-      // Get the last key added to the map
       String lastKey = _selectedPlayersMap.keys.last;
-      // Remove the last item from the map
       _selectedPlayersMap.remove(lastKey);
       notifyListeners();
     }
   }
 
-  // Player? get selectedPlayer => _selectedPlayer;
-
-  // set selectedPlayer(Player? player) {
-  //   _selectedPlayer = player;
-  //   notifyListeners();
-  // }
-
-  // !! filtred player from search
-  // List<Player> filteredPlayers = [];
-
-  // void updateFilteredPlayers(String value) {
-  //   filteredPlayers = players
-  //       .where((player) => player.name.toLowerCase().contains(value))
-  //       .toList();
-  //   notifyListeners();
-  // }
-
+ 
   //! update user bank budget and chekc team selected (max 3)
 
   // ! bank

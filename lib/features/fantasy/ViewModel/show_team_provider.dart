@@ -14,7 +14,6 @@ class ShowTeamProvider extends ChangeNotifier {
 
   List<ShowTeam> showTeam = [];
 
-  //List<ShowTeam> get showTeam => _showTeam;
 
   Future<List<ShowTeam>> fetchTeams() async {
     final String? token = await sl<TokenManager>().getToken();
@@ -41,74 +40,11 @@ class ShowTeamProvider extends ChangeNotifier {
       }
     } else {
       print("Error processing JSON data: $jsonData");
-      // Handle the error as needed, such as logging or displaying an error message to the user
     }
 
     return [];
   }
 
-  // List<ShowTeam> showFantasyTeam = [];
-  // Future<List<ShowTeam>> fetchAndSetFantasyTeam() async {
-  //   try {
-  //     final String? token = await sl<TokenManager>().getToken();
-  //     final response = await http.get(
-  //       Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/32"),
-  //       headers: {
-  //         'Authorization': 'Bearer $token',
-  //         'Content-Type': 'application/json'
-  //       },
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       final jsonData = json.decode(response.body);
-
-  //       final fanatsyData = jsonData['data'] as List<dynamic>;
-  //       showFantasyTeam =
-  //           fanatsyData.map((teamData) => ShowTeam.fromJson(teamData)).toList();
-
-  //       print(showFantasyTeam.length);
-  //       notifyListeners();
-  //       print("Fantasy Showed Successfully");
-
-  //       return showFantasyTeam;
-  //     } else {
-  //       print('Failed to load fantasy team data: ${response.statusCode}');
-  //       throw Exception('Failed to load fantasy team data');
-  //     }
-  //   } catch (e) {
-  //     print('Error fetching fantasy team data: $e');
-  //     throw Exception('Error fetching fantasy team data');
-  //   }
-  // }
-
-  // List<ShowTeam> showFantasyTeam = [];
-
-  // Future<List<ShowTeam>> showFantasyTeamListF() async {
-  //   final String? token = await sl<TokenManager>().getToken();
-  //   final response = await http.get(
-  //     Uri.parse(AppConfig.kUserBaseUrl + "getUserTeam/32"),
-  //     headers: {
-  //       'Authorization': 'Bearer $token',
-  //       'Content-Type': 'application/json'
-  //     },
-  //   );
-  //   final jsonData = json.decode(response.body);
-  //   if (jsonData['success']) {
-  //     print("Fanatsy Showed Successfully");
-  //     final fanatsyData = jsonData['data'] as List<dynamic>;
-  //     showFantasyTeam =
-  //         fanatsyData.map((teamData) => ShowTeam.fromJson(teamData)).toList();
-  //     logger.i(showFantasyTeam.length);
-  //     print(showFantasyTeam.length);
-  //     notifyListeners();
-
-  //     return showFantasyTeam;
-  //   } else {
-  //     print("Fanatsy Show Failed");
-  //   }
-
-  //   return [];
-  // }
 
   List<ShowTeam> showFantasyTeamList = [];
 
