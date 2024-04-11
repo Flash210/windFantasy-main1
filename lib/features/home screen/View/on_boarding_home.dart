@@ -21,8 +21,7 @@ class _HomeyState extends State<Homey> {
   int currentIndex = 0;
 
   final List<Widget> pages = [
-    // const FixturesScreen(),
-    Testt(),
+    const FixturesScreen(),
     const RankingScreen(),
     const StatisticScreen(),
     const ProfileScreeen()
