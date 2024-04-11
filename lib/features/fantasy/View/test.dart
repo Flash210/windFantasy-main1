@@ -24,8 +24,8 @@ class _TesttState extends State<Testt> {
 
   @override
   Widget build(BuildContext context) {
-    print("kkk" + showTeams.length.toString());
-    print("mmm is " + players.length.toString());
+    // print("kkk" + showTeams.length.toString());
+    // print("mmm is " + players.length.toString());
 
     return Scaffold(
       appBar: AppBar(
