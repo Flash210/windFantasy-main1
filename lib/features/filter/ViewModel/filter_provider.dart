@@ -16,14 +16,11 @@ class FilterProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // void updateValues(RangeValues newValues) {
-  //   _values = newValues;
-  //   notifyListeners(); // Notify listeners about the change
-  // }
+
 
   void resetValues() {
     _values = const RangeValues(4, 12);
-    notifyListeners(); // Notify listeners about the change
+    notifyListeners(); 
   }
 
 // !! fill select team by user for filter
@@ -52,15 +49,21 @@ class FilterProvider with ChangeNotifier {
     final List<Player> allPlayers = await sl<PlayerProvider>().fetchPlayerss();
     List<int?> teamIds = _filledListTeam.map((team) => team.id).toList();
 
+    if (position == MyRes.kUnknown) {
+      _filteredPlayerByTeams = allPlayers
+          .where((player) => teamIds.contains(player.teamId))
+          .toList();
+
+      notifyListeners();
+    } else {
+      _filteredPlayerByTeams = allPlayers
+          .where((player) => teamIds.contains(player.teamId))
+          .where((element) => element.position == position)
+          .toList();
+
+      notifyListeners();
+    }
     // Filter players based on team ids
-    _filteredPlayerByTeams = allPlayers
-        .where((player) => teamIds.contains(player.teamId))
-        .where((element) => element.position == position)
-        .toList();
-
-    notifyListeners();
-
-    notifyListeners();
   }
 
   // //! Filter By price
@@ -102,6 +105,7 @@ class FilterProvider with ChangeNotifier {
 
   void filterPlayersByPosition(String position, bool isChecked) {
     final List<Player> allPlayers = sl<PlayerProvider>().players;
+
 
     if (!isChecked) {
       _filteredPlayersByPosition +=
@@ -145,7 +149,7 @@ class FilterProvider with ChangeNotifier {
           (_filteredPlayerByTeams.isEmpty ||
               _filteredPlayerByTeams.contains(item));
     }).toList();
-    if (position == null) {
+    if (position == MyRes.kUnknown) {
       sl<PlayerProvider>().listForFilter = filtredByThreeLists;
     } else {
       sl<PlayerProvider>().listForFilter = filtredByThreeLists
