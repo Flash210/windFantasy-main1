@@ -31,4 +31,10 @@ class MyRes {
   static const String kDefender = "Defenseur";
   static const String kMidfilder = "Milieu";
   static const String kForward = "Attaquant";
+
+
+
+
+
+
 }
