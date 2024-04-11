@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:front/core/services/config.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/core/services/token_manager.dart';
 import 'package:front/features/fantasy/Model/player.dart';
@@ -14,11 +15,11 @@ class ShowTeamProvider extends ChangeNotifier {
 
   List<ShowTeam> showTeam = [];
 
-
   Future<List<ShowTeam>> fetchTeams() async {
     final String? token = await sl<TokenManager>().getToken();
     final response = await http.get(
-        Uri.parse("http://192.168.196.55:3001/api/users/getUserTeam/32"),
+       
+        Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/32"),
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json'
@@ -44,7 +45,6 @@ class ShowTeamProvider extends ChangeNotifier {
 
     return [];
   }
-
 
   List<ShowTeam> showFantasyTeamList = [];
 
@@ -73,5 +73,14 @@ class ShowTeamProvider extends ChangeNotifier {
     print("Player Name ${player.name}");
     //notifyListeners();
     return player.name;
+  }
+
+  Map<String, String> savePlayerPostion = {};
+  void FillsavePlayerListPostion(
+      {required String playerPosition, required String playerName}) {
+    savePlayerPostion[playerPosition] = playerName;
+    print(playerPosition + playerName);
+    print(savePlayerPostion.length);
+    notifyListeners();
   }
 }

@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:front/core/common_functions/extract_player_name.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
 import 'package:front/features/fantasy/View/widgets/bottom_sheet_widget.dart';
-import 'package:front/features/fantasy/functions/bottom_sheet_features.dart';
 import 'package:provider/provider.dart';
 
 // ! build player icon and name
@@ -42,52 +42,51 @@ buildPlayer(
         ),
       ),
       Column(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            width: 80,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10), topRight: Radius.circular(7)),
-              color: Colors.black,
-            ),
-            child: AutoSizeText(
-              maxLines: 1,
-              overflow: TextOverflow.visible,
-              maxFontSize: 13,
-              minFontSize: 8,
-              getOnlyPlayerName(playerName: title),
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 13,
-              ),
-            ),
+    children: [
+      Container(
+        alignment: Alignment.center,
+        width: 60,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10), topRight: Radius.circular(7)),
+          color: Colors.black,
+        ),
+        child: AutoSizeText(
+          maxLines: 1,
+          overflow: TextOverflow.visible,
+          maxFontSize: 13,
+          minFontSize: 8,
+          extractLastName(title),
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 13,
           ),
-          Container(
-            alignment: Alignment.center,
-            width: 80,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(7)),
-              color: Colors.white,
-            ),
-            child: AutoSizeText(
-              maxLines: 1,
-              overflow: TextOverflow.visible,
-              maxFontSize: 15,
-              minFontSize: 8,
-              position,
-              style: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-              ),
-            ),
-          )
-        ],
+        ),
       ),
+      Container(
+        alignment: Alignment.center,
+        width: 60,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(10), bottomLeft: Radius.circular(7)),
+          color: Colors.white,
+        ),
+        child: AutoSizeText(
+          maxLines: 1,
+          overflow: TextOverflow.visible,
+          maxFontSize: 15,
+          minFontSize: 8,
+          position,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+        ),
+      )
+    ],
+  ),
     ],
   );
 }
@@ -125,7 +124,7 @@ buildBenchPlayer(
         ),
       ),
       AutoSizeText(
-        getOnlyPlayerName(playerName: title),
+        extractLastName(title),
         style: const TextStyle(
           color: Colors.black,
           fontSize: 8,

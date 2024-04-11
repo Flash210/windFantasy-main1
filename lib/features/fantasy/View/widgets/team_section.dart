@@ -1,17 +1,18 @@
-
 import 'package:flutter/material.dart';
+import 'package:front/core/common_widget/custom_orange_btn.dart';
 import 'package:front/core/common_widget/my_costum_sizedbox.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/core/services/token_manager.dart';
 import 'package:front/features/fantasy/Model/player.dart';
-import 'package:front/features/fantasy/Model/show_team.dart';
 import 'package:front/features/fantasy/Model/team_edit.dart';
-import 'package:front/features/fantasy/View/widgets/create_player_widget.dart';
-import 'package:front/features/fantasy/View/widgets/show_player_widget.dart';
+import 'package:front/features/fantasy/View/widgets/create_player_icon.dart';
+import 'package:front/features/fantasy/View/widgets/show_player_icon.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
+import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 Column buildTeamSection(
     Map<String, Player> slectedPlayerFromMap,
     Map<String, int> playerPositions,
@@ -20,7 +21,6 @@ Column buildTeamSection(
     List<int> midfielders,
     List<int> defenders,
     List<int> goalkeepers,
-    int moneyRemaining,
     int playersSelected) {
   return Column(children: [
     const MySizedBox(height: 15),
@@ -72,37 +72,59 @@ Column buildTeamSection(
 
     const MySizedBox(height: 10),
 
-    ElevatedButton(
-        onPressed: sl<PlayerProvider>().selectedPlayersMap.length == 15
-            ? () async {
-                final String? token = await sl<TokenManager>().getToken();
+    CustomOrangeButton(
+      textColor: MyColors.kWhite,
+      backgroundColor: MyColors.kSecondaryColor,
+      customWidh: 100,
+      text: "Submit",
+      onTap: sl<PlayerProvider>().selectedPlayersMap.length == 15
+          ? () {
+              print("Button is activated ");
+              sl<TokenManager>()
+                  .saveMap(map: sl<ShowTeamProvider>().savePlayerPostion);
+              sl<TeamEditProvider>().createUserTeam(
+                TeamEdit(
+                  forwards: forwards,
+                  midfielders: midfielders,
+                  defenders: defenders,
+                  goalkeepers: goalkeepers,
+                  moneyRemaining: sl<PlayerProvider>().amount,
+                  playersSelected: 15,
+                ),
+              );
+            }
+          : null,
+    ),
+    // ElevatedButton(
+    //     onPressed: sl<PlayerProvider>().selectedPlayersMap.length == 15
+    //         ? ()  {
 
-                // if (forwards.contains(0) ||
-                //     midfielders.contains(0) ||
-                //     defenders.contains(0) ||
-                //     goalkeepers.contains(0) ||
-                //     forwards.length != 4 ||
-                //     midfielders.length != 6 ||
-                //     defenders.length != 4 ||
-                //     goalkeepers.length != 1) {
+    //             sl<TokenManager>()
+    //                 .saveMap(map: sl<ShowTeamProvider>().savePlayerPostion);
+    //             // if (forwards.contains(0) ||
+    //             //     midfielders.contains(0) ||
+    //             //     defenders.contains(0) ||
+    //             //     goalkeepers.contains(0) ||
+    //             //     forwards.length != 4 ||
+    //             //     midfielders.length != 6 ||
+    //             //     defenders.length != 4 ||
+    //             //     goalkeepers.length != 1) {
 
-                // } else {
-                print("Button is activated ");
-                sl<TeamEditProvider>().createUserTeam(
-                    TeamEdit(
-                      forwards: forwards,
-                      midfielders: midfielders,
-                      defenders: defenders,
-                      goalkeepers: goalkeepers,
-                      moneyRemaining: sl<PlayerProvider>().amount,
-                      playersSelected: 15,
-                    ),
-                     );
-
-         
-              }
-            : null,
-        child: const Text(" Create Team"))
+    //             // } else {
+    //             print("Button is activated ");
+    //             sl<TeamEditProvider>().createUserTeam(
+    //               TeamEdit(
+    //                 forwards: forwards,
+    //                 midfielders: midfielders,
+    //                 defenders: defenders,
+    //                 goalkeepers: goalkeepers,
+    //                 moneyRemaining: sl<PlayerProvider>().amount,
+    //                 playersSelected: 15,
+    //               ),
+    //             );
+    //           }
+    //         : null,
+    //     child: const Text("Submit"))
   ]);
 }
 

@@ -1,4 +1,3 @@
-
 part of 'fantasy_screen.dart';
 
 class FantasyScreen extends StatefulWidget {
@@ -15,6 +14,8 @@ class _FantasyScreenState extends State<FantasyScreen> {
   List<Player> allPlayers = [];
   List<ShowTeam> listOfFantasyPlayers = [];
 
+  Map<String, dynamic> myMap = {};
+
   @override
   void initState() {
     super.initState();
@@ -23,7 +24,6 @@ class _FantasyScreenState extends State<FantasyScreen> {
   }
 
   late int playerSelected;
-  late int moneyRemaining;
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +37,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
               if (snapshot.hasData) {
                 UserData userData = snapshot.data!.data;
                 playerSelected = userData.playersSelected;
-                moneyRemaining = userData.bank;
-                print("Players Selected $playerSelected");
+
                 return Column(
                   children: [
                     MySizedBox(
@@ -75,7 +74,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
 
                               final List<int> forwards = [
                                 slectedPlayerFromMap["Attaquant1"]?.id ?? 0,
-                                slectedPlayerFromMap["Attaquant1"]?.id ?? 0,
+                                slectedPlayerFromMap["Attaquant2"]?.id ?? 0,
                                 slectedPlayerFromMap["bench1"]?.id ?? 0,
                                 slectedPlayerFromMap["bench2"]?.id ?? 0,
                               ];
@@ -102,7 +101,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
                               final playerPositions = {
                                 MyRes.kGoalKepper: 1,
                                 MyRes.kDefender: 4,
-                              MyRes.kMidfilder: 4,
+                                MyRes.kMidfilder: 4,
                                 MyRes.kForward: 2,
                                 "bench": 4,
                               };
@@ -116,13 +115,13 @@ class _FantasyScreenState extends State<FantasyScreen> {
                                       midfielders,
                                       defenders,
                                       goalkeepers,
-                                      moneyRemaining,
                                       playerSelected)
                                   : buildShowFantasyTeam(
                                       context: context,
                                       allPlayers: allPlayers,
                                       listOfFantasyPlayers:
                                           listOfFantasyPlayers,
+                                      myMap: myMap,
                                     );
 
                               //return buildTeamSection(slectedPlayerFromMap, playerPositions, context, forwards, midfielders, defenders, goalkeepers, moneyRemaining, playersSelected);
@@ -149,5 +148,6 @@ class _FantasyScreenState extends State<FantasyScreen> {
   setPlayerList() async {
     allPlayers = await sl<PlayerProvider>().fetchPlayerss();
     listOfFantasyPlayers = await sl<ShowTeamProvider>().fetchTeams();
+    myMap = await sl<TokenManager>().getMap();
   }
 }

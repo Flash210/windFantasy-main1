@@ -8,16 +8,15 @@ class TeamService {
     final String? token = await getToken();
     final response = await postResponse(
         token: token,
-        urlBaseUrl: AppConfig.kTeamBaseUrl,
+        urlBaseUrl: AppConfig.kUserBaseUrl,
         urlEndPoint: AppConfig.kCreateTeam,
-teamEdit: teamEdit
-        );
-        if ( response.statusCode == 200) {
-          print("Team Created");
-        }else 
-        {
-          print("Team Not Created");
-          print(response.body);
-        }
+        teamEdit: teamEdit);
+    if (response.statusCode == 200) {
+      print("Team Created");
+      
+    } else {
+      print("Team Not Created");
+      print(response.body);
+    }
   }
 }

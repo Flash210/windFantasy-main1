@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TokenManager {
@@ -8,8 +10,7 @@ class TokenManager {
 
   // Key for storing token in SharedPreferences
   static const String _tokenKey = 'token';
-    static const String _userId= 'id';
-
+  static const String _userId = 'id';
 
   // Function to save token locally
   Future<void> saveToken(String token) async {
@@ -17,10 +18,10 @@ class TokenManager {
     await prefs.setString(_tokenKey, token);
   }
 
-  // Function to save user id 
-   Future<void> saveUserId(String id) async {
+  // Function to save user id
+  Future<void> saveUserId(String id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_userId,id);
+    await prefs.setString(_userId, id);
   }
 
   // Function to retrieve token from local storage
@@ -39,5 +40,34 @@ class TokenManager {
   Future<void> clearToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove(_tokenKey);
+  }
+
+  static const String _mapKey = 'my_map';
+
+  // Function to save map
+  Future<void> saveMap({required Map<String, String> map}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jsonString = json.encode(map);
+    await prefs.setString(_mapKey, jsonString);
+    print("Map Saved Yes ");
+  }
+
+  // Function to retrieve map from local storage
+  Future<Map<String, dynamic>> getMap() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jsonString = prefs.getString(_mapKey) ?? '{}';
+    print("json is "+jsonString);
+    return json.decode(jsonString);
+  }
+
+  Future<void> clearMap() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_mapKey);
+  }
+
+  // Function to clear all data from local storage
+  Future<void> clearAllData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
   }
 }

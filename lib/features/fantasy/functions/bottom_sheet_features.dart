@@ -5,7 +5,9 @@ import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/team.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
+import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
+import 'package:front/features/fantasy/functions/edit_team_functions.dart';
 import 'package:provider/provider.dart';
 
 ListTile buildBottomSheetListTitle(Team team, Player player,
@@ -26,6 +28,9 @@ ListTile buildBottomSheetListTitle(Team team, Player player,
         context
             .read<PlayerProvider>()
             .addSelectedPlayerToMap(position: positionPlayer, player: player);
+        sl<ShowTeamProvider>().FillsavePlayerListPostion(
+            playerPosition: positionPlayer,
+            playerName: extractLastName(player.name));
         Navigator.pop(context);
       } else {
         // Provider.of<TeamEditProvider>(context, listen: false)
@@ -80,7 +85,7 @@ Column buildPlayerPriceAndName(Player player) {
   return Column(
     children: [
       // Text(player.name),
-      MyCustomText(text: getOnlyPlayerName(playerName: player.name)),
+      MyCustomText(text: extractLastName(player.name)),
       const SizedBox(width: 10),
       MyCustomText(
         text: '£${player.price}m',
@@ -91,10 +96,4 @@ Column buildPlayerPriceAndName(Player player) {
       ),
     ],
   );
-}
-
-String getOnlyPlayerName({required String playerName}) {
-  List<String> nameParts = playerName.split('.');
-  // List<String> nameParts2 = nameParts.last.split(' ');
-  return nameParts.last;
 }
