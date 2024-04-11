@@ -4,7 +4,6 @@ import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
-import 'package:provider/provider.dart';
 
 class Testt extends StatefulWidget {
   const Testt({Key? key}) : super(key: key);
@@ -37,7 +36,8 @@ class _TesttState extends State<Testt> {
         itemBuilder: (context, index) {
           print(getPlayerName(showTeams[index].playerId!));
           return ListTile(
-            title: Text(getPlayerName(showTeams[index].playerId!)),
+            title: Text(
+                extractLastName(getPlayerName(showTeams[index].playerId!))),
             //  subtitle: Text(showFantasyTeam[index].playerId!.toString()),
           );
         },
@@ -75,5 +75,16 @@ class _TesttState extends State<Testt> {
   setPlayerList() async {
     players = await sl<PlayerProvider>().fetchPlayerss();
     showTeams = await sl<ShowTeamProvider>().fetchTeams();
+  }
+
+  String extractLastName(String fullName) {
+    List<String> nameParts = fullName.split('.');
+    List<String> nameParts2 = nameParts.last.split(' ');
+
+    if (nameParts2.length > 1) {
+      return nameParts2.last;
+    }
+
+    return nameParts.last;
   }
 }

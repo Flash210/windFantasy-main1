@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/my_costum_sizedbox.dart';
+import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/authentification/Model/user_model.dart';
 import 'package:front/features/authentification/ViewModel/auth_provider.dart';
+import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
-import 'package:front/features/fantasy/View/test.dart';
+import 'package:front/features/fantasy/View/test2.dart';
 import 'package:front/features/fantasy/View/widgets/app_bar_widget.dart';
 
 import 'package:front/features/fantasy/View/widgets/team_section.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
+import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -26,23 +29,21 @@ class _FantasyScreenState extends State<FantasyScreen> {
   late Future<UserModel?> _userModel;
   late List<ShowTeam> fetchPlayersTeam;
 
+  List<Player> allPlayers = [];
+  List<ShowTeam> listOfFantasyPlayers = [];
+
   @override
   void initState() {
     super.initState();
     _userModel = sl<AuthProvider>().getUserInfo();
-    // fetchPlayersTeam =
-    //     sl<TeamEditProvider>().showLeagugeTeam;
+    setPlayerList();
   }
 
-  bool isCreated = sl<TeamEditProvider>().isCreated;
   late int playerSelected;
   late int moneyRemaining;
 
   @override
   Widget build(BuildContext context) {
-    print(
-        "+++++++++++++++${sl<TeamEditProvider>().showLeagugeTeamList.length}");
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 30, left: 5, right: 5),
@@ -116,10 +117,10 @@ class _FantasyScreenState extends State<FantasyScreen> {
                                 slectedPlayerFromMap["Gardien1"]?.id ?? 0,
                               ];
                               final playerPositions = {
-                                "Gardien": 1,
-                                "Defenseur": 4,
-                                "Milieu": 4,
-                                "Attaquant": 2,
+                                MyRes.kGoalKepper: 1,
+                                MyRes.kDefender: 4,
+                              MyRes.kMidfilder: 4,
+                                MyRes.kForward: 2,
                                 "bench": 4,
                               };
 
@@ -134,17 +135,12 @@ class _FantasyScreenState extends State<FantasyScreen> {
                                       goalkeepers,
                                       moneyRemaining,
                                       playerSelected)
-                                  
-                              : buildTeamSectionAfterCreation(
-                                  slectedPlayerFromMap,
-                                  playerPositions,
-                                  context,
-                                  forwards,
-                                  midfielders,
-                                  defenders,
-                                  goalkeepers,
-                                  moneyRemaining,
-                                  playerSelected);
+                                  : buildShowFantasyTeam(
+                                      context: context,
+                                      allPlayers: allPlayers,
+                                      listOfFantasyPlayers:
+                                          listOfFantasyPlayers,
+                                    );
 
                               //return buildTeamSection(slectedPlayerFromMap, playerPositions, context, forwards, midfielders, defenders, goalkeepers, moneyRemaining, playersSelected);
                             },
@@ -165,5 +161,10 @@ class _FantasyScreenState extends State<FantasyScreen> {
         ),
       ),
     );
+  }
+
+  setPlayerList() async {
+    allPlayers = await sl<PlayerProvider>().fetchPlayerss();
+    listOfFantasyPlayers = await sl<ShowTeamProvider>().fetchTeams();
   }
 }

@@ -4,7 +4,8 @@ import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
-import 'package:front/features/fantasy/functions/players_bottom_sheet.dart';
+import 'package:front/features/fantasy/View/widgets/bottom_sheet_widget.dart';
+import 'package:front/features/fantasy/functions/bottom_sheet_features.dart';
 import 'package:provider/provider.dart';
 
 // ! build player icon and name
@@ -23,8 +24,8 @@ buildPlayer(
           Provider.of<PlayerProvider>(context, listen: false)
               .deleteFromSelectedPlayerToMap();
           //! remove team from map constraint
-          sl<PlayerProvider>().checkMaxTeam(teamName: ch, longPress: true);
-          sl<PlayerProvider>().resetcheckMaxTeam();
+          sl<TeamEditProvider>().checkMaxTeam(teamName: ch, longPress: true);
+          sl<TeamEditProvider>().resetcheckMaxTeam();
           //! return the previous amount to user
           amount < 100
               ? sl<PlayerProvider>().amountSubstraction(
@@ -55,7 +56,7 @@ buildPlayer(
               overflow: TextOverflow.visible,
               maxFontSize: 13,
               minFontSize: 8,
-              title,
+              getOnlyPlayerName(playerName: title),
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -106,8 +107,8 @@ buildBenchPlayer(
           Provider.of<PlayerProvider>(context, listen: false)
               .deleteFromSelectedPlayerToMap();
           //! remove team from map constraint
-          sl<PlayerProvider>().checkMaxTeam(teamName: ch, longPress: true);
-          sl<PlayerProvider>().resetcheckMaxTeam();
+          sl<TeamEditProvider>().checkMaxTeam(teamName: ch, longPress: true);
+          sl<TeamEditProvider>().resetcheckMaxTeam();
           //! return the previous amount to user
           amount < 100
               ? sl<PlayerProvider>().amountSubstraction(
@@ -124,7 +125,7 @@ buildBenchPlayer(
         ),
       ),
       AutoSizeText(
-        title,
+        getOnlyPlayerName(playerName: title),
         style: const TextStyle(
           color: Colors.black,
           fontSize: 8,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front/core/constants/app_constants.dart';
 import 'package:front/generated/l10n.dart';
 
 String? validatePhoneNumber(String? value, BuildContext context) {
@@ -12,7 +11,7 @@ String? validatePhoneNumber(String? value, BuildContext context) {
   }
 
   if (value.startsWith('0')) {
-    return MyRes.kPhoneStartsWithZeroError;
+    return S.of(context).kPhoneStartsWithZeroError;
   }
   return null;
   // Return null if validation passes

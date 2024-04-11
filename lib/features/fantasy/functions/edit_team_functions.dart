@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/team.dart';
@@ -10,7 +11,7 @@ Future<void> createTeam(
     BuildContext context, TeamEdit team, String token) async {
   try {
     await sl<TeamEditProvider>()
-        .createUserTeam(team, token)
+        .createUserTeam(team)
         .then((value) => ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Team submitted successfully!'),
@@ -101,5 +102,63 @@ List<Player> _filterPlayers(String value, String searchCriteria,
           .toList();
     default:
       return listOfPlayers;
+  }
+}
+
+
+
+
+// ! extract the name of teh player from the last name
+String extractLastName(String fullName) {
+  List<String> nameParts = fullName.split('.');
+  List<String> nameParts2 = nameParts.last.split(' ');
+
+  if (nameParts2.length > 1) {
+    return nameParts2.last;
+  }
+
+  return nameParts.last;
+}
+
+String getPlayerName(int playerID,List<Player> players) {
+  final player = players.firstWhere((element) => element.id == playerID,
+      orElse: () => Player(
+          id: 0,
+          name: "name",
+          position: "position",
+          price: 0,
+          totalMatchesPlayed: 0,
+          totalPoints: 0,
+          totalGoals: 0,
+          totalAssists: 0,
+          totalRedCard: 0,
+          totalYellowCard: 0,
+          totalOwnGoals: 0,
+          totalCleanSheet: 0,
+          totalManOfTheMatch: 0,
+          totalMissedPenalties: 0,
+          createdAt: "createdAt",
+          updatedAt: "updatedAt",
+          teamId: 0));
+  return extractLastName(player.name);
+
+}
+
+bool isPositionValidForPlayer(Player player, String position) {
+  if (position.startsWith("ben")) {
+    return player.position == "Gardien" ||
+        player.position == "Defenseur" ||
+        player.position == "Milieu" ||
+        player.position == "Attaquant";
+  } else if (position == "Gardien1") {
+    return player.position == "Gardien";
+  } else if (position.startsWith("Def")) {
+    return player.position == "Defenseur";
+  } else if (position.startsWith("Mil")) {
+    return player.position == MyRes.kMidfilder;
+  } else if (position.startsWith("Att")) {
+    return player.position == MyRes.kForward;
+  } else {
+    return false;
   }
 }

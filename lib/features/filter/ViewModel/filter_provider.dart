@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/team.dart';
@@ -72,15 +73,25 @@ class FilterProvider with ChangeNotifier {
 
   void filterPlayerByPriceF(int minPrice, int maxPrice,
       {required String position}) {
-    final List<Player> allPlayers = sl<PlayerProvider>().playerss;
+    final List<Player> allPlayers = sl<PlayerProvider>().players;
 
-    // Filter players based on price range
-    _filteredPlayerByPrice = allPlayers
-        .where((player) => player.price >= minPrice && player.price <= maxPrice)
-        .where((element) => element.position == position)
-        .toList();
+    if (position == MyRes.kUnknown) {
+      _filteredPlayerByPrice = allPlayers
+          .where(
+              (player) => player.price >= minPrice && player.price <= maxPrice)
+          // .where((element) => element.position == position)
+          .toList();
 
-    notifyListeners();
+      notifyListeners();
+    } else {
+      _filteredPlayerByPrice = allPlayers
+          .where(
+              (player) => player.price >= minPrice && player.price <= maxPrice)
+          .where((element) => element.position == position)
+          .toList();
+
+      notifyListeners();
+    }
   }
 
   //! filter by position
@@ -90,7 +101,7 @@ class FilterProvider with ChangeNotifier {
   List<Player> get filteredPlayerByPosition => _filteredPlayersByPosition;
 
   void filterPlayersByPosition(String position, bool isChecked) {
-    final List<Player> allPlayers = sl<PlayerProvider>().playerss;
+    final List<Player> allPlayers = sl<PlayerProvider>().players;
 
     if (!isChecked) {
       _filteredPlayersByPosition +=
@@ -111,7 +122,7 @@ class FilterProvider with ChangeNotifier {
     _filteredPlayerByPrice = [];
     _filteredPlayersByPosition = [];
     filtredByThreeLists = [];
-    sl<PlayerProvider>().listForFilter = sl<PlayerProvider>().playerss;
+    sl<PlayerProvider>().listForFilter = sl<PlayerProvider>().players;
     _isDefenderSelected = false;
     _isMidfielderSelected = false;
     _isStrikerSelected = false;

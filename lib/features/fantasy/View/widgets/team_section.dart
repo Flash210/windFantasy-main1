@@ -1,17 +1,17 @@
+
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/my_costum_sizedbox.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/core/services/token_manager.dart';
 import 'package:front/features/fantasy/Model/player.dart';
+import 'package:front/features/fantasy/Model/show_team.dart';
 import 'package:front/features/fantasy/Model/team_edit.dart';
 import 'package:front/features/fantasy/View/widgets/create_player_widget.dart';
 import 'package:front/features/fantasy/View/widgets/show_player_widget.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-// ! Team Section before Creation
 Column buildTeamSection(
     Map<String, Player> slectedPlayerFromMap,
     Map<String, int> playerPositions,
@@ -97,7 +97,7 @@ Column buildTeamSection(
                       moneyRemaining: sl<PlayerProvider>().amount,
                       playersSelected: 15,
                     ),
-                    token);
+                     );
 
          
               }

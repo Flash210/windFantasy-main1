@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/team.dart';
-import 'package:front/features/fantasy/View/widgets/bottom_sheet_widgets.dart';
-import 'package:front/features/fantasy/functions/is_player_position.dart';
+import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
+import 'package:front/features/fantasy/functions/bottom_sheet_features.dart';
+import 'package:front/features/fantasy/functions/edit_team_functions.dart';
 import 'package:front/features/filter/View/filtred_screen.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:provider/provider.dart';
@@ -24,16 +25,17 @@ void showListOfPlayers222(
       .toList();
   sl<PlayerProvider>().listForFilter = List.from(listOfPlayersFromApi)
       .cast<Player>()
-      .where(
-        (element) => !selc.contains(element.id),
-      )
+      .where((element) => !selc.contains(element.id))
       .where((element) => isPositionValidForPlayer(element, positionPlayer))
       .where((element) => element.price < sl<PlayerProvider>().amount)
+      // .where((element) => !sl<TeamEditProvider>()
+      //     .playersAfterMaxReached
+      //     .any((playerReached) => playerReached == element)
+          
       .toList(); // Copy all players initially
 
-  /*print(
-      " sl<PlayerProvider>().listForFilter.length${sl<PlayerProvider>().listForFilter.length}");*/
-  String searchCriteria = 'Search by Player Name'; // Default search criteria
+  
+  String searchCriteria = 'Search by Player Name'; 
 
   showModalBottomSheet(
     context: context,
@@ -81,7 +83,7 @@ void showListOfPlayers222(
                             context,
                             MaterialPageRoute(
                               builder: (context) => FilteredPage(
-                                position:positionPlayer,
+                                position: positionPlayer,
                               ),
                             ),
                           );
@@ -106,7 +108,8 @@ void showListOfPlayers222(
                           logo: '',
                         ),
                       );
-                      return buildBottomSheetListTitle(team, player, context, positionPlayer);
+                      return buildBottomSheetListTitle(team, player, context,
+                          positionPlayer, list.listForFilter);
                     }),
                   ),
                 ),
@@ -118,4 +121,3 @@ void showListOfPlayers222(
     },
   );
 }
-

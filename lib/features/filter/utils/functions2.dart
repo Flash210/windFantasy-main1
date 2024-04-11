@@ -1,3 +1,5 @@
+import 'package:front/core/constants/app_constants.dart';
+
 bool checkPositonFrom(String position) {
   if (position.startsWith("Att") ||
       position.startsWith("Def") ||
@@ -9,18 +11,21 @@ bool checkPositonFrom(String position) {
 }
 
 String changePositonFrom({required String position}) {
-  if (position.startsWith("Att")) {
-    return "Attaquant";
+  if (position.startsWith("Att") )
+     
+      {
+    return MyRes.kForward;
   }
 
   if (position.startsWith("Def")) {
-    return "Defenseur";
+    return MyRes.kDefender;
   }
-  if (position.startsWith("Mil")) {
-    return "Milieu";
+  if (position.startsWith("Mil") ) {
+    return MyRes.kMidfilder;
   }
   if (position.startsWith("Gar")) {
-    return "Gardien";
+    return MyRes.kGoalKepper;
   }
-  return "Unknown";
+
+  return MyRes.kUnknown;
 }

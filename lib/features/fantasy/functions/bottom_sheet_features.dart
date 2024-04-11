@@ -8,15 +8,15 @@ import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
 import 'package:provider/provider.dart';
 
-ListTile buildBottomSheetListTitle(
-    Team team, Player player, BuildContext context, String positionPlayer) {
+ListTile buildBottomSheetListTitle(Team team, Player player,
+    BuildContext context, String positionPlayer, List<Player> listForFilter) {
   return ListTile(
     onTap: () {
       sl<TeamEditProvider>().saveTeamPlayerInfos(
           teamNameAttribute: team.name!,
           playerNameAtrribute: player.name,
           playerPrice: player.price);
-      bool maxTeam = sl<PlayerProvider>()
+      bool maxTeam = sl<TeamEditProvider>()
           .checkMaxTeam(teamName: team.name!, longPress: false);
 
       bool enoughMoeny = sl<PlayerProvider>()
@@ -28,6 +28,11 @@ ListTile buildBottomSheetListTitle(
             .addSelectedPlayerToMap(position: positionPlayer, player: player);
         Navigator.pop(context);
       } else {
+        // Provider.of<TeamEditProvider>(context, listen: false)
+        //     .fillTeamsAfterMaxReached(team);
+        // Provider.of<TeamEditProvider>(context, listen: false)
+        //     .fillPlayersMaxReached(player);
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: maxTeam == false
@@ -75,7 +80,7 @@ Column buildPlayerPriceAndName(Player player) {
   return Column(
     children: [
       // Text(player.name),
-      MyCustomText(text: player.name),
+      MyCustomText(text: getOnlyPlayerName(playerName: player.name)),
       const SizedBox(width: 10),
       MyCustomText(
         text: '£${player.price}m',
@@ -86,4 +91,10 @@ Column buildPlayerPriceAndName(Player player) {
       ),
     ],
   );
+}
+
+String getOnlyPlayerName({required String playerName}) {
+  List<String> nameParts = playerName.split('.');
+  // List<String> nameParts2 = nameParts.last.split(' ');
+  return nameParts.last;
 }

@@ -112,7 +112,7 @@ class ShowTeamProvider extends ChangeNotifier {
 
   List<ShowTeam> showFantasyTeamList = [];
 
-  final players = sl<PlayerProvider>().playerss;
+  final players = sl<PlayerProvider>().players;
 
   String getPlayerName(int playerID) {
     final player = players.firstWhere((element) => element.id == playerID,

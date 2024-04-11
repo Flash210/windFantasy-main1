@@ -4,6 +4,7 @@ final sl = GetIt.instance; // Create a new instance of GetIt
 
 Future<void> init() async {
   await authInit(); // Wait for auth initialization before proceeding
+  await playerInit();
 
   sl.registerSingleton<TokenManager>(TokenManager());
   // ! Langauge  Provider
@@ -14,24 +15,24 @@ Future<void> init() async {
   sl.registerSingleton<HomeProvider>(HomeProvider());
 
   // ! Player and Team  Provider
-  sl.registerSingleton<PlayerProvider>(PlayerProvider());
+  sl.registerSingleton<PlayerProvider>(
+    PlayerProvider(playerRepository: sl<PlayerRepository>()),
+  );
 
   // ! Fixture Provider
   sl.registerSingleton<FixtureProvider>(FixtureProvider());
 
-   sl.registerSingleton<RankingProvider>(RankingProvider());
+  sl.registerSingleton<RankingProvider>(RankingProvider());
 
-   sl.registerSingleton<TeamEditProvider>(TeamEditProvider());
-   sl.registerSingleton<FilterProvider>(FilterProvider());
-   sl.registerSingleton<ShowTeamProvider>(ShowTeamProvider());
-   // depe link 
-     sl.registerSingleton<DeepLinkHandler>(DeepLinkHandler());
+  sl.registerSingleton<TeamEditProvider>(
+      TeamEditProvider(teamRepository: sl<TeamRepository>()));
+  sl.registerSingleton<FilterProvider>(FilterProvider());
+  sl.registerSingleton<ShowTeamProvider>(ShowTeamProvider());
+  // depe link
+  sl.registerSingleton<DeepLinkHandler>(DeepLinkHandler());
 
-     //! slider range 
-       sl.registerLazySingleton(() => const RangeValues(2, 9));
-
-
-
+  //! slider range
+  sl.registerLazySingleton(() => const RangeValues(2, 9));
 }
 
 Future<void> authInit() async {
@@ -45,4 +46,18 @@ Future<void> authInit() async {
   sl.registerSingleton<AuthProvider>(AuthProvider(
     authRepository: sl<AuthRepository>(), // Access AuthRepository using sl()
   ));
+}
+
+Future<void> playerInit() async {
+  // !player
+  sl.registerSingleton<PlayerApiService>(PlayerApiService());
+  sl.registerSingleton<PlayerRepository>(
+    PlayerRepository(sl.get<PlayerApiService>()),
+  );
+
+  //! Team
+  sl.registerSingleton<TeamService>(TeamService());
+  sl.registerSingleton<TeamRepository>(
+    TeamRepository(teamService: sl.get<TeamService>()),
+  );
 }
