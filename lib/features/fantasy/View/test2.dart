@@ -6,32 +6,42 @@ import 'package:front/features/fantasy/View/widgets/player_icon.dart';
 import 'package:front/features/fantasy/functions/edit_team_functions.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-buildShowFantasyTeam(
+Column buildShowFantasyTeam(
     {required BuildContext context,
     required List<Player> allPlayers,
     required List<ShowTeam> listOfFantasyPlayers,
     required Map<String, dynamic> myMap}) {
-  String gardien1 = myMap[
-      "Gardien1"]; // Get value from myMap, default to empty string if null
-  String textToShow = listOfFantasyPlayers.any(
-          (element) => getPlayerName(element.playerId!, allPlayers) == gardien1)
-      ? gardien1
-      : " dd";
-
   return Column(
     children: [
       buildPlayerIcon(
-          playerName: getTextToShow(
-              listOfFantasyPlayers, allPlayers, myMap, "Gardien1"),
-          playerPosition: "Gardien1",
-          isItBenched: "No"),
+        playerName:
+            getTextToShow(listOfFantasyPlayers, allPlayers, myMap, "Gardien1"),
+        playerPosition: "Gardien1",
+        isItBenched: "No",
+        onTap: () {
+          showAdaptiveDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                    title: Text("Choisissez un nouveau gardien",
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )));
+              });
+        },
+      ),
       SizedBox(height: 15),
       Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         buildPlayerIcon(
             playerName: getTextToShow(
                 listOfFantasyPlayers, allPlayers, myMap, "Defenseur1"),
             playerPosition: "Defenseur1",
-            isItBenched: "No"),
+            isItBenched: "No",
+            onTap: () {}),
         buildPlayerIcon(
             playerName: getTextToShow(
                 listOfFantasyPlayers, allPlayers, myMap, "Defenseur2"),

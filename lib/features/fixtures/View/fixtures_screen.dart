@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/constants/colors.dart';
+import 'package:front/core/services/injection_container.dart';
+import 'package:front/features/authentification/Model/user_model.dart';
+import 'package:front/features/authentification/ViewModel/auth_provider.dart';
 import 'package:front/features/fantasy/Model/team.dart';
+import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
 import 'package:front/features/fixtures/Model/fixture.dart';
 import 'package:front/features/fixtures/utils/commun_function.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,6 +33,8 @@ class FixturesScreenState extends State<FixturesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("player ha  " +
+        sl<TeamEditProvider>().userPlay!.data![0].gameWeek.toString());
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(

@@ -1,4 +1,5 @@
 import 'package:front/features/fantasy/Model/team_edit.dart';
+import 'package:front/features/fantasy/Model/user_play.dart';
 import 'package:front/features/fantasy/services/team_service.dart';
 
 class TeamRepository {
@@ -9,5 +10,10 @@ class TeamRepository {
     return teamService.createTeam(
       teamEdit: teamEdit,
     );
+  }
+
+
+  Future<UserPlay> getUserPLay() async {
+    return teamService.getUserPLay();
   }
 }

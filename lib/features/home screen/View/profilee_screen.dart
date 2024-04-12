@@ -87,7 +87,7 @@ class _ProfileScreeenState extends State<ProfileScreeen> {
                                       ElevatedButton(
                                         onPressed: () {
                                           sl<TokenManager>().clearToken();
-                                          sl<TokenManager>().clearMap();
+                                         // sl<TokenManager>().clearMap();
 
                                           // Navigator.pushNamedAndRemoveUntil(
                                           //     context,

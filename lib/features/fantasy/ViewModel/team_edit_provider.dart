@@ -5,6 +5,7 @@ import 'package:front/core/services/config.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/team.dart';
 import 'package:front/features/fantasy/Model/team_edit.dart';
+import 'package:front/features/fantasy/Model/user_play.dart';
 import 'package:front/features/fantasy/repository/team_repository.dart';
 
 import 'package:http/http.dart' as http;
@@ -19,6 +20,20 @@ class TeamEditProvider with ChangeNotifier {
     await teamRepository.createTeam(
       teamEdit: userTeam,
     );
+  }
+
+  // ! user play gameWeek
+  UserPlay? userPlay;
+  Future<UserPlay> getUserPLay() async {
+    try {
+      userPlay = await teamRepository.getUserPLay();
+      print("---------------" + userPlay!.data![0].gameWeek.toString());
+      notifyListeners();
+    } catch (e) {
+      print("Error" + e.toString());
+    }
+
+    return userPlay!;
   }
 
 // ! show team

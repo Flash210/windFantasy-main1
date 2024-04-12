@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/authentification/Model/user_credentials.dart';
+import 'package:front/features/authentification/repository/authentification_repository.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -12,12 +13,22 @@ import 'package:logger/logger.dart';
 
 class AuthProvider extends ChangeNotifier {
   final AuthRepository _authRepository;
+  final AuthentificationRepository authentificationRepository;
   bool _isAuthenticated = false;
 
   bool get isAuthenticated => _isAuthenticated;
 
-  AuthProvider({required AuthRepository authRepository})
+  AuthProvider(
+      {required this.authentificationRepository,
+      required AuthRepository authRepository})
       : _authRepository = authRepository;
+
+  //  You? userHaya;
+
+  // Future<You> getUserData() async {
+  //   userHaya = await authentificationRepository.getUserDataInfo();
+  //   return userHaya!;
+  // }
 
 // ! Sign up method
   Future<void> signUp({
@@ -68,6 +79,8 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+
+UserData? userDataa;
 // ! Get user info method
   Future<UserModel?> getUserInfo() async {
     Logger logger = Logger();
@@ -95,7 +108,9 @@ class AuthProvider extends ChangeNotifier {
         ///sl<TokenManager>().saveUserId(user.data.id.toString());
         var ch = await sl<TokenManager>().getUserId();
         print("User Id is +$ch");
-        logger.i("id is ${user.data.id}");
+        //logger.i("id is ${user.data.id}");
+        userDataa=user.data ;
+        notifyListeners();
 
         return user;
       } else {

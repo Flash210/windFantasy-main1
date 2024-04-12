@@ -17,7 +17,7 @@ class UserModel {
 }
 
 class UserData {
-  final BigInt? id;
+  //final BigInt? id;
   final String name;
   final int phone;
   final String userRole;
@@ -28,7 +28,7 @@ class UserData {
   final int points;
 
   const UserData({
-    this.id,
+    //this.id,
     required this.name,
     required this.phone,
     required this.userRole,
@@ -40,7 +40,7 @@ class UserData {
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) => UserData(
-        id: json['id'] as BigInt?,
+       // id: json['id'] as BigInt?,
         name: json['name'] as String,
         phone: json['phone'] as int,
         userRole: json['userRole'] as String,
@@ -51,3 +51,4 @@ class UserData {
         points: json['points'] as int,
       );
 }
+

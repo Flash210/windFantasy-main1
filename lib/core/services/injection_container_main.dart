@@ -3,6 +3,11 @@ part of 'injection_container.dart';
 final sl = GetIt.instance; // Create a new instance of GetIt
 
 Future<void> init() async {
+  //! User
+  sl.registerSingleton<UserService>(UserService());
+  sl.registerSingleton<AuthentificationRepository>(
+    AuthentificationRepository(userService: sl.get<UserService>()),
+  );
   await authInit(); // Wait for auth initialization before proceeding
   await playerInit();
 
@@ -10,9 +15,6 @@ Future<void> init() async {
   // ! Langauge  Provider
 
   sl.registerSingleton<LanguageProvider>(LanguageProvider());
-
-// ! Home Provider
-  sl.registerSingleton<HomeProvider>(HomeProvider());
 
   // ! Player and Team  Provider
   sl.registerSingleton<PlayerProvider>(
@@ -44,7 +46,9 @@ Future<void> authInit() async {
   ));
 
   sl.registerSingleton<AuthProvider>(AuthProvider(
-    authRepository: sl<AuthRepository>(), // Access AuthRepository using sl()
+    authRepository: sl<AuthRepository>(),
+    authentificationRepository:
+        sl<AuthentificationRepository>(), // Access AuthRepository using sl()
   ));
 }
 
