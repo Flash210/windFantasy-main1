@@ -8,24 +8,20 @@ import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:logger/logger.dart';
 
 class ShowTeamProvider extends ChangeNotifier {
-  Logger logger = Logger();
+  
 
   List<ShowTeam> showTeam = [];
 
   Future<List<ShowTeam>> fetchTeams() async {
     final String? token = await sl<TokenManager>().getToken();
-    final response = await http.get(
-       
-        Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/32"),
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json'
-        });
+    final response = await http
+        .get(Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/32"), headers: {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json'
+    });
     final jsonData = json.decode(response.body);
-    // logger.i(jsonData);
 
     if (response.statusCode == 200) {
       try {
@@ -36,7 +32,6 @@ class ShowTeamProvider extends ChangeNotifier {
         return showTeam;
       } catch (e) {
         print("Error processing JSON data: $e");
-        // Handle the error as needed, such as logging or displaying an error message to the user
         return [];
       }
     } else {
@@ -70,17 +65,15 @@ class ShowTeamProvider extends ChangeNotifier {
             createdAt: "createdAt",
             updatedAt: "updatedAt",
             teamId: 0));
-    print("Player Name ${player.name}");
     //notifyListeners();
     return player.name;
   }
 
   Map<String, String> savePlayerPostion = {};
-  void FillsavePlayerListPostion(
+  void fillSavePlayerListPostion(
       {required String playerPosition, required String playerName}) {
     savePlayerPostion[playerPosition] = playerName;
-    print(playerPosition + playerName);
-    print(savePlayerPostion.length);
+
     notifyListeners();
   }
 }

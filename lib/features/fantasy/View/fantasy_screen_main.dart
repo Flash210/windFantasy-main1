@@ -66,68 +66,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
                       // child: InteractiveViewer(
                       //   constrained: false,
                       child: Stack(
-                        children: [
-                          Consumer<PlayerProvider>(
-                            builder: (context, playerProvider, child) {
-                              final slectedPlayerFromMap =
-                                  playerProvider.selectedPlayersMap;
-
-                              final List<int> forwards = [
-                                slectedPlayerFromMap["Attaquant1"]?.id ?? 0,
-                                slectedPlayerFromMap["Attaquant2"]?.id ?? 0,
-                                slectedPlayerFromMap["bench1"]?.id ?? 0,
-                                slectedPlayerFromMap["bench2"]?.id ?? 0,
-                              ];
-
-                              final List<int> midfielders = [
-                                slectedPlayerFromMap["Milieu1"]?.id ?? 0,
-                                slectedPlayerFromMap["Milieu2"]?.id ?? 0,
-                                slectedPlayerFromMap["Milieu3"]?.id ?? 0,
-                                slectedPlayerFromMap["Milieu4"]?.id ?? 0,
-                                slectedPlayerFromMap["bench3"]?.id ?? 0,
-                                slectedPlayerFromMap["bench4"]?.id ?? 0,
-                              ];
-
-                              final List<int> defenders = [
-                                slectedPlayerFromMap["Defenseur1"]?.id ?? 0,
-                                slectedPlayerFromMap["Defenseur2"]?.id ?? 0,
-                                slectedPlayerFromMap["Defenseur3"]?.id ?? 0,
-                                slectedPlayerFromMap["Defenseur4"]?.id ?? 0,
-                              ];
-
-                              final List<int> goalkeepers = [
-                                slectedPlayerFromMap["Gardien1"]?.id ?? 0,
-                              ];
-                              final playerPositions = {
-                                MyRes.kGoalKepper: 1,
-                                MyRes.kDefender: 4,
-                                MyRes.kMidfilder: 4,
-                                MyRes.kForward: 2,
-                                "bench": 4,
-                              };
-
-                              return playerSelected != 15
-                                  ? buildTeamSection(
-                                      slectedPlayerFromMap,
-                                      playerPositions,
-                                      context,
-                                      forwards,
-                                      midfielders,
-                                      defenders,
-                                      goalkeepers,
-                                      playerSelected)
-                                  : buildShowFantasyTeam(
-                                      context: context,
-                                      allPlayers: allPlayers,
-                                      listOfFantasyPlayers:
-                                          listOfFantasyPlayers,
-                                      myMap: myMap,
-                                    );
-
-                              //return buildTeamSection(slectedPlayerFromMap, playerPositions, context, forwards, midfielders, defenders, goalkeepers, moneyRemaining, playersSelected);
-                            },
-                          )
-                        ],
+                        children: [buildCreationAndShowTeam()],
                       ),
                     ),
                     // ),
@@ -142,6 +81,62 @@ class _FantasyScreenState extends State<FantasyScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Consumer<PlayerProvider> buildCreationAndShowTeam() {
+    return Consumer<PlayerProvider>(
+      builder: (context, playerProvider, child) {
+        final slectedPlayerFromMap = playerProvider.selectedPlayersMap;
+
+        final List<int> forwards = [
+          slectedPlayerFromMap["Attaquant1"]?.id ?? 0,
+          slectedPlayerFromMap["Attaquant2"]?.id ?? 0,
+          slectedPlayerFromMap["bench1"]?.id ?? 0,
+          slectedPlayerFromMap["bench2"]?.id ?? 0,
+        ];
+
+        final List<int> midfielders = [
+          slectedPlayerFromMap["Milieu1"]?.id ?? 0,
+          slectedPlayerFromMap["Milieu2"]?.id ?? 0,
+          slectedPlayerFromMap["Milieu3"]?.id ?? 0,
+          slectedPlayerFromMap["Milieu4"]?.id ?? 0,
+          slectedPlayerFromMap["bench3"]?.id ?? 0,
+          slectedPlayerFromMap["bench4"]?.id ?? 0,
+        ];
+
+        final List<int> defenders = [
+          slectedPlayerFromMap["Defenseur1"]?.id ?? 0,
+          slectedPlayerFromMap["Defenseur2"]?.id ?? 0,
+          slectedPlayerFromMap["Defenseur3"]?.id ?? 0,
+          slectedPlayerFromMap["Defenseur4"]?.id ?? 0,
+        ];
+
+        final List<int> goalkeepers = [
+          slectedPlayerFromMap["Gardien1"]?.id ?? 0,
+        ];
+        final playerPositions = {
+          MyRes.kGoalKepper: 1,
+          MyRes.kDefender: 4,
+          MyRes.kMidfilder: 4,
+          MyRes.kForward: 2,
+          "bench": 4,
+        };
+
+        return playerSelected != 15
+            ? buildTeamSection(slectedPlayerFromMap, playerPositions, context,
+                forwards, midfielders, defenders, goalkeepers, playerSelected,
+                listOfFantasyPlayers: listOfFantasyPlayers,
+                )
+            : buildShowFantasyTeam(
+                context: context,
+                allPlayers: allPlayers,
+                listOfFantasyPlayers: listOfFantasyPlayers,
+                myMap: myMap,
+              );
+
+        //return buildTeamSection(slectedPlayerFromMap, playerPositions, context, forwards, midfielders, defenders, goalkeepers, moneyRemaining, playersSelected);
+      },
     );
   }
 

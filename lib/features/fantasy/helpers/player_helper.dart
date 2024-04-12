@@ -14,7 +14,7 @@ Future<http.Response> getResponse(
     required String urlBaseUrl,
     required String urlEndPoint}) async {
   return await http.get(
-    Uri.parse(urlBaseUrl + urlEndPoint),
+    Uri.parse(urlBaseUrl+urlEndPoint),
     headers: {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json'
@@ -46,38 +46,3 @@ Future<List<T>> parseListResponse1<T>(
 
 
 
-
-
-/*
-  List<Player> parseResponse(http.Response response) {
-    if (response.statusCode == 200) {
-      try {
-        final jsonData = json.decode(response.body);
-        final data = jsonData['data'] as List<dynamic>;
-        return data.map((teamData) => Player.fromJson(teamData)).toList();
-      } catch (e) {
-        print("Error processing JSON data: $e");
-        return [];
-      }
-    } else {
-      print("Error fetching players: ${response.body}");
-      return [];
-    }
-  }
-
-
-  List<Team> parseResponse(http.Response response) {
-    if (response.statusCode == 200) {
-      try {
-        final jsonData = json.decode(response.body);
-        final data = jsonData['data'] as List<dynamic>;
-        return data.map((teamData) => Team.fromJson(teamData)).toList();
-      } catch (e) {
-        print("Error processing JSON data: $e");
-        return [];
-      }
-    } else {
-      print("Error fetching players: ${response.body}");
-      return [];
-    }
-  }*/

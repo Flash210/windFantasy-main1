@@ -7,7 +7,6 @@ import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
 import 'package:front/features/filter/ViewModel/filter_provider.dart';
-import 'package:front/features/home%20screen/ViewModel/home_provider.dart';
 import 'package:front/features/langauge/provider.dart';
 import 'package:front/features/ranking/ViewModel/ranking_provider.dart';
 import 'package:front/generated/l10n.dart';
@@ -35,7 +34,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => sl<AuthProvider>(),
         ),
-        ChangeNotifierProvider(create: (context) => sl<HomeProvider>()),
         ChangeNotifierProvider(create: (context) => sl<RankingProvider>()),
         ChangeNotifierProvider(create: (context) => sl<PlayerProvider>()),
         ChangeNotifierProvider(create: (context) => sl<TeamEditProvider>()),

@@ -1,5 +1,5 @@
 class AppConfig {
-  static String kBaseUrl = "http://192.168.0.189:3001/api/";
+  static String kBaseUrl = "http://192.168.210.55:3001/api/";
   // ! user base url
 
   static String kUserBaseUrl = "${kBaseUrl}users/";
@@ -13,6 +13,8 @@ class AppConfig {
   static String kFixtureBaseUrl = "${kBaseUrl}fixtures/";
   // ! Validate user  base url
   static String kValidateUserBaseUrl = "${kBaseUrl}validateUser";
+  // userPla
+  static String kUserPlayerBaseUrl = "${kBaseUrl}userPlay/";
 
 //  APi Endpoints
 

@@ -28,7 +28,7 @@ ListTile buildBottomSheetListTitle(Team team, Player player,
         context
             .read<PlayerProvider>()
             .addSelectedPlayerToMap(position: positionPlayer, player: player);
-        sl<ShowTeamProvider>().FillsavePlayerListPostion(
+        sl<ShowTeamProvider>().fillSavePlayerListPostion(
             playerPosition: positionPlayer,
             playerName: extractLastName(player.name));
         Navigator.pop(context);

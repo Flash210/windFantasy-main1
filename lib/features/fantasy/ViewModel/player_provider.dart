@@ -46,7 +46,7 @@ class PlayerProvider extends ChangeNotifier {
   }
 
 // ! selected players
-  Map<String, Player> _selectedPlayersMap = {};
+  final Map<String, Player> _selectedPlayersMap = {};
 
   Map<String, Player> get selectedPlayersMap => _selectedPlayersMap;
 
@@ -76,7 +76,7 @@ class PlayerProvider extends ChangeNotifier {
     if (longPress) {
       amount == 100 ? amount = 100 : amount += value;
      
-      print("Amount ${amount}");
+      print("Amount $amount");
       
       notifyListeners();
       return true; 
