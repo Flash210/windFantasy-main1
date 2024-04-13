@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/core/common_functions/extract_player_name.dart';
 import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
@@ -108,17 +109,17 @@ List<Player> _filterPlayers(String value, String searchCriteria,
 
 
 
-// ! extract the name of teh player from the last name
-String extractLastName(String fullName) {
-  List<String> nameParts = fullName.split('.');
-  List<String> nameParts2 = nameParts.last.split(' ');
+// // ! extract the name of teh player from the last name
+// String extractLastName(String fullName) {
+//   List<String> nameParts = fullName.split('.');
+//   List<String> nameParts2 = nameParts.last.split(' ');
 
-  if (nameParts2.length > 1) {
-    return nameParts2.last;
-  }
+//   if (nameParts2.length > 1) {
+//     return nameParts2.last;
+//   }
 
-  return nameParts.last;
-}
+//   return nameParts.last;
+// }
 
 String getPlayerName(int playerID,List<Player> players) {
   final player = players.firstWhere((element) => element.id == playerID,
@@ -162,3 +163,7 @@ bool isPositionValidForPlayer(Player player, String position) {
     return false;
   }
 }
+
+
+
+

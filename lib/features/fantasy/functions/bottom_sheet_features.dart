@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/core/common_functions/extract_player_name.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/services/injection_container.dart';
@@ -7,7 +8,6 @@ import 'package:front/features/fantasy/Model/team.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
-import 'package:front/features/fantasy/functions/edit_team_functions.dart';
 import 'package:provider/provider.dart';
 
 ListTile buildBottomSheetListTitle(Team team, Player player,
