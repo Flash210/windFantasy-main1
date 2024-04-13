@@ -33,3 +33,50 @@ String getPlayerName(int playerID,List<Player> players) {
           teamId: 0));
   return extractLastName(player.name);
 }
+
+
+String getTeamShirtName({required String teamName}) {
+  switch (teamName) {
+    case "AS Roma":
+      return "roma";
+    case "Atalanta":
+      return "atalanta";
+    case "Bologna":
+      return "bologna";
+    case "Cagliari":
+      return "cagliari";
+    case "Empoli":
+      return "empoli";
+    case "Fiorentina":
+      return "fiorentina";
+    case "Frosinone":
+      return "frosinone";
+    case "Genoa":
+      return "genoa";
+    case "Verona":
+      return "verona";
+    case "Inter":
+      return "inter";
+    case "Juventus":
+      return "juventus";
+    case "Lazio":
+      return "lazio";
+    case "Lecce":
+      return "lecce";
+    case "AC Milan":
+      return "milan";
+    case "Monza":
+      return "monza";
+    case "Napoli":
+      return "napoli";
+    case "Salernitana":
+      return "salernitana";
+    case "Sassuolo":
+      return "sassuolo";
+    case "Torino":
+      return "torino";
+    case "Udinese":
+      return "udinese";
+    default:
+      return "anonymTeam";
+  }}

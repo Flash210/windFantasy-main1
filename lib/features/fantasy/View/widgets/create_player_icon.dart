@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:front/core/common_functions/extract_player_name.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
+import 'package:front/features/fantasy/Model/team.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
 import 'package:front/features/fantasy/View/widgets/bottom_sheet_widget.dart';
@@ -13,11 +14,13 @@ buildPlayer(
     {required String title,
     required String position,
     required BuildContext context,
-    required int playersSelected}) {
+    required int playersSelected,
+    required String teamName}) {
   return Column(
     children: [
       GestureDetector(
         onDoubleTap: () {
+          print("Team Name" + teamName);
           String ch = sl<TeamEditProvider>().teamName;
           int amount = sl<PlayerProvider>().amount;
           // ! remove player from screen
@@ -36,57 +39,60 @@ buildPlayer(
           showListOfPlayers222(context: context, positionPlayer: position);
         },
         child: Image.asset(
-          "assets/whiteKit.png",
-          width: 40,
-          height: 40,
+          teamName == "anonymTeam"
+              ? "assets/whiteKit.png"
+              : "assets/kits/$teamName.png",
+          width: 60,
+          height: 60,
         ),
       ),
       Column(
-    children: [
-      Container(
-        alignment: Alignment.center,
-        width: 60,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10), topRight: Radius.circular(7)),
-          color: Colors.black,
-        ),
-        child: AutoSizeText(
-          maxLines: 1,
-          overflow: TextOverflow.visible,
-          maxFontSize: 13,
-          minFontSize: 8,
-          extractLastName(title),
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 13,
+        children: [
+          Container(
+            alignment: Alignment.center,
+            width: 60,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10), topRight: Radius.circular(7)),
+              color: Colors.black,
+            ),
+            child: AutoSizeText(
+              maxLines: 1,
+              overflow: TextOverflow.visible,
+              maxFontSize: 13,
+              minFontSize: 8,
+              extractLastName(title),
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+              ),
+            ),
           ),
-        ),
+          Container(
+            alignment: Alignment.center,
+            width: 60,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(7)),
+              color: Colors.white,
+            ),
+            child: AutoSizeText(
+              maxLines: 1,
+              overflow: TextOverflow.visible,
+              maxFontSize: 15,
+              minFontSize: 8,
+              position,
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
+          )
+        ],
       ),
-      Container(
-        alignment: Alignment.center,
-        width: 60,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(10), bottomLeft: Radius.circular(7)),
-          color: Colors.white,
-        ),
-        child: AutoSizeText(
-          maxLines: 1,
-          overflow: TextOverflow.visible,
-          maxFontSize: 15,
-          minFontSize: 8,
-          position,
-          style: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-          ),
-        ),
-      )
-    ],
-  ),
     ],
   );
 }
@@ -155,11 +161,23 @@ Widget buildPlayerPositionInTheStatdium(
 
         final player = selectedPlayersMap[position];
         final playerName = player?.name ?? "";
+        final List<Team> teams = sl<PlayerProvider>().teams;
+        final teamName = teams.firstWhere(
+          (team) => team.id == player?.teamId,
+          orElse: () => Team(
+            id: 0,
+            name: 'Unknown',
+          ),
+        );
+        print(teams.length.toString());
+        print("player tema name is " +
+            getTeamShirtName(teamName: teamName.name!));
         return buildPlayer(
           title: playerName,
           position: position,
           context: context,
           playersSelected: playersSelected,
+          teamName: getTeamShirtName(teamName: teamName.name!),
         );
       },
     ),

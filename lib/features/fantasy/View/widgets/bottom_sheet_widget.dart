@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/team.dart';
-import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
 import 'package:front/features/fantasy/functions/bottom_sheet_features.dart';
 import 'package:front/features/fantasy/functions/edit_team_functions.dart';
 import 'package:front/features/filter/View/filtred_screen.dart';
@@ -93,13 +92,13 @@ void showListOfPlayers222(
               ),
               Expanded(
                 child: Consumer<PlayerProvider>(
-                  builder: (BuildContext context, PlayerProvider list,
+                  builder: (BuildContext context, PlayerProvider playerProvider,
                           Widget? child) =>
                       ListWheelScrollView(
                     controller: scrollController,
                     itemExtent: 100, // Adjust the height of each item
-                    children: List.generate(list.listForFilter.length, (index) {
-                      final player = list.listForFilter[index];
+                    children: List.generate(playerProvider.listForFilter.length, (index) {
+                      final player = playerProvider.listForFilter[index];
                       final team = teams.firstWhere(
                         (team) => team.id == player.teamId,
                         orElse: () => Team(
@@ -109,7 +108,7 @@ void showListOfPlayers222(
                         ),
                       );
                       return buildBottomSheetListTitle(team, player, context,
-                          positionPlayer, list.listForFilter);
+                          positionPlayer, playerProvider.listForFilter);
                     }),
                   ),
                 ),
