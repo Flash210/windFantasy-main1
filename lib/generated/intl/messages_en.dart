@@ -52,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "LogOut": MessageLookupByLibrary.simpleMessage("LogOut"),
         "Midfildier": MessageLookupByLibrary.simpleMessage("Midfildier"),
         "NameAndSurname": MessageLookupByLibrary.simpleMessage("Name"),
+        "NameOfPlayer": MessageLookupByLibrary.simpleMessage("Name: "),
         "NewPassword": MessageLookupByLibrary.simpleMessage("New Password"),
         "Next": MessageLookupByLibrary.simpleMessage("Next"),
         "Notif": MessageLookupByLibrary.simpleMessage("Notifications "),
@@ -67,7 +68,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "Send": MessageLookupByLibrary.simpleMessage("Send"),
         "SignIn": MessageLookupByLibrary.simpleMessage("Sign In"),
         "SignUp": MessageLookupByLibrary.simpleMessage("Sign Up"),
-        "Team": MessageLookupByLibrary.simpleMessage("Team"),
+        "Team": MessageLookupByLibrary.simpleMessage("Team "),
+        "Team1": MessageLookupByLibrary.simpleMessage("Team: "),
         "TeamName": MessageLookupByLibrary.simpleMessage("Team Name"),
         "WelcomeSection": MessageLookupByLibrary.simpleMessage(
             "Welcome to \n WindFantasy App"),

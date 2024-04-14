@@ -80,3 +80,53 @@ String getTeamShirtName({required String teamName}) {
     default:
       return "anonymTeam";
   }}
+
+
+
+
+  String getTeamShirtNameReversed({required String teamName}) {
+  switch (teamName) {
+    case "roma":
+      return "AS Roma";
+    case "atalanta":
+      return "Atalanta";
+    case "bologna":
+      return "Bologna";
+    case "cagliari":
+      return "Cagliari";
+    case "empoli":
+      return "Empoli";
+    case "fiorentina":
+      return "Fiorentina";
+    case "frosinone":
+      return "Frosinone";
+    case "genoa":
+      return "Genoa";
+    case "verona":
+      return "Verona";
+    case "inter":
+      return "Inter";
+    case "juventus":
+      return "Juventus";
+    case "lazio":
+      return "Lazio";
+    case "lecce":
+      return "Lecce";
+    case "milan":
+      return "AC Milan";
+    case "monza":
+      return "Monza";
+    case "napoli":
+      return "Napoli";
+    case "salernitana":
+      return "Salernitana";
+    case "sassuolo":
+      return "Sassuolo";
+    case "torino":
+      return "Torino";
+    case "udinese":
+      return "Udinese";
+    default:
+      return "anonymTeam";
+  }
+}

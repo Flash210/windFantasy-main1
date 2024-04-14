@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:front/core/common_functions/extract_player_name.dart';
 import 'package:front/core/common_widget/show_player_widget.dart';
@@ -42,9 +41,7 @@ buildPlayer(
               playerName: extractLastName(title),
               playerPosition: position,
               teamName: teamName,
-              context:context
-              )),
-
+              context: context)),
     ],
   );
 }
@@ -58,45 +55,47 @@ buildBenchPlayer(
   return Column(
     children: [
       GestureDetector(
-        onDoubleTap: () {
-          String ch = sl<TeamEditProvider>().teamName;
-          int amount = sl<PlayerProvider>().amount;
-          // ! remove player from screen
-          Provider.of<PlayerProvider>(context, listen: false)
-              .deleteFromSelectedPlayerToMap();
-          //! remove team from map constraint
-          sl<TeamEditProvider>().checkMaxTeam(teamName: ch, longPress: true);
-          sl<TeamEditProvider>().resetcheckMaxTeam();
-          //! return the previous amount to user
-          amount < 100
-              ? sl<PlayerProvider>().amountSubstraction(
-                  value: sl<TeamEditProvider>().playerPrice, longPress: true)
-              : null;
-        },
-        onTap: () {
-          showListOfPlayers222(context: context, positionPlayer: position);
-        },
-        child:buildbenchedPlayerContainer(playerName:      extractLastName(title),
-         teamName: teamName,context: context)
-        
-      //    Image.asset(
-      //     teamName == "anonymTeam"
-      //         ? "assets/greyKit.png"
-      //         : "assets/kits/$teamName.png",
-      //     width: 35,
-      //     height: 40,
-      //   ),
-      // ),
-      // AutoSizeText(
-      //   extractLastName(title),
-      //   style: const TextStyle(
-      //     color: Colors.black,
-      //     fontSize: 8,
-      //   ),
-      //   maxLines: 1,
-      //   overflow: TextOverflow.clip,
-      // )
-      )
+          onDoubleTap: () {
+            String ch = sl<TeamEditProvider>().teamName;
+            int amount = sl<PlayerProvider>().amount;
+            // ! remove player from screen
+            Provider.of<PlayerProvider>(context, listen: false)
+                .deleteFromSelectedPlayerToMap();
+            //! remove team from map constraint
+            sl<TeamEditProvider>().checkMaxTeam(teamName: ch, longPress: true);
+            sl<TeamEditProvider>().resetcheckMaxTeam();
+            //! return the previous amount to user
+            amount < 100
+                ? sl<PlayerProvider>().amountSubstraction(
+                    value: sl<TeamEditProvider>().playerPrice, longPress: true)
+                : null;
+          },
+          onTap: () {
+            showListOfPlayers222(context: context, positionPlayer: position);
+          },
+          child: buildbenchedPlayerContainer(
+              playerName: extractLastName(title),
+              teamName: teamName,
+              context: context)
+
+          //    Image.asset(
+          //     teamName == "anonymTeam"
+          //         ? "assets/greyKit.png"
+          //         : "assets/kits/$teamName.png",
+          //     width: 35,
+          //     height: 40,
+          //   ),
+          // ),
+          // AutoSizeText(
+          //   extractLastName(title),
+          //   style: const TextStyle(
+          //     color: Colors.black,
+          //     fontSize: 8,
+          //   ),
+          //   maxLines: 1,
+          //   overflow: TextOverflow.clip,
+          // )
+          )
     ],
   );
 }
@@ -109,7 +108,7 @@ Widget buildPlayerPositionInTheStatdium(
   playersSelected,
 ) {
   return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    mainAxisAlignment: MainAxisAlignment.center,
     children: List.generate(
       playerPositions[positionPrefix]!,
       (index) {
@@ -128,7 +127,9 @@ Widget buildPlayerPositionInTheStatdium(
             name: 'Unknown',
           ),
         );
-       
+
+        
+
         return buildPlayer(
           title: playerName,
           position: position,

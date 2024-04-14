@@ -45,18 +45,37 @@ class TokenManager {
   static const String _mapKey = 'my_map';
 
   // Function to save map
-  Future<void> saveMap({required Map<String, String> map}) async {
+  Future<void> savePlayerPositionToMap(
+      {required Map<String, String> map}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jsonString = json.encode(map);
     await prefs.setString(_mapKey, jsonString);
-    print("Map Saved Yes ");
   }
 
   // Function to retrieve map from local storage
   Future<Map<String, dynamic>> getMap() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jsonString = prefs.getString(_mapKey) ?? '{}';
-    print("json is "+jsonString);
+   // print("json is " + jsonString);
+    return json.decode(jsonString);
+  }
+
+  //! .............
+
+  static const String _tShirt = '_tShirt';
+
+  // Function to save map
+  Future<void> saveTshirtTeamToMap({required Map<String, String> map}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jsonString = json.encode(map);
+    await prefs.setString(_tShirt, jsonString);
+  }
+
+  // Function to retrieve map from local storage
+  Future<Map<String, dynamic>> getTshirtMap() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jsonString = prefs.getString(_tShirt) ?? '{}';
+  //  print("Tshirt player  " + jsonString);
     return json.decode(jsonString);
   }
 

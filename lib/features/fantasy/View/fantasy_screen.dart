@@ -11,7 +11,7 @@ import 'package:front/features/authentification/Model/user_model.dart';
 import 'package:front/features/authentification/ViewModel/auth_provider.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
-import 'package:front/features/fantasy/View/test2.dart';
+import 'package:front/features/fantasy/View/show_fantasy_screen.dart';
 import 'package:front/features/fantasy/View/widgets/app_bar_widget.dart';
 
 import 'package:front/features/fantasy/View/widgets/team_section.dart';

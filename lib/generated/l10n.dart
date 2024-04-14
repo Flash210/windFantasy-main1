@@ -520,10 +520,10 @@ class S {
     );
   }
 
-  /// `Team`
+  /// `Team `
   String get Team {
     return Intl.message(
-      'Team',
+      'Team ',
       name: 'Team',
       desc: '',
       args: [],
@@ -615,6 +615,26 @@ class S {
     return Intl.message(
       'Filter',
       name: 'Filter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name: `
+  String get NameOfPlayer {
+    return Intl.message(
+      'Name: ',
+      name: 'NameOfPlayer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Team: `
+  String get Team1 {
+    return Intl.message(
+      'Team: ',
+      name: 'Team1',
       desc: '',
       args: [],
     );

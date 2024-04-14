@@ -35,16 +35,16 @@ class ShowTeam {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['PlayingInGameweeks'] = this.playingInGameweeks;
-    data['captain'] = this.captain;
-    data['viceCaptain'] = this.viceCaptain;
-    data['gameweeks'] = this.gameweeks;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['userId'] = this.userId;
-    data['playerId'] = this.playerId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['PlayingInGameweeks'] = playingInGameweeks;
+    data['captain'] = captain;
+    data['viceCaptain'] = viceCaptain;
+    data['gameweeks'] = gameweeks;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['userId'] = userId;
+    data['playerId'] = playerId;
     return data;
   }
 }

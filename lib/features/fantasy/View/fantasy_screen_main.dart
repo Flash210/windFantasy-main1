@@ -14,7 +14,9 @@ class _FantasyScreenState extends State<FantasyScreen> {
   List<Player> allPlayers = [];
   List<ShowTeam> listOfFantasyPlayers = [];
 
-  Map<String, dynamic> myMap = {};
+  Map<String, dynamic> myMapOfPlayersName = {};
+    Map<String, dynamic> myMapOfTshirt = {};
+
 
   @override
   void initState() {
@@ -61,8 +63,10 @@ class _FantasyScreenState extends State<FantasyScreen> {
                     Container(
                       decoration: const BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage('assets/empty.png'),
-                              fit: BoxFit.fill)),
+                        image: AssetImage('assets/empty.png'),
+                        //fit: BoxFit.fill
+                        fit: BoxFit.fitHeight,
+                      )),
                       // child: InteractiveViewer(
                       //   constrained: false,
                       child: Stack(
@@ -124,16 +128,23 @@ class _FantasyScreenState extends State<FantasyScreen> {
         };
 
         return playerSelected != 15
-            ? buildTeamSection(slectedPlayerFromMap, playerPositions, context,
-                forwards, midfielders, defenders, goalkeepers, playerSelected,
+            ? buildTeamSection(
+                slectedPlayerFromMap,
+                playerPositions,
+                context,
+                forwards,
+                midfielders,
+                defenders,
+                goalkeepers,
+                playerSelected,
                 listOfFantasyPlayers: listOfFantasyPlayers,
-               
-                )
+              )
             : buildShowFantasyTeam(
                 context: context,
                 allPlayers: allPlayers,
                 listOfFantasyPlayers: listOfFantasyPlayers,
-                myMap: myMap,
+                myMap: myMapOfPlayersName,
+                myTshirtMap:myMapOfTshirt
               );
 
         //return buildTeamSection(slectedPlayerFromMap, playerPositions, context, forwards, midfielders, defenders, goalkeepers, moneyRemaining, playersSelected);
@@ -144,6 +155,9 @@ class _FantasyScreenState extends State<FantasyScreen> {
   setPlayerList() async {
     allPlayers = await sl<PlayerProvider>().fetchPlayerss();
     listOfFantasyPlayers = await sl<ShowTeamProvider>().fetchTeams();
-    myMap = await sl<TokenManager>().getMap();
+   // print("lenghth " + listOfFantasyPlayers[0].);
+    myMapOfPlayersName = await sl<TokenManager>().getMap();
+    myMapOfTshirt=await  sl<TokenManager>().getTshirtMap();
+
   }
 }
