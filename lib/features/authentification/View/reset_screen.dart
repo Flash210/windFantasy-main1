@@ -1,13 +1,13 @@
 
 import 'package:flutter/material.dart';
+import 'package:front/core/common_widget/btn_and_text_widget.dart';
 import 'package:front/core/common_widget/custom_input_field.dart';
-import 'package:front/core/common_widget/custom_orange_btn.dart';
+import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/features/authentification/utils/validate_fields.dart';
 import 'package:front/generated/l10n.dart';
 
-import '../../../../../../core/common_widget/powered_by.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({super.key});

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:front/core/common_widget/btn_and_text_widget.dart';
+import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/app_constants.dart';
 import 'package:front/features/authentification/View/auth_screen.dart';
 import 'package:front/generated/l10n.dart';
 
-import '../../core/common_widget/custom_orange_btn.dart';
-import '../../core/common_widget/logo_screen.dart';
+
 
 class EntryPointScreen extends StatelessWidget {
   const EntryPointScreen({super.key});

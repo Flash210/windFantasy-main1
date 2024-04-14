@@ -127,6 +127,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
             ? buildTeamSection(slectedPlayerFromMap, playerPositions, context,
                 forwards, midfielders, defenders, goalkeepers, playerSelected,
                 listOfFantasyPlayers: listOfFantasyPlayers,
+               
                 )
             : buildShowFantasyTeam(
                 context: context,

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:front/core/common_widget/custom_orange_btn.dart';
-import 'package:front/core/common_widget/my_costum_sizedbox.dart';
+import 'package:front/core/common_widget/btn_and_text_widget.dart';
+import 'package:front/core/common_widget/custom_text.dart';
+import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/constants/colors.dart';
+import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/core/services/token_manager.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
 import 'package:front/features/fantasy/Model/team_edit.dart';
 import 'package:front/features/fantasy/View/widgets/create_player_icon.dart';
-import 'package:front/features/fantasy/View/widgets/show_player_icon.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
@@ -25,27 +26,26 @@ Column buildTeamSection(
     int playersSelected,
     {required List<ShowTeam> listOfFantasyPlayers}) {
   return Column(children: [
-    const MySizedBox(height: 15),
+    MySizedBox(height: ScreenUtils.getHeight(context) * 0.020),
 
-    buildPlayerPositionInTheStatdium("Gardien", slectedPlayerFromMap,
+    buildPlayerPositionInTheStatdium(MyRes.kGoalKepper, slectedPlayerFromMap,
         playerPositions, context, playersSelected),
-    const MySizedBox(height: 10),
+    MySizedBox(height: ScreenUtils.getHeight(context) * 0.020),
 
     // ! Defenders Row
-    buildPlayerPositionInTheStatdium("Defenseur", slectedPlayerFromMap,
+    buildPlayerPositionInTheStatdium(MyRes.kDefender, slectedPlayerFromMap,
         playerPositions, context, playersSelected),
 
-    // buildPosition("def", slectedPlayerFromMap, playerPositions),
+    MySizedBox(height: ScreenUtils.getHeight(context) * 0.020),
     // ! midfilders Row
-    const MySizedBox(height: 20),
-    buildPlayerPositionInTheStatdium("Milieu", slectedPlayerFromMap,
+    buildPlayerPositionInTheStatdium(MyRes.kMidfilder, slectedPlayerFromMap,
         playerPositions, context, playersSelected),
     // ! Strikers Row
-    const MySizedBox(height: 20),
-    buildPlayerPositionInTheStatdium("Attaquant", slectedPlayerFromMap,
+    MySizedBox(height: ScreenUtils.getHeight(context) * 0.020),
+    buildPlayerPositionInTheStatdium(MyRes.kForward, slectedPlayerFromMap,
         playerPositions, context, playersSelected),
 
-    const MySizedBox(height: 100),
+    MySizedBox(height: ScreenUtils.getHeight(context) * 0.15),
     // ! Bench Row
     Container(
       decoration: BoxDecoration(
@@ -101,68 +101,5 @@ Column buildTeamSection(
             }
           : null,
     ),
-  ]);
-}
-
-//! Team Section after creation
-Column buildTeamSectionAfterCreation(
-    Map<String, Player> slectedPlayerFromMap,
-    Map<String, int> playerPositions,
-    BuildContext context,
-    List<int> forwards,
-    List<int> midfielders,
-    List<int> defenders,
-    List<int> goalkeepers,
-    int moneyRemaining,
-    int playersSelected) {
-  return Column(children: [
-    const MySizedBox(height: 15),
-
-    buildShowPlayerPositionInTheStatdium("Gardien", slectedPlayerFromMap,
-        playerPositions, context, playersSelected),
-    const MySizedBox(height: 10),
-
-    // ! Defenders Row
-    buildShowPlayerPositionInTheStatdium("Defenseur", slectedPlayerFromMap,
-        playerPositions, context, playersSelected),
-
-    // buildPosition("def", slectedPlayerFromMap, playerPositions),
-    // ! midfilders Row
-    const MySizedBox(height: 20),
-    buildShowPlayerPositionInTheStatdium("Milieu", slectedPlayerFromMap,
-        playerPositions, context, playersSelected),
-    // ! Strikers Row
-    const MySizedBox(height: 20),
-    buildShowPlayerPositionInTheStatdium("Attaquant", slectedPlayerFromMap,
-        playerPositions, context, playersSelected),
-
-    const MySizedBox(height: 100),
-    // ! Bench Row
-    Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: MyColors.greyF,
-      ),
-      width: 300,
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text('Benched Players',
-              style: GoogleFonts.rubik(
-                textStyle: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600),
-              )),
-          const SizedBox(height: 16),
-          // ! the place where the benched players will be shown
-          buildShowBenchedPlayerPositionInSatduim("bench", slectedPlayerFromMap,
-              playerPositions, context, playersSelected),
-        ],
-      ),
-    ),
-
-    const MySizedBox(height: 10),
   ]);
 }

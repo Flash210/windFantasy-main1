@@ -1,6 +1,7 @@
 
+
 import 'package:flutter/material.dart';
-import 'package:front/core/common_widget/my_costum_sizedbox.dart';
+import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
