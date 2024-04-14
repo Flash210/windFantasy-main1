@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:front/core/common_functions/extract_player_name.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
 import 'package:front/features/fantasy/View/widgets/player_icon.dart';
 import 'package:front/features/fantasy/functions/edit_team_functions.dart';
+import 'package:front/features/player%20card/View/player_card.dart';
+import 'package:front/generated/l10n.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 Column buildShowFantasyTeam(
@@ -24,22 +27,28 @@ Column buildShowFantasyTeam(
         playerPosition: "Gardien1",
         isItBenched: "No",
         onTap: () {
-          showAdaptiveDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                    title: Text("Choisissez un nouveau gardien",
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        )));
-              });
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PlayerCard(
+                  teamName: getTshirtTeamToShow(
+                    nameOfPlayer: getTextToShow(
+                        listOfFantasyPlayers, allPlayers, myMap, "Gardien1"),
+                    map: myTshirtMap,
+                  ),
+                  teamTshirt: getTshirtTeamToShow(
+                    nameOfPlayer: getTextToShow(
+                        listOfFantasyPlayers, allPlayers, myMap, "Gardien1"),
+                    map: myTshirtMap,
+                  ),
+                  position: S.of(context).GoalKepper,
+                  playerName: getTextToShow(
+                      listOfFantasyPlayers, allPlayers, myMap, "Gardien1")),
+            ),
+          );
         },
       ),
-      SizedBox(height: 15),
+      const SizedBox(height: 15),
       Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         buildPlayerIcon(
             myTshirtMap: myTshirtMap,

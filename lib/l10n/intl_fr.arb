@@ -19,7 +19,6 @@
   "ForgotPasswordBtn": "Mot de passe oublié",
   "EnterYourEmail": "Entrez votre adresse e-mail",
   "ComeBackForConnect": "Revenir pour se connecter vous",
-  "NewPassword": "Nouveau mot de passe",
   "EnterYourNewPassword": "Entrez votre nouveua mot de passe",
   "Gameweek": "Journée de matchs",
   "kPhoneEmptyError": "Veuillez saisir votre numéro de téléphone",
@@ -55,5 +54,7 @@
   "AreYouSure": "Êtes-vous sûr(e) de vouloir vous déconnecter ?",
   "Cancel": "Annuler",
   "Langue": "Langue ",
-  "Filter": "Filtrer"
+  "Filter": "Filtrer",
+  "NameOfPlayer": "Nom: ",
+  "Team1": "Equipe: "
 }

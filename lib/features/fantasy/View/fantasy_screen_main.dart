@@ -155,7 +155,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
   setPlayerList() async {
     allPlayers = await sl<PlayerProvider>().fetchPlayerss();
     listOfFantasyPlayers = await sl<ShowTeamProvider>().fetchTeams();
-    print("lenghth " + listOfFantasyPlayers.length.toString());
+   // print("lenghth " + listOfFantasyPlayers[0].);
     myMapOfPlayersName = await sl<TokenManager>().getMap();
     myMapOfTshirt=await  sl<TokenManager>().getTshirtMap();
 

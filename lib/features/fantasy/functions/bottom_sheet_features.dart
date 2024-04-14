@@ -28,23 +28,22 @@ ListTile buildBottomSheetListTitle(Team team, Player player,
         context
             .read<PlayerProvider>()
             .addSelectedPlayerToMap(position: positionPlayer, player: player);
-            //! save player postion in shared storage
+        //! save player postion in shared storage
         sl<ShowTeamProvider>().fillSavePlayerListPostion(
             playerPosition: positionPlayer,
             playerName: extractLastName(player.name));
-            //!
-             final List<Team> teams = sl<PlayerProvider>().teams;
+        //!
+        final List<Team> teams = sl<PlayerProvider>().teams;
         final teamName = teams.firstWhere(
-          (team) => team.id == player?.teamId,
+          (team) => team.id == player.teamId,
           orElse: () => Team(
             id: 0,
             name: 'Unknown',
           ),
         );
-            sl<ShowTeamProvider>().saveTeamShirtF(playerName: extractLastName(player.name), 
+        sl<ShowTeamProvider>().saveTeamShirtF(
+            playerName: extractLastName(player.name),
             teamShirt: getTeamShirtName(teamName: teamName.name!));
-
-
 
         Navigator.pop(context);
       } else {

@@ -82,13 +82,13 @@ Column buildPlayerContainer({
               bottomRight: Radius.circular(10), bottomLeft: Radius.circular(7)),
           color: Colors.white,
         ),
-        child: AutoSizeText(
+        child: const AutoSizeText(
           maxLines: 1,
           overflow: TextOverflow.visible,
           maxFontSize: 15,
           minFontSize: 8,
           "",
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
             fontSize: 15,
@@ -98,3 +98,24 @@ Column buildPlayerContainer({
     ],
   );
 }
+
+
+RichText buildRichText(
+      {required String textSpan, required String textSpnaValue}) {
+    return RichText(
+      text: TextSpan(
+        style: const TextStyle(color: Colors.white, fontSize: 12),
+        children: [
+          TextSpan(text: textSpan),
+          TextSpan(
+            text: textSpnaValue,
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }

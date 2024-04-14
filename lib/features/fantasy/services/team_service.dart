@@ -16,10 +16,7 @@ class TeamService {
         urlEndPoint: AppConfig.kCreateTeam,
         teamEdit: teamEdit);
     if (response.statusCode == 200) {
-      print("Team Created");
     } else {
-      print("Team Not Created");
-      print(response.body);
     }
   }
 
@@ -34,10 +31,8 @@ class TeamService {
       },
     );
     if (Response.statusCode == 200) {
-      print("User Play Yes ");
       return UserPlay.fromJson(json.decode(Response.body));
     } else {
-      print("User Play No ");
       return UserPlay.fromJson(json.decode(Response.body));
     }
   }

@@ -46,7 +46,7 @@
   "Midfildier": "Midfildier",
   "Forward": "Forward",
   "Apply": "Apply",
-  "Team": "Team",
+  "Team": "Team ",
   "PriceRange": "Price Range",
   "Reset": "Reset",
   "PersonalInfo": "Personal Information ",
@@ -55,5 +55,8 @@
   "AreYouSure": "Are you sure you want to log out?",
   "Cancel": "Cancel",
   "Langue": "Language",
-  "Filter":"Filter"
+  "Filter":"Filter",
+  "NameOfPlayer":"Name: ",
+  "Team1": "Team: "
+  
 }

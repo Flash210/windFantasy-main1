@@ -53,12 +53,12 @@ Column buildBenchedPlayerIcon(
 String getTshirtTeamToShow(
     {required String nameOfPlayer, required Map<String, dynamic> map}) {
   bool exist = map.containsKey(nameOfPlayer);
-  print("nameOfPlayer: " +
-      nameOfPlayer +
-      " nameOfPlayer" +
-      map.containsKey(nameOfPlayer).toString());
+  // print("nameOfPlayer: " +
+  //     nameOfPlayer +
+  //     " nameOfPlayer" +
+  //     map.containsKey(nameOfPlayer).toString());
 
-  print(map[nameOfPlayer].toString());
+  // print(map[nameOfPlayer].toString());
 
   return exist ? map[nameOfPlayer] : "anonymTeam";
 }
