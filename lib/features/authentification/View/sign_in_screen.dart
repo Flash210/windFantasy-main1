@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:front/core/common_widget/custom_orange_btn.dart';
+import 'package:front/core/common_widget/btn_and_text_widget.dart';
+import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/core/services/injection_container.dart';
@@ -12,7 +13,6 @@ import 'package:front/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../core/common_widget/custom_input_field.dart';
-import '../../../../../../core/common_widget/powered_by.dart';
 
 class SignInScreenT extends StatefulWidget {
   const SignInScreenT({super.key});

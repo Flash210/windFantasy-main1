@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:front/core/common_widget/team_and_name_widget.dart';
+import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/team.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';

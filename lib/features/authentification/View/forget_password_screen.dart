@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:front/core/common_widget/btn_and_text_widget.dart';
 import 'package:front/core/common_widget/custom_input_field.dart';
-import 'package:front/core/common_widget/custom_orange_btn.dart';
+import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
@@ -14,7 +15,6 @@ import 'package:front/generated/l10n.dart';
 import 'package:logger/logger.dart';
 import 'package:uni_links/uni_links.dart';
 
-import '../../../../../../core/common_widget/powered_by.dart';
 
 class ForgetPasswordScreenT extends StatefulWidget {
   const ForgetPasswordScreenT({super.key});
