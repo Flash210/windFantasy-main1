@@ -10,14 +10,12 @@ import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:http/http.dart' as http;
 
 class ShowTeamProvider extends ChangeNotifier {
-  
-
   List<ShowTeam> showTeam = [];
 
   Future<List<ShowTeam>> fetchTeams() async {
     final String? token = await sl<TokenManager>().getToken();
     final response = await http
-        .get(Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/32"), headers: {
+        .get(Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/33"), headers: {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json'
     });
@@ -73,6 +71,17 @@ class ShowTeamProvider extends ChangeNotifier {
   void fillSavePlayerListPostion(
       {required String playerPosition, required String playerName}) {
     savePlayerPostion[playerPosition] = playerName;
+
+    notifyListeners();
+  }
+
+  Map<String, String> saveTeamShirt = {};
+
+  void saveTeamShirtF({
+    required String playerName,
+    required String teamShirt,
+  }) {
+    saveTeamShirt[playerName] = teamShirt;
 
     notifyListeners();
   }

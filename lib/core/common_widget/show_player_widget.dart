@@ -14,15 +14,26 @@ Column buildbenchedPlayerContainer(
       width: ScreenUtils.getWidth(context) * 0.19,
       height: ScreenUtils.getWidth(context) * 0.19,
     ),
-    AutoSizeText(
-      playerName,
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 8,
+    Container(
+      alignment: Alignment.center,
+      width: ScreenUtils.getWidth(context) * 0.18,
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        color: Colors.black,
       ),
-      maxLines: 1,
-      overflow: TextOverflow.clip,
-    )
+      child: AutoSizeText(
+        maxLines: 1,
+        overflow: TextOverflow.visible,
+        maxFontSize: 13,
+        minFontSize: 8,
+        playerName,
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 15,
+        ),
+      ),
+    ),
   ]);
 }
 
@@ -32,6 +43,7 @@ Column buildPlayerContainer({
   required String teamName,
   required BuildContext context,
 }) {
+  print(teamName + " " + "issssss" + " ");
   return Column(
     children: [
       Image.asset(
@@ -43,7 +55,7 @@ Column buildPlayerContainer({
       ),
       Container(
         alignment: Alignment.center,
-        width: 60,
+        width: ScreenUtils.getWidth(context) * 0.18,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10), topRight: Radius.circular(7)),
@@ -58,13 +70,13 @@ Column buildPlayerContainer({
           style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 13,
+            fontSize: 15,
           ),
         ),
       ),
       Container(
         alignment: Alignment.center,
-        width: 60,
+        width: ScreenUtils.getWidth(context) * 0.18,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
               bottomRight: Radius.circular(10), bottomLeft: Radius.circular(7)),
@@ -75,7 +87,7 @@ Column buildPlayerContainer({
           overflow: TextOverflow.visible,
           maxFontSize: 15,
           minFontSize: 8,
-          playerPosition,
+          "",
           style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,

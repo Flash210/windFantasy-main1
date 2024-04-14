@@ -10,10 +10,14 @@ Column buildShowFantasyTeam(
     {required BuildContext context,
     required List<Player> allPlayers,
     required List<ShowTeam> listOfFantasyPlayers,
-    required Map<String, dynamic> myMap}) {
+    required Map<String, dynamic> myMap,
+    required Map<String, dynamic> myTshirtMap}) {
+  print(listOfFantasyPlayers.length);
+
   return Column(
     children: [
       buildPlayerIcon(
+        myTshirtMap: myTshirtMap,
         context: context,
         playerName:
             getTextToShow(listOfFantasyPlayers, allPlayers, myMap, "Gardien1"),
@@ -38,6 +42,7 @@ Column buildShowFantasyTeam(
       SizedBox(height: 15),
       Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         buildPlayerIcon(
+            myTshirtMap: myTshirtMap,
             context: context,
             playerName: getTextToShow(
                 listOfFantasyPlayers, allPlayers, myMap, "Defenseur1"),
@@ -45,18 +50,21 @@ Column buildShowFantasyTeam(
             isItBenched: "No",
             onTap: () {}),
         buildPlayerIcon(
+            myTshirtMap: myTshirtMap,
             context: context,
             playerName: getTextToShow(
                 listOfFantasyPlayers, allPlayers, myMap, "Defenseur2"),
             playerPosition: "Defenseur2",
             isItBenched: "No"),
         buildPlayerIcon(
+            myTshirtMap: myTshirtMap,
             context: context,
             playerName: getTextToShow(
                 listOfFantasyPlayers, allPlayers, myMap, "Defenseur3"),
             playerPosition: "Defenseur3",
             isItBenched: "No"),
         buildPlayerIcon(
+            myTshirtMap: myTshirtMap,
             context: context,
             playerName: getTextToShow(
                 listOfFantasyPlayers, allPlayers, myMap, "Defenseur4"),
@@ -66,24 +74,28 @@ Column buildShowFantasyTeam(
       const SizedBox(height: 30),
       Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         buildPlayerIcon(
+            myTshirtMap: myTshirtMap,
             context: context,
             playerName: getTextToShow(
                 listOfFantasyPlayers, allPlayers, myMap, "Milieu1"),
             playerPosition: "Milieu1",
             isItBenched: "No"),
         buildPlayerIcon(
+            myTshirtMap: myTshirtMap,
             context: context,
             playerName: getTextToShow(
                 listOfFantasyPlayers, allPlayers, myMap, "Milieu2"),
             playerPosition: "Milieu2",
             isItBenched: "No"),
         buildPlayerIcon(
+            myTshirtMap: myTshirtMap,
             context: context,
             playerName: getTextToShow(
                 listOfFantasyPlayers, allPlayers, myMap, "Milieu3"),
             playerPosition: "Milieu3",
             isItBenched: "No"),
         buildPlayerIcon(
+            myTshirtMap: myTshirtMap,
             context: context,
             playerName: getTextToShow(
                 listOfFantasyPlayers, allPlayers, myMap, "Milieu4"),
@@ -94,12 +106,14 @@ Column buildShowFantasyTeam(
       const SizedBox(height: 30),
       Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         buildPlayerIcon(
+            myTshirtMap: myTshirtMap,
             context: context,
             playerName: getTextToShow(
                 listOfFantasyPlayers, allPlayers, myMap, "Attaquant1"),
             playerPosition: "Attaquant1",
             isItBenched: "No"),
         buildPlayerIcon(
+            myTshirtMap: myTshirtMap,
             context: context,
             playerName: getTextToShow(
                 listOfFantasyPlayers, allPlayers, myMap, "Attaquant2"),
@@ -127,24 +141,28 @@ Column buildShowFantasyTeam(
             const SizedBox(height: 16),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               buildBenchedPlayerIcon(
+                  myTshirtMap: myTshirtMap,
                   context: context,
                   playerName: getTextToShow(
                       listOfFantasyPlayers, allPlayers, myMap, "bench1"),
                   playerPosition: "bench1",
                   isItBenched: "Yes"),
               buildBenchedPlayerIcon(
+                  myTshirtMap: myTshirtMap,
                   context: context,
                   playerName: getTextToShow(
                       listOfFantasyPlayers, allPlayers, myMap, "bench2"),
                   playerPosition: "bench2",
                   isItBenched: "Yes"),
               buildBenchedPlayerIcon(
+                  myTshirtMap: myTshirtMap,
                   context: context,
                   playerName: getTextToShow(
                       listOfFantasyPlayers, allPlayers, myMap, "bench3"),
                   playerPosition: "bench3",
                   isItBenched: "Yes"),
               buildBenchedPlayerIcon(
+                  myTshirtMap: myTshirtMap,
                   context: context,
                   playerName: getTextToShow(
                       listOfFantasyPlayers, allPlayers, myMap, "bench4"),

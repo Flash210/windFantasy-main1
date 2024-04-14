@@ -45,14 +45,14 @@ Column buildTeamSection(
     buildPlayerPositionInTheStatdium(MyRes.kForward, slectedPlayerFromMap,
         playerPositions, context, playersSelected),
 
-    MySizedBox(height: ScreenUtils.getHeight(context) * 0.15),
+    MySizedBox(height: ScreenUtils.getHeight(context) * 0.23),
     // ! Bench Row
     Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
         color: MyColors.greyF,
       ),
-      width: 300,
+      width: ScreenUtils.getWidth(context) * 0.9,
       padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,7 +64,7 @@ Column buildTeamSection(
                     fontSize: 14,
                     fontWeight: FontWeight.w600),
               )),
-          const SizedBox(height: 16),
+          MySizedBox(height: ScreenUtils.getHeight(context) * 0.01),
           // ! the place where the benched players will be shown
           buildBenchedPlayerPositionInSatduim("bench", slectedPlayerFromMap,
               playerPositions, context, playersSelected),
@@ -87,7 +87,11 @@ Column buildTeamSection(
                 i.playingInGameweeks = i.gameweeks;
               }
               sl<TokenManager>()
-                  .saveMap(map: sl<ShowTeamProvider>().savePlayerPostion);
+                ..savePlayerPositionToMap(
+                    map: sl<ShowTeamProvider>().savePlayerPostion)
+                ..saveTshirtTeamToMap(
+                    map: sl<ShowTeamProvider>().saveTeamShirt);
+
               sl<TeamEditProvider>().createUserTeam(
                 TeamEdit(
                   forwards: forwards,
