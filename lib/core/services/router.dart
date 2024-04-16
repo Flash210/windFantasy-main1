@@ -23,7 +23,7 @@ class AppRouter {
                   return const Homey();
                 } else {
                   // Token doesn't exist, navigate to entry point screen
-                  return const LanguageScreen();
+                  return const SplashScreen();
                 }
               } else {
                 // Token retrieval in progress, show loading indicator

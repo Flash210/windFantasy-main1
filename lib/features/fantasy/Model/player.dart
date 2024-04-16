@@ -17,6 +17,26 @@ class Player {
   final String updatedAt;
   final int teamId;
 
+ Player.empty()
+      : id = 0,
+        name = '',
+        position = '',
+        price = 0,
+        totalMatchesPlayed = 0,
+        totalPoints = 0,
+        totalGoals = 0,
+        totalAssists = 0,
+        totalRedCard = 0,
+        totalYellowCard = 0,
+        totalOwnGoals = 0,
+        totalCleanSheet = 0,
+        totalManOfTheMatch = 0,
+        totalMissedPenalties = 0,
+        createdAt = '',
+        updatedAt = '',
+        teamId = 0;
+  
+
   
 
   Player({

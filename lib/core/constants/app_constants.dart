@@ -21,10 +21,8 @@ class MyRes {
   static const kEditProfile = "edit";
   static const kFantasy = "fantasy";
 
-
-    //
-    static const String  kUnknown="Unknown";
-
+  //
+  static const String kUnknown = "Unknown";
 
   // players postions
   static const String kGoalKepper = "Gardien";
@@ -32,9 +30,24 @@ class MyRes {
   static const String kMidfilder = "Milieu";
   static const String kForward = "Attaquant";
 
+  static const String kGoalKepper1 = "Gardien1";
 
-
-
-
-
+  static const List<String> kDefenders = [
+    'Defenseur1',
+    'Defenseur2',
+    'Defenseur3',
+    'Defenseur4'
+  ];
+  static const List<String> mMidfielders = [
+    'Milieu1',
+    'Milieu2',
+    'Milieu3',
+    'Milieu4'
+  ];
+  static const List<String> kForwards = [
+    'Attaquant1',
+    'Attaquant2',
+    'Attaquant3',
+    'Attaquant4'
+  ];
 }

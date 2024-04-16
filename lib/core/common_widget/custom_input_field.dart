@@ -7,6 +7,7 @@ class CustomInputField extends StatelessWidget {
   final TextEditingController controller;
   final TextInputType keyboardType;
   final bool? obscureText;
+  final GlobalKey? fieldKey;
   final Widget? suffixIcon;
   final String? Function(String?)? validator;
   final String? hintText;
@@ -17,12 +18,12 @@ class CustomInputField extends StatelessWidget {
       required this.keyboardType,
       this.obscureText,
       this.suffixIcon,
-      required this.validator, this.hintText});
-      
+      required this.validator,
+      this.hintText,
+      this.fieldKey});
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,48 +34,57 @@ class CustomInputField extends StatelessWidget {
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               shape: BoxShape.rectangle,
-              color: Colors.white,
             ),
-            child: TextFormField(
-              
-                cursorColor: Colors.black,
-                decoration: InputDecoration(
-                  
-                  hintText: hintText,
-                    focusedBorder: const OutlineInputBorder(
+            child: Form(
+              key: fieldKey,
+              child: TextFormField(
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                      // border: InputBorder.none,
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide(color: MyColors.kPrimaryColor),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: InputBorder.none,
-                    suffixIcon: suffixIcon),
-                controller: controller,
-                keyboardType: keyboardType,
-                obscureText: obscureText ?? false,
-                
-                validator: (value) {
-                  // Validate the input value using the provided validator function
-                  if (validator != null) {
-                    final validationResult = validator!(value);
-                    if (validationResult != null) {
-                      //  CustomErrorSnackbar(errorMessage: validationResult,color: MyColors.kRed,);
-                      // Show scaffold message error if validation fails
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(validationResult),
-                          backgroundColor: MyColors.kRed,
-                          duration: const Duration(seconds: 2),
-                        ),
-                      );
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        //borderSide: BorderSide(color: MyColors.kPrimaryColor),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      hintText: hintText,
+                      focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: MyColors.kPrimaryColor),
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      filled: true,
+                      fillColor: Colors.white,
+                      errorMaxLines: 1,
+                      errorText: null, //TODO add error msg attribute here
+                      suffixIcon: suffixIcon),
+                  controller: controller,
+                  keyboardType: keyboardType,
+                  key: key,
+                  obscureText: obscureText ?? false,
+                  validator: (value) {
+                    // Validate the input value using the provided validator function
+                    if (validator != null) {
+                      final validationResult = validator!(value);
+                      if (validationResult != null) {
+                        //  CustomErrorSnackbar(errorMessage: validationResult,color: MyColors.kRed,);
+                        // Show scaffold message error if validation fails
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(validationResult),
+                            backgroundColor: MyColors.kRed,
+                            duration: const Duration(seconds: 2),
+                          ),
+                        );
+                      }
+                      return validationResult;
                     }
-                  }
-                }),
+                  }),
+            ),
           ),
         ]);
   }
 }
-
-
 
 class CustomPageRoute<T> extends MaterialPageRoute<T> {
   final bool fromLeft;

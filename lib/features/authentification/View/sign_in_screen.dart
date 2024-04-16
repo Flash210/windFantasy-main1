@@ -90,6 +90,7 @@ class SignInScreenTState extends State<SignInScreenT> {
 
               SizedBox(height: ScreenUtils.getHeight(context) * 0.03),
               CustomOrangeButton(
+                textColor: MyColors.kWhite,
                 backgroundColor: MyColors.kPrimaryColor,
                 text: S.of(context).SignIn,
                 onTap: () async {
@@ -112,21 +113,20 @@ class SignInScreenTState extends State<SignInScreenT> {
 
   void _submit() {
     if (_formKey.currentState!.validate()) {
-      Provider.of<AuthProvider>(context, listen: false)
-          .signIn(
-            email: _emailController.text,
-            password: _passwordController.text,
-          );
-          // .then((value) => awesomeDialog(
-          //     context: context,
-          //     text: MyRes.kSignInSucces,
-          //     type: DialogType.success,
-          //     showRed: false))
-          // .catchError((error) => awesomeDialog(
-          //     context: context,
-          //     text: MyRes.kSignInError,
-          //     type: DialogType.error,
-          //     showRed: true));
+      Provider.of<AuthProvider>(context, listen: false).signIn(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      // .then((value) => awesomeDialog(
+      //     context: context,
+      //     text: MyRes.kSignInSucces,
+      //     type: DialogType.success,
+      //     showRed: false))
+      // .catchError((error) => awesomeDialog(
+      //     context: context,
+      //     text: MyRes.kSignInError,
+      //     type: DialogType.error,
+      //     showRed: true));
 
       Future.delayed(const Duration(seconds: 2), () {
         if (Provider.of<AuthProvider>(context, listen: false).isAuthenticated) {

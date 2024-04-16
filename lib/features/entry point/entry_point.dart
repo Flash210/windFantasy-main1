@@ -6,8 +6,6 @@ import 'package:front/core/constants/app_constants.dart';
 import 'package:front/features/authentification/View/auth_screen.dart';
 import 'package:front/generated/l10n.dart';
 
-
-
 class EntryPointScreen extends StatelessWidget {
   const EntryPointScreen({super.key});
 
@@ -30,7 +28,7 @@ class EntryPointScreen extends StatelessWidget {
             CustomOrangeButton(
               customWidh: width * 0.6,
               backgroundColor: MyColors.kPrimaryColor,
-              textColor: MyColors.kSecondaryColor,
+              textColor: MyColors.kWhite,
               text: S.of(context).SignIn,
               onTap: () {
                 Navigator.push(

@@ -1,6 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:front/core/common_functions/extract_player_name.dart';
 import 'package:front/core/constants/screen_utils.dart';
+import 'package:front/features/fantasy/Model/player.dart';
+import 'package:front/features/fantasy/Model/show_team.dart';
 
 Column buildbenchedPlayerContainer(
     {required String playerName,
@@ -100,22 +103,13 @@ Column buildPlayerContainer({
 }
 
 
-RichText buildRichText(
-      {required String textSpan, required String textSpnaValue}) {
-    return RichText(
-      text: TextSpan(
-        style: const TextStyle(color: Colors.white, fontSize: 12),
-        children: [
-          TextSpan(text: textSpan),
-          TextSpan(
-            text: textSpnaValue,
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
+
+String getTextToShow(List<ShowTeam> listOfFantasyPlayers,
+    List<Player> allPlayers, Map<String, dynamic> myMap, String position) {
+  String playerPos = myMap[position] ?? "";
+  return listOfFantasyPlayers.any((element) =>
+          getPlayerName(element.playerId!, allPlayers) == playerPos)
+      ? playerPos
+      : " No PLayer Found";
+}

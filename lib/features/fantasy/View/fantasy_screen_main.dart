@@ -8,53 +8,111 @@ class FantasyScreen extends StatefulWidget {
 }
 
 class _FantasyScreenState extends State<FantasyScreen> {
-  late Future<UserModel?> _userModel;
   late List<ShowTeam> fetchPlayersTeam;
+  late int playerSelected;
 
   List<Player> allPlayers = [];
   List<ShowTeam> listOfFantasyPlayers = [];
 
   Map<String, dynamic> myMapOfPlayersName = {};
-    Map<String, dynamic> myMapOfTshirt = {};
-
+  Map<String, dynamic> myMapOfTshirt = {};
 
   @override
   void initState() {
-    super.initState();
-    _userModel = sl<AuthProvider>().getUserInfo();
+       playerSelected = Provider.of<AuthProvider>(context, listen: false)
+        .userDataa!
+        .playersSelected;
+
+
+    print("playerSelected $playerSelected");
     setPlayerList();
+    super.initState();
+
   }
 
-  late int playerSelected;
 
   @override
   Widget build(BuildContext context) {
+    print("playerSelected $playerSelected");
     return Scaffold(
+      appBar: AppBar(
+        title: Center(
+            child: MyCustomText(
+          text: "Squad Page",
+          style: GoogleFonts.blackOpsOne(),
+        )),
+      ),
       body: Padding(
         padding: const EdgeInsets.only(top: 30, left: 5, right: 5),
         child: SingleChildScrollView(
-          child: FutureBuilder(
-            future: _userModel,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                UserData userData = snapshot.data!.data;
-                playerSelected = userData.playersSelected;
+          child:
 
-                return Column(
+                Column(
                   children: [
                     MySizedBox(
-                      height: ScreenUtils.getHeight(context) * 0.11,
+                      height: ScreenUtils.getHeight(context) * 0.01,
                     ),
 
-                    Text(snapshot.data!.data.teamName,
-                        style: GoogleFonts.raviPrakash(
-                          textStyle: const TextStyle(
-                              color: MyColors.kBlue,
-                              fontSize: 30,
-                              fontWeight: FontWeight.w600),
-                        )),
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(8),
+                              topRight: Radius.circular(8)),
+                          color: MyColors.kSecondaryColor),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          RichText(
+                            text:  TextSpan(
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 11),
+                              children: [
+                                const TextSpan(text: "Team Name: "),
+                                TextSpan(
+                                  text: sl<AuthProvider>().userDataa!.teamName,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
 
-                    buildAppBar(),
+                         Container(
+                           padding: const EdgeInsets.all(8),
+                           decoration: BoxDecoration(
+                             color: Colors.white,
+                             borderRadius: BorderRadius.circular(10),
+                           ),
+                           child: Row(
+                             children: [
+                               const MyCustomText(
+                                 text: "Budget:",
+                                 style: TextStyle(
+                                   fontSize: 13,
+                                   color: Colors.black,
+                                 )
+                               ),
+                               MyCustomText(
+                                 text: "${sl<AuthProvider>().userDataa!.bank} \$",
+                                 style: TextStyle(
+                                   fontSize: 16,
+                                   color: Colors.green,
+                                   fontFamily: GoogleFonts.roboto().fontFamily,
+                                   fontWeight: FontWeight.bold,
+                                 ),
+                               ),
+                             ],
+                           ),)
+                        ],
+
+                      ),
+                    ),
+
+                    // buildAppBar(bank: snapshot.data!.data.bank),
                     MySizedBox(
                       height: ScreenUtils.getHeight(context) * 0.033,
                     ),
@@ -75,14 +133,9 @@ class _FantasyScreenState extends State<FantasyScreen> {
                     ),
                     // ),
                   ],
-                );
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else {
-                return const CircularProgressIndicator(); // Placeholder for loading state
-              }
-            },
-          ),
+                ),
+
+
         ),
       ),
     );
@@ -144,8 +197,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
                 allPlayers: allPlayers,
                 listOfFantasyPlayers: listOfFantasyPlayers,
                 myMap: myMapOfPlayersName,
-                myTshirtMap:myMapOfTshirt
-              );
+                myTshirtMap: myMapOfTshirt);
 
         //return buildTeamSection(slectedPlayerFromMap, playerPositions, context, forwards, midfielders, defenders, goalkeepers, moneyRemaining, playersSelected);
       },
@@ -155,9 +207,8 @@ class _FantasyScreenState extends State<FantasyScreen> {
   setPlayerList() async {
     allPlayers = await sl<PlayerProvider>().fetchPlayerss();
     listOfFantasyPlayers = await sl<ShowTeamProvider>().fetchTeams();
-   // print("lenghth " + listOfFantasyPlayers[0].);
+    // print("lenghth " + listOfFantasyPlayers[0].);
     myMapOfPlayersName = await sl<TokenManager>().getMap();
-    myMapOfTshirt=await  sl<TokenManager>().getTshirtMap();
-
+    myMapOfTshirt = await sl<TokenManager>().getTshirtMap();
   }
 }

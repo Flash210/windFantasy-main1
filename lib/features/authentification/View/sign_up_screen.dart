@@ -16,7 +16,6 @@ import 'package:front/generated/l10n.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_links/uni_links.dart';
 
-
 class SignUpScreenT extends StatefulWidget {
   const SignUpScreenT({super.key});
 
@@ -33,6 +32,16 @@ class SignUpScreenTState extends State<SignUpScreenT> {
     // sl<DeepLinkHandler>().initDeepLinks(context,"signUp");
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _phoneController.dispose();
+    _teamController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   Future<void> initDeepLinks() async {
@@ -69,7 +78,7 @@ class SignUpScreenTState extends State<SignUpScreenT> {
     );
   }
 
-  final TextEditingController nameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _teamController = TextEditingController();
 
@@ -77,121 +86,118 @@ class SignUpScreenTState extends State<SignUpScreenT> {
 
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _nameKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _emailKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _teamKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _phoneKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30.0),
       child: Form(
-          key: _formKey,
+          // key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              //  SizedBox(height: ScreenUtils.getHeight(context) * 0.05),
-              SizedBox(height: ScreenUtils.getHeight(context) * 0.080),
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          //  SizedBox(height: ScreenUtils.getHeight(context) * 0.05),
+          SizedBox(height: ScreenUtils.getHeight(context) * 0.080),
 
-              buildWelcomeText(context),
-              SizedBox(height: ScreenUtils.getHeight(context) * 0.03),
+          buildWelcomeText(context),
+          SizedBox(height: ScreenUtils.getHeight(context) * 0.03),
 
-              Text(S.of(context).WelcomeSubSection),
-              SizedBox(height: ScreenUtils.getHeight(context) * 0.03),
-              // Your CustomInputField widgets
+          Text(S.of(context).WelcomeSubSection),
+          SizedBox(height: ScreenUtils.getHeight(context) * 0.03),
+          // Your CustomInputField widgets
 
-              CustomInputField(
-                text: S.of(context).NameAndSurname,
-                controller: nameController,
-                keyboardType: TextInputType.text,
-                validator: (value) => validateName(value, context),
-              ),
+          //? Name field
+          CustomInputField(
+            fieldKey: _nameKey,
+            text: S.of(context).NameAndSurname,
+            controller: _nameController,
+            keyboardType: TextInputType.text,
+            validator: (value) => validateName(value, context),
+          ),
 
-              //? Email field
-              CustomInputField(
-                text: S.of(context).Email,
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) => validateEmail(value, context),
-              ),
-              //? Team field
-              CustomInputField(
-                text: S.of(context).TeamName,
-                controller: _teamController,
-                keyboardType: TextInputType.text,
-                validator: (value) => validateTeamName(value, context),
-              ),
-              //? Phone field
+          //? Email field
+          CustomInputField(
+            fieldKey: _emailKey,
+            text: S.of(context).Email,
+            controller: _emailController,
+            keyboardType: TextInputType.emailAddress,
+            validator: (value) => validateEmail(value, context),
+          ),
 
-              CustomInputField(
-                  text: S.of(context).Phone,
-                  controller: _phoneController,
-                  keyboardType: TextInputType.phone,
-                  validator: (value) => validatePhoneNumber(value, context)),
-              //? Password field
-              //? Password field
-              Consumer<AuthProvider>(
-                builder: (context, provider, _) {
-                  return CustomInputField(
-                    text: S.of(context).Password,
-                    suffixIcon: IconButton(
-                      icon: Icon(provider.obscureText
-                          ? Icons.visibility
-                          : Icons.visibility_off),
-                      onPressed: () {
-                        provider.togglePasswordVisibility();
-                      },
-                    ),
-                    controller: _passwordController,
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: provider.obscureText,
-                    validator: (value) => validatePassword(value, context),
-                  );
-                },
-              ),
+          //? Team field
+          CustomInputField(
+            text: S.of(context).TeamName,
+            controller: _teamController,
+            keyboardType: TextInputType.text,
+            validator: (value) => validateTeamName(value, context),
+          ),
+          //? Phone field
 
-              SizedBox(height: ScreenUtils.getHeight(context) * 0.03),
-              CustomOrangeButton(
-                backgroundColor: MyColors.kPrimaryColor,
-                text: S.of(context).SignUp,
-                textColor: Colors.black,
-                onTap: () {
-                  _submitForm();
-                },
-              ),
+          CustomInputField(
+              text: S.of(context).Phone,
+              controller: _phoneController,
+              keyboardType: TextInputType.phone,
+              validator: (value) => validatePhoneNumber(value, context)),
+          //? Password field
+          //? Password field
+          Consumer<AuthProvider>(
+            builder: (context, provider, _) {
+              return CustomInputField(
+                text: S.of(context).Password,
+                suffixIcon: IconButton(
+                  icon: Icon(provider.obscureText
+                      ? Icons.visibility
+                      : Icons.visibility_off),
+                  onPressed: () {
+                    provider.togglePasswordVisibility();
+                  },
+                ),
+                controller: _passwordController,
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: provider.obscureText,
+                validator: (value) => validatePassword(value, context),
+              );
+            },
+          ),
 
-              SizedBox(
-                height: ScreenUtils.getHeight(context) * 0.03,
-              ),
+          SizedBox(height: ScreenUtils.getHeight(context) * 0.03),
+          CustomOrangeButton(
+            backgroundColor: MyColors.kPrimaryColor,
+            text: S.of(context).SignUp,
+            textColor: Colors.black,
+            onTap: () {
+              _submitForm();
+            },
+          ),
 
-              buildPoweredBy(),
-            ],
-          )),
+          SizedBox(
+            height: ScreenUtils.getHeight(context) * 0.03,
+          ),
+
+          buildPoweredBy(),
+        ],
+      )),
     );
   }
 
   void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      final signUpProvider = Provider.of<AuthProvider>(context, listen: false);
-      signUpProvider
-          .signUp(
-            name: nameController.text.trim(),
-            email: _emailController.text.trim(),
-            phone: _phoneController.text.trim(),
-            teamName: _teamController.text.trim(),
-            password: _passwordController.text.trim(),
-          );
-          // .then((value) =>
-          //  awesomeDialog(context:context, text: MyRes.kSignUpSucces,type: 
-          //   DialogType.success,showRed: false))
-          // .catchError((error) {
-          //   awesomeDialog(
-          //       context: context,
-          //       text: MyRes.kSignUpError,
-              
-          //       type: DialogType.error,
-          //       showRed: true
-          //       );
-          // });
+    if (_nameKey.currentState!.validate()) {
+      if (_emailKey.currentState!.validate()) {
+        final signUpProvider =
+            Provider.of<AuthProvider>(context, listen: false);
+        signUpProvider.signUp(
+          name: _nameController.text.trim(),
+          email: _emailController.text.trim(),
+          phone: _phoneController.text.trim(),
+          teamName: _teamController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+      }
     }
   }
 }
-
-

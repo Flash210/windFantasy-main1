@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/app_constants.dart';
+import 'package:front/core/services/injection_container.dart';
+import 'package:front/features/authentification/ViewModel/auth_provider.dart';
 
 class StatisticScreen extends StatelessWidget {
   const StatisticScreen({super.key});
@@ -18,7 +20,10 @@ class StatisticScreen extends StatelessWidget {
           top: 150,
           left: 30,
           child: GestureDetector(
-            onTap: () => Navigator.pushNamed(context, MyRes.kFantasy),
+            onTap: () => sl<AuthProvider>().getUserInfo().then((value) =>
+            value!.success ? Navigator.pushNamed(context, MyRes.kFantasy)
+            : CircularProgressIndicator()
+            ),
             child: Container(
               height: 60,
               width: 100,

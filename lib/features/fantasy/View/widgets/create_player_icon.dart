@@ -78,23 +78,7 @@ buildBenchPlayer(
               teamName: teamName,
               context: context)
 
-          //    Image.asset(
-          //     teamName == "anonymTeam"
-          //         ? "assets/greyKit.png"
-          //         : "assets/kits/$teamName.png",
-          //     width: 35,
-          //     height: 40,
-          //   ),
-          // ),
-          // AutoSizeText(
-          //   extractLastName(title),
-          //   style: const TextStyle(
-          //     color: Colors.black,
-          //     fontSize: 8,
-          //   ),
-          //   maxLines: 1,
-          //   overflow: TextOverflow.clip,
-          // )
+       
           )
     ],
   );

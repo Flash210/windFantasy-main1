@@ -1,5 +1,5 @@
 class AppConfig {
-  static String kBaseUrl = "http://192.168.1.107:3001/api/";
+  static String kBaseUrl = "http://192.168.137.1:3001/api/";
   // ! user base url
 
   static String kUserBaseUrl = "${kBaseUrl}users/";

@@ -1,4 +1,5 @@
 import 'package:front/features/fantasy/Model/player.dart';
+import 'package:front/features/fantasy/Model/show_team.dart';
 
 String extractLastName(String fullName) {
   List<String> nameParts = fullName.split('.');
@@ -11,7 +12,7 @@ String extractLastName(String fullName) {
   return nameParts.last;
 }
 
-String getPlayerName(int playerID,List<Player> players) {
+String getPlayerName(int playerID, List<Player> players) {
   final player = players.firstWhere((element) => element.id == playerID,
       orElse: () => Player(
           id: 0,
@@ -34,6 +35,17 @@ String getPlayerName(int playerID,List<Player> players) {
   return extractLastName(player.name);
 }
 
+//!......
+Player getPlayerStatistic(
+    {required List<ShowTeam> list, required List<Player> players}) {
+
+
+ShowTeam playerShowed = list.firstWhere((element) => element.id != null);
+  final player = players.firstWhere((element) => element.id == playerShowed.id,
+      orElse: () => Player.empty());
+      print("Player is "+player.position);
+  return player;
+}
 
 String getTeamShirtName({required String teamName}) {
   switch (teamName) {
@@ -79,12 +91,10 @@ String getTeamShirtName({required String teamName}) {
       return "udinese";
     default:
       return "anonymTeam";
-  }}
+  }
+}
 
-
-
-
-  String getTeamShirtNameReversed({required String teamName}) {
+String getTeamShirtNameReversed({required String teamName}) {
   switch (teamName) {
     case "roma":
       return "AS Roma";
