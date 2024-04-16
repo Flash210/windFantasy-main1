@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front/core/common_functions/extract_player_name.dart';
 import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';

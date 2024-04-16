@@ -70,7 +70,7 @@ class AuthProvider extends ChangeNotifier {
       }
       notifyListeners();
     } catch (e) {
-      throw Exception('Failed to sign in');
+      throw Exception('Failed to sign in' + e.toString());
     }
   }
 
@@ -79,8 +79,7 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-UserData? userDataa;
+  UserData? userDataa;
 // ! Get user info method
   Future<UserModel?> getUserInfo() async {
     Logger logger = Logger();
@@ -109,7 +108,7 @@ UserData? userDataa;
         var ch = await sl<TokenManager>().getUserId();
         print("User Id is +$ch");
         //logger.i("id is ${user.data.id}");
-        userDataa=user.data ;
+        userDataa = user.data;
         notifyListeners();
 
         return user;

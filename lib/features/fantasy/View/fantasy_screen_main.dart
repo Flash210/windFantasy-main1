@@ -15,8 +15,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
   List<ShowTeam> listOfFantasyPlayers = [];
 
   Map<String, dynamic> myMapOfPlayersName = {};
-    Map<String, dynamic> myMapOfTshirt = {};
-
+  Map<String, dynamic> myMapOfTshirt = {};
 
   @override
   void initState() {
@@ -30,6 +29,13 @@ class _FantasyScreenState extends State<FantasyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Center(
+            child: MyCustomText(
+          text: "Squad Page",
+          style: GoogleFonts.blackOpsOne(),
+        )),
+      ),
       body: Padding(
         padding: const EdgeInsets.only(top: 30, left: 5, right: 5),
         child: SingleChildScrollView(
@@ -144,8 +150,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
                 allPlayers: allPlayers,
                 listOfFantasyPlayers: listOfFantasyPlayers,
                 myMap: myMapOfPlayersName,
-                myTshirtMap:myMapOfTshirt
-              );
+                myTshirtMap: myMapOfTshirt);
 
         //return buildTeamSection(slectedPlayerFromMap, playerPositions, context, forwards, midfielders, defenders, goalkeepers, moneyRemaining, playersSelected);
       },
@@ -155,9 +160,8 @@ class _FantasyScreenState extends State<FantasyScreen> {
   setPlayerList() async {
     allPlayers = await sl<PlayerProvider>().fetchPlayerss();
     listOfFantasyPlayers = await sl<ShowTeamProvider>().fetchTeams();
-   // print("lenghth " + listOfFantasyPlayers[0].);
+    // print("lenghth " + listOfFantasyPlayers[0].);
     myMapOfPlayersName = await sl<TokenManager>().getMap();
-    myMapOfTshirt=await  sl<TokenManager>().getTshirtMap();
-
+    myMapOfTshirt = await sl<TokenManager>().getTshirtMap();
   }
 }

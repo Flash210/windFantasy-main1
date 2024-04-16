@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:front/core/constants/colors.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/core/services/router.dart';
 import 'package:front/features/authentification/ViewModel/auth_provider.dart';
@@ -12,7 +13,6 @@ import 'package:front/features/ranking/ViewModel/ranking_provider.dart';
 import 'package:front/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -20,8 +20,6 @@ Future<void> main() async {
 
   runApp(const MyApp());
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -39,14 +37,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => sl<TeamEditProvider>()),
         ChangeNotifierProvider(create: (context) => sl<FilterProvider>()),
         ChangeNotifierProvider(create: (context) => sl<ShowTeamProvider>()),
-
-
       ],
       child: Consumer<LanguageProvider>(
         builder: (context, languageProvider, _) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(primarySwatch: Colors.blue),
+            theme: ThemeData(
+                primarySwatch: Colors.blue, primaryColor: Colors.black),
             locale: languageProvider.appLanguage == AppLanguage.French
                 ? const Locale('fr', 'FR')
                 : const Locale('en', 'US'),

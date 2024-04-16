@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:front/core/common_functions/extract_player_name.dart';
+import 'package:front/core/common_widget/show_player_widget.dart';
+import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
 import 'package:front/features/fantasy/View/widgets/player_icon.dart';
-import 'package:front/features/fantasy/functions/edit_team_functions.dart';
 import 'package:front/features/player%20card/View/player_card.dart';
 import 'package:front/generated/l10n.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,28 +23,31 @@ Column buildShowFantasyTeam(
       buildPlayerIcon(
         myTshirtMap: myTshirtMap,
         context: context,
-        playerName:
-            getTextToShow(listOfFantasyPlayers, allPlayers, myMap, "Gardien1"),
-        playerPosition: "Gardien1",
+        playerName: getTextToShow(
+            listOfFantasyPlayers, allPlayers, myMap, MyRes.kGoalKepper1),
+        playerPosition: MyRes.kGoalKepper1,
         isItBenched: "No",
         onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => PlayerCard(
+                // player: listOfFantasyPlayers.any((element) => 
+                // getPlayerStatistic(element.id, allPlayers) ),
+                player: getPlayerStatistic(list: listOfFantasyPlayers, players: allPlayers),
                   teamName: getTshirtTeamToShow(
-                    nameOfPlayer: getTextToShow(
-                        listOfFantasyPlayers, allPlayers, myMap, "Gardien1"),
+                    nameOfPlayer: getTextToShow(listOfFantasyPlayers,
+                        allPlayers, myMap, MyRes.kGoalKepper1),
                     map: myTshirtMap,
                   ),
                   teamTshirt: getTshirtTeamToShow(
-                    nameOfPlayer: getTextToShow(
-                        listOfFantasyPlayers, allPlayers, myMap, "Gardien1"),
+                    nameOfPlayer: getTextToShow(listOfFantasyPlayers,
+                        allPlayers, myMap, MyRes.kGoalKepper1),
                     map: myTshirtMap,
                   ),
                   position: S.of(context).GoalKepper,
-                  playerName: getTextToShow(
-                      listOfFantasyPlayers, allPlayers, myMap, "Gardien1")),
+                  playerName: getTextToShow(listOfFantasyPlayers, allPlayers,
+                      myMap, MyRes.kGoalKepper1)),
             ),
           );
         },
@@ -185,11 +189,6 @@ Column buildShowFantasyTeam(
   );
 }
 
-String getTextToShow(List<ShowTeam> listOfFantasyPlayers,
-    List<Player> allPlayers, Map<String, dynamic> myMap, String position) {
-  String playerPos = myMap[position] ?? "";
-  return listOfFantasyPlayers.any((element) =>
-          getPlayerName(element.playerId!, allPlayers) == playerPos)
-      ? playerPos
-      : " No PLayer Found";
-}
+
+
+

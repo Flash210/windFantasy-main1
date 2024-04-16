@@ -27,7 +27,6 @@ class TeamEditProvider with ChangeNotifier {
   Future<UserPlay> getUserPLay() async {
     try {
       userPlay = await teamRepository.getUserPLay();
-      print("---------------" + userPlay!.data![0].gameWeek.toString());
       notifyListeners();
     } catch (e) {
       print("Error" + e.toString());
@@ -137,7 +136,7 @@ class TeamEditProvider with ChangeNotifier {
 
   void fillTeamsAfterMaxReached(Team team) {
     teamsAfterMaxReached.add(team);
-    print("Team Reached" + team.toString());
+    print("Team Reached$team");
     notifyListeners();
   }
 

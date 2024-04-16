@@ -61,6 +61,7 @@ class LanguageScreenState extends State<LanguageScreen> {
                   // Next button
                   CustomOrangeButton(
                     customWidh: ScreenUtils.getWidth(context) * 0.6,
+                    textColor: MyColors.kWhite,
                     text: S.of(context).Next,
                     onTap: () {
                       Navigator.push(

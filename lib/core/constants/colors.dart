@@ -2,8 +2,13 @@ import 'dart:ui';
 
 class MyColors {
   static const Color kPrimaryColor = Color(0xFFFBA834);
+  //static const Color kPrimaryColor = Color.fromARGB(255, 7, 42, 95);
+  // static const Color kPrimaryColor = Color.fromARGB(255, 25, 48, 82);
+
   // 0xFF41C9E2
   static const Color kSecondaryColor = Color.fromARGB(255, 7, 42, 95);
+  // static const Color kThirdColor = Color(0xFFDAC0A3);
+
   // static const Color kSecondaryColor = Color(0xFF000000);
   static const Color kWhite = Color(0xFFFFFFFF);
   static const Color kGrey = Color.fromARGB(255, 54, 52, 52);
