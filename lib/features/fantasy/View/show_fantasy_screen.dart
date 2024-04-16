@@ -7,6 +7,7 @@ import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
 import 'package:front/features/fantasy/View/widgets/player_icon.dart';
 import 'package:front/features/player%20card/View/player_card.dart';
+import 'package:front/features/player%20card/functions/player_statistics.dart';
 import 'package:front/generated/l10n.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -28,7 +29,7 @@ Column buildShowFantasyTeam(
         playerPosition: MyRes.kGoalKepper1,
         isItBenched: "No",
         onTap: () {
-          Navigator.push(
+         /* Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => PlayerCard(
@@ -49,7 +50,9 @@ Column buildShowFantasyTeam(
                   playerName: getTextToShow(listOfFantasyPlayers, allPlayers,
                       myMap, MyRes.kGoalKepper1)),
             ),
-          );
+          );*/
+          navigateToPlayerCard(context, allPlayers, listOfFantasyPlayers, myMap,
+              myTshirtMap, MyRes.kGoalKepper1,S.of(context).GoalKepper);
         },
       ),
       const SizedBox(height: 15),
