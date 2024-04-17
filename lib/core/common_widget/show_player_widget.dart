@@ -46,7 +46,6 @@ Column buildPlayerContainer({
   required String teamName,
   required BuildContext context,
 }) {
-  print(teamName + " " + "issssss" + " ");
   return Column(
     children: [
       Image.asset(

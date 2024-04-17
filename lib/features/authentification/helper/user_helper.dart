@@ -10,11 +10,9 @@ Future<T> parseUserResponse<T>(
       final data = jsonData['data'];
       return fromJson(data);
     } catch (e) {
-      print("Error processing JSON data: $e");
       throw Exception('Error processing JSON data: $e');
     }
   } else {
-    print("Error fetching data: ${response.body}");
     throw Exception('Error fetching data: ${response.body}');
   }
 }

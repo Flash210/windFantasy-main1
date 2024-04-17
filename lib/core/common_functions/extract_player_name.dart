@@ -43,7 +43,6 @@ Player getPlayerStatistic(
 ShowTeam playerShowed = list.firstWhere((element) => element.id != null);
   final player = players.firstWhere((element) => element.id == playerShowed.id,
       orElse: () => Player.empty());
-      print("Player is "+player.position);
   return player;
 }
 

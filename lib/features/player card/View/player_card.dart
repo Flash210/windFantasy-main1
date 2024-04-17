@@ -43,21 +43,23 @@ class PlayerCard extends StatelessWidget {
                   context: context),
               MySizedBox(height: ScreenUtils.getHeight(context) * 0.1),
               buildPlayerStatistic1(
-                  matchPlayed: "0",
-                  manOfMatch: "0",
-                  goals: "0",
-                  points: "0",
+                  matchPlayed: player.totalMatchesPlayed.toString(),
+                  manOfMatch: player.totalManOfTheMatch.toString(),
+                  goals: player.totalGoals.toString(),
+                  points: player.totalPoints.toString(),
                   context: context),
               MySizedBox(height: ScreenUtils.getHeight(context) * 0.015),
               buildPlayerStatistic2(
-                  assits: "0",
-                  redCart: "0",
-                  yellowCart: "0",
-                  ownGoals: "0",
+                  assits: player.totalAssists.toString(),
+                  redCart: player.totalRedCard.toString(),
+                  yellowCart: player.totalYellowCard.toString(),
+                  ownGoals: player.totalOwnGoals.toString(),
                   context: context),
               MySizedBox(height: ScreenUtils.getHeight(context) * 0.015),
               buildPlayerStatistic3(
-                  missedPenalties: "0", cleanSHeet: "0", context: context),
+                  missedPenalties: player.totalMissedPenalties.toString(),
+                  cleanSHeet: player.totalCleanSheet.toString(),
+                  context: context),
               MySizedBox(height: ScreenUtils.getHeight(context) * 0.05),
               Container(
                 decoration: BoxDecoration(

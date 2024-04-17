@@ -38,7 +38,7 @@ class MyRes {
     'Defenseur3',
     'Defenseur4'
   ];
-  static const List<String> mMidfielders = [
+  static const List<String> kMidfielders = [
     'Milieu1',
     'Milieu2',
     'Milieu3',

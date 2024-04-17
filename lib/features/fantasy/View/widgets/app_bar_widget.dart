@@ -14,7 +14,7 @@ Row buildAppBar({required int bank}) {
             color: MyColors.kPrimaryColor),
         child: MyCustomText(
           text: bank.toString(),
-          style: TextStyle(
+          style: const TextStyle(
             color: MyColors.kWhite,
           ),
         ),

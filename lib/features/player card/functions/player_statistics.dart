@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../core/common_functions/extract_player_name.dart';
 import '../../../core/common_widget/show_player_widget.dart';
-import '../../../core/constants/app_constants.dart';
-import '../../../generated/l10n.dart';
 import '../../fantasy/Model/player.dart';
 import '../../fantasy/Model/show_team.dart';
 import '../../fantasy/View/widgets/player_icon.dart';
