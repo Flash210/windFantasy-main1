@@ -106,7 +106,6 @@ class AuthProvider extends ChangeNotifier {
 
         ///sl<TokenManager>().saveUserId(user.data.id.toString());
         var ch = await sl<TokenManager>().getUserId();
-        print("User Id is +$ch");
         //logger.i("id is ${user.data.id}");
         userDataa = user.data;
         notifyListeners();
@@ -168,15 +167,21 @@ class AuthProvider extends ChangeNotifier {
   }
 
   // ! Reset password method
-  Future<bool> resetPassword(String newPassword) async {
+  Future<bool> resetPassword({required String newPassword}) async {
     final response = await http.post(
       Uri.parse(AppConfig.kUserBaseUrl + AppConfig.kResetPasswordEndPoint),
       body: {'newPassword': newPassword},
     );
+    Logger logger = Logger();
 
     if (response.statusCode == 200) {
+      print("Yes");
+      logger.i('Password reset successfully');
       return true;
     } else {
+      logger.e('Failed to reset password'+response.body.toString());
+      
+      print("No");
       return false;
     }
   }

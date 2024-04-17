@@ -20,7 +20,7 @@ class AuthenticationScreenT extends StatelessWidget {
 
     switch (pageType) {
       case MyRes.kSignIn:
-        body = const SignInScreenT();
+        body =  SignInScreenT();
         break;
       case MyRes.kSignUpPage:
         body = const SignUpScreenT();

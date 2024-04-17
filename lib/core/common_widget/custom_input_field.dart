@@ -56,32 +56,50 @@ class CustomInputField extends StatelessWidget {
                       filled: true,
                       fillColor: Colors.white,
                       errorMaxLines: 1,
-                      errorText: null, //TODO add error msg attribute here
+                      errorText: null, 
                       suffixIcon: suffixIcon),
                   controller: controller,
                   keyboardType: keyboardType,
-                  key: key,
+                  // key: key,
                   obscureText: obscureText ?? false,
-                  validator: (value) {
-                    // Validate the input value using the provided validator function
-                    if (validator != null) {
-                      final validationResult = validator!(value);
-                      if (validationResult != null) {
-                        //  CustomErrorSnackbar(errorMessage: validationResult,color: MyColors.kRed,);
-                        // Show scaffold message error if validation fails
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(validationResult),
-                            backgroundColor: MyColors.kRed,
-                            duration: const Duration(seconds: 2),
-                          ),
-                        );
-                      }
-                      return validationResult;
-                    }
-                  }),
+                  validator: validator != null
+                      ? (value) {
+                          final validationResult = validator!(value);
+                          if (validationResult != null) {
+                         
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(validationResult),
+                                backgroundColor: MyColors.kRed,
+                                duration: const Duration(seconds: 2),
+                              ),
+                            );
+                          }
+                          return validationResult;
+                        }
+                      : null),
+                  // (value) {
+                  //   // Validate the input value using the provided validator function
+                  //   if (validator != null) {
+                  //     final validationResult = validator!(value);
+                  //     if (validationResult != null) {
+                  //       //  CustomErrorSnackbar(errorMessage: validationResult,color: MyColors.kRed,);
+                  //       // Show scaffold message error if validation fails
+                  //       ScaffoldMessenger.of(context).showSnackBar(
+                  //         SnackBar(
+                  //           content: Text(validationResult),
+                  //           backgroundColor: MyColors.kRed,
+                  //           duration: const Duration(seconds: 2),
+                  //         ),
+                  //       );
+                  //     }
+                  //     return validationResult;
+                  //   }
+               
+                  
+                  ),
             ),
-          ),
+          
         ]);
   }
 }

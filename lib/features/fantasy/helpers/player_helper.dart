@@ -32,11 +32,9 @@ Future<List<T>> parseListResponse1<T>(
       final data = jsonData['data'] as List<dynamic>;
       return data.map((itemData) => fromJson(itemData)).toList();
     } catch (e) {
-      print("Error processing JSON data: $e");
       return [];
     }
   } else {
-    print("Error fetching data: ${response.body}");
     return [];
   }
 }

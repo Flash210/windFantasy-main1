@@ -13,8 +13,8 @@ import 'package:front/features/authentification/ViewModel/auth_provider.dart';
 import 'package:front/features/authentification/utils/validate_fields.dart';
 import 'package:front/generated/l10n.dart';
 import 'package:logger/logger.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:uni_links/uni_links.dart';
-
 
 class ForgetPasswordScreenT extends StatefulWidget {
   const ForgetPasswordScreenT({super.key});
@@ -39,8 +39,6 @@ class ForgetPasswordScreenTState extends State<ForgetPasswordScreenT> {
       await getInitialLink();
       logger.i('Initial link...');
     } on PlatformException {
-    
-
       // Handle error
     }
 
@@ -67,7 +65,7 @@ class ForgetPasswordScreenTState extends State<ForgetPasswordScreenT> {
       context,
       MaterialPageRoute(
           builder: (context) => const AuthenticationScreenT(
-                pageType: MyRes.kSignIn,
+                pageType: MyRes.kResetPasswordPage,
               )),
     );
   }
@@ -118,7 +116,22 @@ class ForgetPasswordScreenTState extends State<ForgetPasswordScreenT> {
                 text: S.of(context).Send,
                 onTap: () async {
                   await sl<AuthProvider>()
-                      .forgotPassword(_emailController.text.trim());
+                      .forgotPassword(_emailController.text.trim())
+                      .then((value) => QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.success,
+                          confirmBtnColor: MyColors.kGreen,
+                          title: 'Success',
+                          text: 'Email sent successfully',
+                          onConfirmBtnTap: () => Navigator.pop(context)))
+                      .onError((error, stackTrace) => QuickAlert.show(
+                            context: context,
+                            type: QuickAlertType.error,
+                            confirmBtnColor: MyColors.kGreen,
+                            title: 'Oops...',
+                            text: 'Sorry, something went wrong',
+                            onConfirmBtnTap: () => Navigator.pop(context),
+                          ));
                 },
               ),
 

@@ -10,10 +10,13 @@ import 'package:front/core/services/injection_container.dart';
 import 'package:front/core/services/token_manager.dart';
 import 'package:front/features/authentification/View/auth_screen.dart';
 import 'package:front/features/authentification/ViewModel/auth_provider.dart';
+import 'package:front/features/authentification/keys_class.dart';
 import 'package:front/features/authentification/utils/validate_fields.dart';
 import 'package:front/features/authentification/utils/welcome_text.dart';
 import 'package:front/generated/l10n.dart';
 import 'package:provider/provider.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:uni_links/uni_links.dart';
 
 class SignUpScreenT extends StatefulWidget {
@@ -85,23 +88,14 @@ class SignUpScreenTState extends State<SignUpScreenT> {
   final TextEditingController _phoneController = TextEditingController();
 
   final TextEditingController _passwordController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _nameKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _emailKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _teamKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _phoneKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30.0),
-      child: Form(
-          // key: _formKey,
-          child: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          //  SizedBox(height: ScreenUtils.getHeight(context) * 0.05),
           SizedBox(height: ScreenUtils.getHeight(context) * 0.080),
 
           buildWelcomeText(context),
@@ -109,11 +103,10 @@ class SignUpScreenTState extends State<SignUpScreenT> {
 
           Text(S.of(context).WelcomeSubSection),
           SizedBox(height: ScreenUtils.getHeight(context) * 0.03),
-          // Your CustomInputField widgets
 
           //? Name field
           CustomInputField(
-            fieldKey: _nameKey,
+            fieldKey: KeysValidation.nameKey,
             text: S.of(context).NameAndSurname,
             controller: _nameController,
             keyboardType: TextInputType.text,
@@ -122,7 +115,7 @@ class SignUpScreenTState extends State<SignUpScreenT> {
 
           //? Email field
           CustomInputField(
-            fieldKey: _emailKey,
+            fieldKey: KeysValidation.emailKey,
             text: S.of(context).Email,
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
@@ -131,6 +124,7 @@ class SignUpScreenTState extends State<SignUpScreenT> {
 
           //? Team field
           CustomInputField(
+            fieldKey: KeysValidation.teamKey,
             text: S.of(context).TeamName,
             controller: _teamController,
             keyboardType: TextInputType.text,
@@ -139,6 +133,7 @@ class SignUpScreenTState extends State<SignUpScreenT> {
           //? Phone field
 
           CustomInputField(
+              fieldKey: KeysValidation.phoneKey,
               text: S.of(context).Phone,
               controller: _phoneController,
               keyboardType: TextInputType.phone,
@@ -148,6 +143,7 @@ class SignUpScreenTState extends State<SignUpScreenT> {
           Consumer<AuthProvider>(
             builder: (context, provider, _) {
               return CustomInputField(
+                fieldKey: KeysValidation.passwordKey,
                 text: S.of(context).Password,
                 suffixIcon: IconButton(
                   icon: Icon(provider.obscureText
@@ -181,22 +177,43 @@ class SignUpScreenTState extends State<SignUpScreenT> {
 
           buildPoweredBy(),
         ],
-      )),
+      ),
     );
   }
 
   void _submitForm() {
-    if (_nameKey.currentState!.validate()) {
-      if (_emailKey.currentState!.validate()) {
-        final signUpProvider =
-            Provider.of<AuthProvider>(context, listen: false);
-        signUpProvider.signUp(
-          name: _nameController.text.trim(),
-          email: _emailController.text.trim(),
-          phone: _phoneController.text.trim(),
-          teamName: _teamController.text.trim(),
-          password: _passwordController.text.trim(),
-        );
+    if (KeysValidation.nameKey.currentState!.validate()) {
+      if (KeysValidation.emailKey.currentState!.validate()) {
+        if (KeysValidation.teamKey.currentState!.validate()) {
+          if (KeysValidation.phoneKey.currentState!.validate()) {
+            if (KeysValidation.passwordKey.currentState!.validate()) {
+              final signUpProvider =
+                  Provider.of<AuthProvider>(context, listen: false);
+              signUpProvider
+                  .signUp(
+                    name: _nameController.text.trim(),
+                    email: _emailController.text.trim(),
+                    phone: _phoneController.text.trim(),
+                    teamName: _teamController.text.trim(),
+                    password: _passwordController.text.trim(),
+                  )
+                  .then((value) => QuickAlert.show(
+                        context: context,
+                        type: QuickAlertType.success,
+                        text: 'Mail Send Successfully!',
+                        confirmBtnColor: MyColors.kPrimaryColor,
+
+                      ))
+                  .onError((error, stackTrace) => QuickAlert.show(
+                        context: context,
+                        confirmBtnColor: MyColors.kPrimaryColor,
+                        type: QuickAlertType.error,
+                        title: 'Oops...',
+                        text: 'Sorry, something went wrong',
+                      ));
+            }
+          }
+        }
       }
     }
   }
