@@ -55,11 +55,14 @@ class ForgetPasswordScreenTState extends State<ForgetPasswordScreenT> {
   }
 
   void handleDeepLink(String link) {
-    // Extract token from the deep link
+
     final token = link.split('/').last;
 
-    sl<TokenManager>().saveToken(token);
-    sl<AuthProvider>().verifyEmail(token);
+    sl<TokenManager>().saveToken(token).then((value) =>
+
+    logger.i('Forget PAssword :Token saved successfully '+token)
+    );
+    //sl<AuthProvider>().verifyEmail(token);
 
     Navigator.push(
       context,

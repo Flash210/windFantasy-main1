@@ -29,7 +29,7 @@ class AuthenticationScreenT extends StatelessWidget {
         body = const ForgetPasswordScreenT();
         break;
       case MyRes.kResetPasswordPage:
-        body = const ResetPasswordScreen();
+        body =  ResetPasswordScreen();
         break;
     }
 
