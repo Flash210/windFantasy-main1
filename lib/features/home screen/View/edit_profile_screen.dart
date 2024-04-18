@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/btn_and_text_widget.dart';
 import 'package:front/core/common_widget/custom_text.dart';
+import 'package:front/core/common_widget/show_player_widget.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/core/services/injection_container.dart';
@@ -40,7 +41,6 @@ class EditProfileScreenState extends State<EditProfileScreen> {
           if (snapshot.hasData) {
             final UserModel user = snapshot.data!;
             final UserData userData = user.data;
-            // getLogger(ProfileScreen);
 
             return SingleChildScrollView(
               child: Padding(
@@ -70,30 +70,24 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              TextField(
-                                controller: name,
-                                decoration: InputDecoration(
-                                  hintText: userData.name,
+                              buildEditProfile(
                                   labelText: "Name",
-                                ),
-                              ),
-                              TextField(
-                                controller: teamName,
-                                decoration: InputDecoration(
-                                  labelText: "Team Name",
-                                  hintStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                  hintText: userData.teamName,
-                                ),
-                              ),
-                              TextField(
-                                controller: phone,
-                                decoration: InputDecoration(
-                                  labelText: "Phone",
-                                  hintText: userData.phone.toString(),
-                                ),
-                              ),
+                                  controller: name,
+                                  hintText: userData.name),
+                              MySizedBox(
+                                  height:
+                                      ScreenUtils.getHeight(context) * 0.01),
+                              buildEditProfile(
+                                  labelText: "teamName",
+                                  controller: teamName,
+                                  hintText: userData.teamName),
+                              MySizedBox(
+                                  height:
+                                      ScreenUtils.getHeight(context) * 0.01),
+                              buildEditProfile(
+                                  labelText: "phone",
+                                  controller: phone,
+                                  hintText: userData.phone.toString()),
                             ])),
                     const SizedBox(
                       height: 15,

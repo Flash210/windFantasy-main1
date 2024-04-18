@@ -101,9 +101,6 @@ Column buildPlayerContainer({
   );
 }
 
-
-
-
 String getTextToShow(List<ShowTeam> listOfFantasyPlayers,
     List<Player> allPlayers, Map<String, dynamic> myMap, String position) {
   String playerPos = myMap[position] ?? "";
@@ -111,4 +108,22 @@ String getTextToShow(List<ShowTeam> listOfFantasyPlayers,
           getPlayerName(element.playerId!, allPlayers) == playerPos)
       ? playerPos
       : " No PLayer Found";
+}
+
+TextField buildEditProfile(
+    {required String labelText,
+    required TextEditingController controller,
+    required String hintText}) {
+  return TextField(
+    controller: controller,
+    decoration: InputDecoration(
+      labelText: labelText,
+      hintText: hintText,
+      labelStyle: const TextStyle(color: Colors.black),
+      border: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderSide: BorderSide(color: Colors.black),
+      ),
+    ),
+  );
 }
