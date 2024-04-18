@@ -1,15 +1,16 @@
 import 'dart:convert';
 import 'package:front/core/services/injection_container.dart';
-import 'package:front/features/authentification/Model/user_credentials.dart';
-import 'package:front/features/authentification/repository/authentification_repository.dart';
-import 'package:get/get.dart';
+import 'package:front/features/auth/Model/user_credentials.dart';
+import 'package:front/features/auth/Model/user_model.dart';
+import 'package:front/features/auth/repository/auth_repository.dart';
+import 'package:front/features/auth/repository/authentification_repository.dart';
+
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:front/core/services/config.dart';
 import 'package:front/core/services/token_manager.dart';
-import 'package:front/features/authentification/Model/user_model.dart';
-import 'package:front/features/authentification/repository/auth_repository.dart';
+
 import 'package:logger/logger.dart';
 import 'package:logger/web.dart';
 
@@ -67,7 +68,7 @@ class AuthProvider extends ChangeNotifier {
       }
       notifyListeners();
     } catch (e) {
-      throw Exception('Failed to sign in' + e.toString());
+      throw Exception('Failed to sign in$e');
     }
   }
 
@@ -142,11 +143,11 @@ class AuthProvider extends ChangeNotifier {
           notifyListeners();
         } else {}
       } else {
-        logger.e('Failed to verify email.' + response.body.toString());
+        logger.e('Failed to verify email.${response.body}');
         throw Exception('Failed to verify email.');
       }
     } catch (e) {
-      logger.e('Failed to verify email.' + e.toString());
+      logger.e('Failed to verify email.$e');
       throw Exception('Error Net ');
     }
   }
@@ -168,50 +169,12 @@ class AuthProvider extends ChangeNotifier {
 
 
 
-
-  // ! Reset password method
-  /*
-  Future<void> resetPassword({required String newPassword}) async {
-    final String? token = await sl<TokenManager>().getToken();
-
-    final Map<String, dynamic> body = {
-      'newPassword': newPassword,
-    };
-
-
-    final response = await http.post(
-      Uri.parse(AppConfig.kUserBaseUrl + AppConfig.kResetPasswordEndPoint),
-     // body: {'newPassword': newPassword},
-      body: jsonEncode(body),
-
-      headers: {
-        'Authorization':'Bearer $token',
-        'Content-Type': 'application/json',
-
-
-      },
-    );
-
-
-    // Logger logger = Logger();
-
-    if (response.statusCode == 200) {
-      print("Yes");
-      logger.i('Password reset successfully');
-      //return true;
-    } else {
-      logger.e('Failed to reset password' + response.body.toString());
-
-      print("No");
-    //  return false;
-    }
-  }*/
   Future<void> resetPassword({required String newPassword}) async {
     try {
 
 
       final String? token = await sl<TokenManager>().getToken();
-logger.i('Reset PAssword: Token is '+token.toString());
+logger.i('Reset PAssword: Token is $token');
       final String baseUrl = AppConfig.kUserBaseUrl;
       final String resetPasswordEndpoint = AppConfig.kResetPasswordEndPoint;
       final Uri url = Uri.parse(baseUrl + resetPasswordEndpoint);
@@ -222,7 +185,7 @@ logger.i('Reset PAssword: Token is '+token.toString());
       final Map<String, dynamic> requestBody = {
         'sentToken':token,
         'newPassword': newPassword};
-      logger.i('Reset PAssword: headers is '+headers.toString());
+      logger.i('Reset PAssword: headers is $headers');
 
       final http.Response response = await http.post(
         url,
@@ -235,7 +198,7 @@ logger.i('Reset PAssword: Token is '+token.toString());
         logger.i('Password reset successfully');
         // Handle success
       } else {
-        logger.e('Failed to reset password: ' + response.body.toString());
+        logger.e('Failed to reset password: ${response.body}');
         print("No");
         // Handle failure
       }
@@ -265,4 +228,43 @@ logger.i('Reset PAssword: Token is '+token.toString());
     _userCredentials = UserCredentials(email: email, password: password);
     notifyListeners();
   }
+
+
+
+
+  
+Future<void> updateUser({
+  required String userId,
+  String? name,
+  String? phone,
+  String? teamName,
+}) async {
+  try {
+    final Uri url = Uri.parse("${AppConfig.kUserBaseUrl}Update/$userId"); // Replace with your actual API endpoint
+    final Map<String, dynamic> requestBody = {
+      if (name != null) 'name': name,
+      if (phone != null) 'phone': phone,
+      if (teamName != null) 'teamName': teamName,
+    };
+
+    final http.Response response = await http.put(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(requestBody),
+    );
+
+    if (response.statusCode == 200) {
+      print('User updated successfully');
+      // Handle success
+    } else {
+      print('Failed to update user: ${response.body}');
+      // Handle failure
+    }
+  } catch (error) {
+    print('Error updating user: $error');
+    // Handle error
+  }
+}
 }

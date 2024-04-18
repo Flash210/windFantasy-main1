@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/services/injection_container.dart';
-import 'package:front/features/authentification/ViewModel/auth_provider.dart';
+import 'package:front/features/auth/ViewModel/auth_provider.dart';
 
 class StatisticScreen extends StatelessWidget {
   const StatisticScreen({super.key});

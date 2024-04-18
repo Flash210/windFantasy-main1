@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/core/services/router.dart';
-import 'package:front/features/authentification/ViewModel/auth_provider.dart';
+import 'package:front/features/auth/ViewModel/auth_provider.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';

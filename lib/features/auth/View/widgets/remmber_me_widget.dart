@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
-import 'package:front/features/authentification/Model/user_credentials.dart';
-import 'package:front/features/authentification/View/auth_screen.dart';
-import 'package:front/features/authentification/ViewModel/auth_provider.dart';
+import 'package:front/features/auth/Model/user_credentials.dart';
+import 'package:front/features/auth/View/auth_screen.dart';
+import 'package:front/features/auth/ViewModel/auth_provider.dart';
+
 import 'package:front/generated/l10n.dart';
 
 Row buildRemmemberAndForget(

@@ -1,7 +1,9 @@
 import 'dart:convert';
 
-import 'package:front/features/authentification/api/api.dart';
-import 'package:front/features/authentification/repository/auth_repository.dart';
+import 'package:front/features/auth/api/api.dart';
+import 'package:front/features/auth/repository/auth_repository.dart';
+
+
 
 class AuthRepositoryImpl extends AuthRepository { 
   final AuthApi _authApi;

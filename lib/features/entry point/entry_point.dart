@@ -3,7 +3,7 @@ import 'package:front/core/common_widget/btn_and_text_widget.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/app_constants.dart';
-import 'package:front/features/authentification/View/auth_screen.dart';
+import 'package:front/features/auth/View/auth_screen.dart';
 import 'package:front/generated/l10n.dart';
 
 class EntryPointScreen extends StatelessWidget {
