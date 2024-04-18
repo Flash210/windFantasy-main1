@@ -1,8 +1,9 @@
 
 
 
-import 'package:front/features/authentification/Model/user_model.dart';
-import 'package:front/features/authentification/service/user_service.dart';
+import 'package:front/features/auth/Model/user_model.dart';
+import 'package:front/features/auth/service/user_service.dart';
+
 
 class AuthentificationRepository {
 

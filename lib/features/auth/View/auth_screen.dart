@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:front/core/constants/app_constants.dart';
-import 'package:front/features/authentification/View/reset_screen.dart';
-import 'package:front/features/authentification/View/sign_in_screen.dart';
-import 'package:front/features/authentification/View/sign_up_screen.dart';
+import 'package:front/features/auth/View/reset_screen.dart';
+import 'package:front/features/auth/View/sign_in_screen.dart';
+import 'package:front/features/auth/View/sign_up_screen.dart';
+
 
 import 'forget_password_screen.dart';
 

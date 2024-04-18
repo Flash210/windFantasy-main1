@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:front/core/services/token_manager.dart';
-import 'package:front/features/authentification/ViewModel/auth_provider.dart';
-import 'package:front/features/authentification/api/api.dart';
-import 'package:front/features/authentification/repository/auth_api_impl.dart';
-import 'package:front/features/authentification/repository/auth_repository.dart';
-import 'package:front/features/authentification/repository/authentification_repository.dart';
-import 'package:front/features/authentification/service/user_service.dart';
-import 'package:front/features/authentification/utils/deep_link.dart';
+import 'package:front/features/auth/ViewModel/auth_provider.dart';
+import 'package:front/features/auth/api/api.dart';
+import 'package:front/features/auth/repository/auth_api_impl.dart';
+import 'package:front/features/auth/repository/auth_repository.dart';
+import 'package:front/features/auth/repository/authentification_repository.dart';
+import 'package:front/features/auth/service/user_service.dart';
+import 'package:front/features/auth/utils/deep_link.dart';
+
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';

@@ -17,7 +17,6 @@ Column buildShowFantasyTeam(
     required List<ShowTeam> listOfFantasyPlayers,
     required Map<String, dynamic> myMap,
     required Map<String, dynamic> myTshirtMap}) {
-
   return Column(
     children: [
       MySizedBox(
@@ -31,73 +30,96 @@ Column buildShowFantasyTeam(
         playerPosition: MyRes.kGoalKepper1,
         isItBenched: "No",
         onTap: () {
-
           navigateToPlayerCard(context, allPlayers, listOfFantasyPlayers, myMap,
-              myTshirtMap, MyRes.kGoalKepper1,S.of(context).GoalKepper);
+              myTshirtMap, MyRes.kGoalKepper1, S.of(context).GoalKepper);
         },
       ),
       const SizedBox(height: 15),
       Row(
-         // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-        buildPlayerIcon(
-            myTshirtMap: myTshirtMap,
-            context: context,
-            playerName: getTextToShow(
-                listOfFantasyPlayers, allPlayers, myMap, MyRes.kDefenders[0]),
-            playerPosition: MyRes.kDefenders[0],
-            isItBenched: "No",
-          onTap: () {
-
-            navigateToPlayerCard(context, allPlayers, listOfFantasyPlayers, myMap,
-                myTshirtMap, MyRes.kDefenders[0],S.of(context).Defender);
-          },),
-
-        buildPlayerIcon(
-            onTap: () {
-
-              navigateToPlayerCard(context, allPlayers, listOfFantasyPlayers, myMap,
-                  myTshirtMap, MyRes.kDefenders[1],S.of(context).Defender);
-            },
-            myTshirtMap: myTshirtMap,
-            context: context,
-            playerName: getTextToShow(
-                listOfFantasyPlayers, allPlayers, myMap, MyRes.kDefenders[1]),
-            playerPosition: MyRes.kDefenders[1],
-            isItBenched: "No"),
-
-        buildPlayerIcon(
-            onTap: () {
-
-              navigateToPlayerCard(context, allPlayers, listOfFantasyPlayers, myMap,
-                  myTshirtMap, MyRes.kDefenders[2],S.of(context).Defender);
-            },
-            myTshirtMap: myTshirtMap,
-            context: context,
-            playerName: getTextToShow(
-                listOfFantasyPlayers, allPlayers, myMap, MyRes.kDefenders[2]),
-            playerPosition: MyRes.kDefenders[2],
-            isItBenched: "No"),
-        buildPlayerIcon(
-            onTap: () {
-
-              navigateToPlayerCard(context, allPlayers, listOfFantasyPlayers, myMap,
-                  myTshirtMap, MyRes.kDefenders[3],S.of(context).Defender);
-            },
-            myTshirtMap: myTshirtMap,
-            context: context,
-            playerName: getTextToShow(
-                listOfFantasyPlayers, allPlayers, myMap,  MyRes.kDefenders[3]),
-            playerPosition:  MyRes.kDefenders[3],
-            isItBenched: "No"),
-      ]),
+            buildPlayerIcon(
+              myTshirtMap: myTshirtMap,
+              context: context,
+              playerName: getTextToShow(
+                  listOfFantasyPlayers, allPlayers, myMap, MyRes.kDefenders[0]),
+              playerPosition: MyRes.kDefenders[0],
+              isItBenched: "No",
+              onTap: () {
+                navigateToPlayerCard(
+                    context,
+                    allPlayers,
+                    listOfFantasyPlayers,
+                    myMap,
+                    myTshirtMap,
+                    MyRes.kDefenders[0],
+                    S.of(context).Defender);
+              },
+            ),
+            buildPlayerIcon(
+                onTap: () {
+                  navigateToPlayerCard(
+                      context,
+                      allPlayers,
+                      listOfFantasyPlayers,
+                      myMap,
+                      myTshirtMap,
+                      MyRes.kDefenders[1],
+                      S.of(context).Defender);
+                },
+                myTshirtMap: myTshirtMap,
+                context: context,
+                playerName: getTextToShow(listOfFantasyPlayers, allPlayers,
+                    myMap, MyRes.kDefenders[1]),
+                playerPosition: MyRes.kDefenders[1],
+                isItBenched: "No"),
+            buildPlayerIcon(
+                onTap: () {
+                  navigateToPlayerCard(
+                      context,
+                      allPlayers,
+                      listOfFantasyPlayers,
+                      myMap,
+                      myTshirtMap,
+                      MyRes.kDefenders[2],
+                      S.of(context).Defender);
+                },
+                myTshirtMap: myTshirtMap,
+                context: context,
+                playerName: getTextToShow(listOfFantasyPlayers, allPlayers,
+                    myMap, MyRes.kDefenders[2]),
+                playerPosition: MyRes.kDefenders[2],
+                isItBenched: "No"),
+            buildPlayerIcon(
+                onTap: () {
+                  navigateToPlayerCard(
+                      context,
+                      allPlayers,
+                      listOfFantasyPlayers,
+                      myMap,
+                      myTshirtMap,
+                      MyRes.kDefenders[3],
+                      S.of(context).Defender);
+                },
+                myTshirtMap: myTshirtMap,
+                context: context,
+                playerName: getTextToShow(listOfFantasyPlayers, allPlayers,
+                    myMap, MyRes.kDefenders[3]),
+                playerPosition: MyRes.kDefenders[3],
+                isItBenched: "No"),
+          ]),
       const SizedBox(height: 30),
       Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         buildPlayerIcon(
             onTap: () {
-
-              navigateToPlayerCard(context, allPlayers, listOfFantasyPlayers, myMap,
-                  myTshirtMap, MyRes.kMidfielders[0],S.of(context).Midfildier);
+              navigateToPlayerCard(
+                  context,
+                  allPlayers,
+                  listOfFantasyPlayers,
+                  myMap,
+                  myTshirtMap,
+                  MyRes.kMidfielders[0],
+                  S.of(context).Midfildier);
             },
             myTshirtMap: myTshirtMap,
             context: context,
@@ -107,21 +129,31 @@ Column buildShowFantasyTeam(
             isItBenched: "No"),
         buildPlayerIcon(
             onTap: () {
-
-              navigateToPlayerCard(context, allPlayers, listOfFantasyPlayers, myMap,
-                  myTshirtMap, MyRes.kMidfielders[1],S.of(context).Midfildier);
+              navigateToPlayerCard(
+                  context,
+                  allPlayers,
+                  listOfFantasyPlayers,
+                  myMap,
+                  myTshirtMap,
+                  MyRes.kMidfielders[1],
+                  S.of(context).Midfildier);
             },
             myTshirtMap: myTshirtMap,
             context: context,
             playerName: getTextToShow(
-                listOfFantasyPlayers, allPlayers, myMap,  MyRes.kMidfielders[1]),
-            playerPosition:  MyRes.kMidfielders[1],
+                listOfFantasyPlayers, allPlayers, myMap, MyRes.kMidfielders[1]),
+            playerPosition: MyRes.kMidfielders[1],
             isItBenched: "No"),
         buildPlayerIcon(
             onTap: () {
-
-              navigateToPlayerCard(context, allPlayers, listOfFantasyPlayers, myMap,
-                  myTshirtMap, MyRes.kMidfielders[2],S.of(context).Midfildier);
+              navigateToPlayerCard(
+                  context,
+                  allPlayers,
+                  listOfFantasyPlayers,
+                  myMap,
+                  myTshirtMap,
+                  MyRes.kMidfielders[2],
+                  S.of(context).Midfildier);
             },
             myTshirtMap: myTshirtMap,
             context: context,
@@ -131,9 +163,14 @@ Column buildShowFantasyTeam(
             isItBenched: "No"),
         buildPlayerIcon(
             onTap: () {
-
-              navigateToPlayerCard(context, allPlayers, listOfFantasyPlayers, myMap,
-                  myTshirtMap, MyRes.kMidfielders[3],S.of(context).Midfildier);
+              navigateToPlayerCard(
+                  context,
+                  allPlayers,
+                  listOfFantasyPlayers,
+                  myMap,
+                  myTshirtMap,
+                  MyRes.kMidfielders[3],
+                  S.of(context).Midfildier);
             },
             myTshirtMap: myTshirtMap,
             context: context,
@@ -147,27 +184,37 @@ Column buildShowFantasyTeam(
       Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         buildPlayerIcon(
             onTap: () {
-
-              navigateToPlayerCard(context, allPlayers, listOfFantasyPlayers, myMap,
-                  myTshirtMap, MyRes.kForwards[0],S.of(context).Forward);
+              navigateToPlayerCard(
+                  context,
+                  allPlayers,
+                  listOfFantasyPlayers,
+                  myMap,
+                  myTshirtMap,
+                  MyRes.kForwards[0],
+                  S.of(context).Forward);
             },
             myTshirtMap: myTshirtMap,
             context: context,
             playerName: getTextToShow(
-                listOfFantasyPlayers, allPlayers, myMap,  MyRes.kForwards[0]),
-            playerPosition:  MyRes.kForwards[0],
+                listOfFantasyPlayers, allPlayers, myMap, MyRes.kForwards[0]),
+            playerPosition: MyRes.kForwards[0],
             isItBenched: "No"),
         buildPlayerIcon(
             onTap: () {
-
-              navigateToPlayerCard(context, allPlayers, listOfFantasyPlayers, myMap,
-                  myTshirtMap, MyRes.kForwards[1],S.of(context).Forward);
+              navigateToPlayerCard(
+                  context,
+                  allPlayers,
+                  listOfFantasyPlayers,
+                  myMap,
+                  myTshirtMap,
+                  MyRes.kForwards[1],
+                  S.of(context).Forward);
             },
             myTshirtMap: myTshirtMap,
             context: context,
             playerName: getTextToShow(
-                listOfFantasyPlayers, allPlayers, myMap,  MyRes.kForwards[1]),
-            playerPosition:  MyRes.kForwards[1],
+                listOfFantasyPlayers, allPlayers, myMap, MyRes.kForwards[1]),
+            playerPosition: MyRes.kForwards[1],
             isItBenched: "No"),
       ]),
       const SizedBox(height: 30),
@@ -225,7 +272,3 @@ Column buildShowFantasyTeam(
     ],
   );
 }
-
-
-
-

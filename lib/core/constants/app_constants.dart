@@ -3,7 +3,7 @@ class MyRes {
   static const basePath = "assets/";
   static const kFrenshFlag = "${basePath}fr.png";
   static const kEnglishFlag = "${basePath}eng.png";
-  static String kAuthBackground = "${basePath}auth.jpg";
+  static String kAuthBackground = "${basePath}authentification.jpg";
   static String kWindLogo = "${basePath}wind logo.png";
   static String kMatchBack = "${basePath}stade.png";
   static String kBackButton = "${basePath}back2.png";

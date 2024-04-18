@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:front/core/common_widget/btn_and_text_widget.dart';
+import 'package:front/core/common_widget/custom_text.dart';
+import 'package:front/core/constants/colors.dart';
+import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/core/services/injection_container.dart';
-import 'package:front/features/authentification/Model/user_model.dart';
-import 'package:front/features/authentification/ViewModel/auth_provider.dart';
-import 'package:front/features/home%20screen/View/widgets/custom_app_bar.dart';
-import 'package:front/features/home%20screen/View/widgets/list_title_widget.dart';
+import 'package:front/features/auth/Model/user_model.dart';
+import 'package:front/features/auth/ViewModel/auth_provider.dart';
 
+import 'package:front/features/home%20screen/View/widgets/custom_app_bar.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -15,7 +18,9 @@ class EditProfileScreen extends StatefulWidget {
 
 class EditProfileScreenState extends State<EditProfileScreen> {
   late Future<UserModel?> _userModel;
-
+  TextEditingController name = TextEditingController();
+  TextEditingController teamName = TextEditingController();
+  TextEditingController phone = TextEditingController();
 
   @override
   void initState() {
@@ -37,52 +42,75 @@ class EditProfileScreenState extends State<EditProfileScreen> {
             final UserData userData = user.data;
             // getLogger(ProfileScreen);
 
-            return Padding(
-              padding:
-                  const EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
-              child: Column(
-                children: [
-                  Container(
-                      padding: const EdgeInsets.all(20.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: const Offset(
-                                0, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            buildListTile(Icons.person, userData.name),
-                            buildListTile(
-                                Icons.phone, userData.phone.toString()),
-                            buildListTile(
-                                Icons.sports_score, userData.teamName),
-                            buildListTile(Icons.wallet, "${userData.bank} \$"),
-                            buildListTile(
-                                Icons.score, userData.points.toString()),
-                          ])),
-
-                  // ElevatedButton(
-                  //     onPressed: () {
-                  //       sl<TokenManager>().clearToken();
-                  //       Navigator.pushReplacement(
-                  //           context,
-                  //           MaterialPageRoute(
-                  //               builder: (context) => const AuthenticationScreenT(
-                  //                     pageType: MyRes.kSignIn,
-                  //                   )));
-                  //     },
-                  //     child: const Text('Log Out'))
-                ],
+            return SingleChildScrollView(
+              child: Padding(
+                padding:
+                    const EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+                child: Column(
+                  children: [
+                    MySizedBox(
+                      height: ScreenUtils.getHeight(context) * 0.15,
+                    ),
+                    Container(
+                        padding: const EdgeInsets.all(20.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset: const Offset(
+                                  0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              TextField(
+                                controller: name,
+                                decoration: InputDecoration(
+                                  hintText: userData.name,
+                                  labelText: "Name",
+                                ),
+                              ),
+                              TextField(
+                                controller: teamName,
+                                decoration: InputDecoration(
+                                  labelText: "Team Name",
+                                  hintStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                  hintText: userData.teamName,
+                                ),
+                              ),
+                              TextField(
+                                controller: phone,
+                                decoration: InputDecoration(
+                                  labelText: "Phone",
+                                  hintText: userData.phone.toString(),
+                                ),
+                              ),
+                            ])),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    CustomOrangeButton(
+                        backgroundColor: MyColors.kPrimaryColor,
+                        text: "Submit",
+                        textColor: Colors.white,
+                        onTap: () {
+                          sl<AuthProvider>().updateUser(
+                              userId: userData.id.toString(),
+                              name: name.text.trim(),
+                              phone: phone.text.trim(),
+                              teamName: teamName.text.trim());
+                        })
+                  ],
+                ),
               ),
             );
           } else if (snapshot.hasError) {

@@ -8,7 +8,7 @@ Future<void> init() async {
   sl.registerSingleton<AuthentificationRepository>(
     AuthentificationRepository(userService: sl.get<UserService>()),
   );
-  await authInit(); // Wait for auth initialization before proceeding
+  await authInit(); // Wait for authentification initialization before proceeding
   await playerInit();
 
   sl.registerSingleton<TokenManager>(TokenManager());

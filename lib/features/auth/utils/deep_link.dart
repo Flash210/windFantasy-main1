@@ -3,8 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/core/services/token_manager.dart';
-import 'package:front/features/authentification/View/auth_screen.dart';
-import 'package:front/features/authentification/ViewModel/auth_provider.dart';
+import 'package:front/features/auth/View/auth_screen.dart';
+import 'package:front/features/auth/ViewModel/auth_provider.dart';
+
 import 'package:uni_links/uni_links.dart';
 
 class DeepLinkHandler {

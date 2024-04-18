@@ -1,6 +1,7 @@
  import 'package:front/core/services/config.dart';
-import 'package:front/features/authentification/Model/user_model.dart';
-import 'package:front/features/authentification/helper/user_helper.dart';
+import 'package:front/features/auth/Model/user_model.dart';
+import 'package:front/features/auth/helper/user_helper.dart';
+
 import 'package:front/features/fantasy/helpers/player_helper.dart';
 
 class UserService {
