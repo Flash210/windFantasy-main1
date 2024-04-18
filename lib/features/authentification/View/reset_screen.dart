@@ -14,110 +14,196 @@ import 'package:front/generated/l10n.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 
-class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+// class ResetPasswordScreen extends StatefulWidget {
+//   const ResetPasswordScreen({super.key});
 
-  static const String routeName = '/login';
+//   static const String routeName = '/login';
 
-  @override
-  SignInScreenState createState() => SignInScreenState();
-}
+//   @override
+//   SignInScreenState createState() => SignInScreenState();
+// }
 
-class SignInScreenState extends State<ResetPasswordScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
+// class SignInScreenState extends State<ResetPasswordScreen> {
+//   @override
+//   void initState() {
+//     super.initState();
+//   }
 
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
+//   final TextEditingController _passwordController = TextEditingController();
+//   final TextEditingController _confirmPasswordController =
+//       TextEditingController();
+
+//   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+//   final GlobalKey<FormState> _confirmKey = GlobalKey<FormState>();
+
+//   @override
+//   Widget build(BuildContext context) {
+
+//     return Padding(
+//       padding: const EdgeInsets.all(30.0),
+//       child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.stretch,
+//               children: [
+//       const SizedBox(height: 50.0),
+//       Text(
+//         S.of(context).NewPassword,
+//         style: const TextStyle(
+//           fontSize: 20.0,
+//           color: MyColors.kPrimaryColor,
+//         ),
+//       ),
+//       Text(S.of(context).EnterYourNewPassword),
+//       const SizedBox(height: 50.0),
+//       // Your CustomInputField widgets
+
+//       //? Name and Surname field
+
+//       //? Email field
+//       CustomInputField(
+//         fieldKey: _formKey,
+//         text: S.of(context).NewPassword,
+//         controller: _passwordController,
+//         keyboardType: TextInputType.emailAddress,
+//         validator: (value) => validatePassword(value, context),
+//       ),
+//       CustomInputField(
+//         fieldKey: _confirmKey,
+//         text: S.of(context).ConfirmNewPassword,
+//         controller: _confirmPasswordController,
+//         keyboardType: TextInputType.emailAddress,
+//         validator: (value) => validatePassword(value, context),
+//       ),
+
+//       const SizedBox(height: 16.0),
+
+//       CustomOrangeButton(
+//         backgroundColor: MyColors.kPrimaryColor,
+//         text: S.of(context).Confirm,
+//         onTap: () async {
+//           if (_formKey.currentState!.validate()) {
+//             if (_confirmKey.currentState!.validate()) {
+//               await sl<AuthProvider>()
+//                   .resetPassword(
+//                       newPassword: _passwordController.text.trim())
+//                   .then((value) => QuickAlert.show(
+//                       context: context,
+//                       type: QuickAlertType.success,
+//                       confirmBtnColor: MyColors.kGreen,
+//                       title: 'Success',
+//                       text: 'Password Reset successfully',
+//                       onConfirmBtnTap: () =>
+//                           Future.delayed(const Duration(seconds: 2), () {
+//                             Navigator.pushAndRemoveUntil(context,
+//                                 MaterialPageRoute(builder: (context) {
+//                               return const AuthenticationScreenT(
+//                                   pageType: MyRes.kSignIn);
+//                             }), (route) => false);
+//                           })))
+//                   .onError((error, stackTrace) => QuickAlert.show(
+//                         context: context,
+//                         type: QuickAlertType.error,
+//                         confirmBtnColor: MyColors.kGreen,
+//                         title: 'Oops...',
+//                         text: 'Sorry, something went wrong',
+//                         onConfirmBtnTap: () => Navigator.pop(context),
+//                       ));
+//             }
+//           }
+//         },
+//       ),
+//       SizedBox(height: ScreenUtils.getHeight(context) * 0.40),
+//       buildPoweredBy(),
+//               ],
+//             ),
+//     );
+//   }
+// }
+
+class ResetPasswordScreen extends StatelessWidget {
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
       TextEditingController();
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _confirmKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> confirmKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-// Add this line to track the state of the checkbox
-
     return Padding(
       padding: const EdgeInsets.all(30.0),
-      child: Form(
-          //  key: _formKey,
-          child: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(height: 50.0),
+          SizedBox(height: 50.0),
           Text(
             S.of(context).NewPassword,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 20.0,
               color: MyColors.kPrimaryColor,
             ),
           ),
           Text(S.of(context).EnterYourNewPassword),
-          const SizedBox(height: 50.0),
-          // Your CustomInputField widgets
-
-          //? Name and Surname field
-
-          //? Email field
+          SizedBox(height: 50.0),
           CustomInputField(
-            fieldKey: _formKey,
+            fieldKey: formKey,
             text: S.of(context).NewPassword,
-            controller: _passwordController,
+            controller: passwordController,
             keyboardType: TextInputType.emailAddress,
             validator: (value) => validatePassword(value, context),
           ),
           CustomInputField(
-            fieldKey: _confirmKey,
+            fieldKey: confirmKey,
             text: S.of(context).ConfirmNewPassword,
-            controller: _confirmPasswordController,
+            controller: confirmPasswordController,
             keyboardType: TextInputType.emailAddress,
             validator: (value) => validatePassword(value, context),
           ),
-
-          const SizedBox(height: 16.0),
-
+          SizedBox(height: 16.0),
           CustomOrangeButton(
             backgroundColor: MyColors.kPrimaryColor,
             text: S.of(context).Confirm,
             onTap: () async {
-              if (_formKey.currentState!.validate()) {
-                if (_confirmKey.currentState!.validate()) {
-                  await sl<AuthProvider>()
-                      .resetPassword(
-                          newPassword: _passwordController.text.trim())
-                      .then((value) => QuickAlert.show(
-                          context: context,
-                          type: QuickAlertType.success,
-                          confirmBtnColor: MyColors.kGreen,
-                          title: 'Success',
-                          text: 'Password Reset successfully',
-                          onConfirmBtnTap: () =>
-                              Future.delayed(const Duration(seconds: 2), () {
-                                Navigator.pushAndRemoveUntil(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return const AuthenticationScreenT(
-                                      pageType: MyRes.kSignIn);
-                                }), (route) => false);
-                              })))
-                      .onError((error, stackTrace) => QuickAlert.show(
-                            context: context,
-                            type: QuickAlertType.error,
-                            confirmBtnColor: MyColors.kGreen,
-                            title: 'Oops...',
-                            text: 'Sorry, something went wrong',
-                            onConfirmBtnTap: () => Navigator.pop(context),
-                          ));
-                }
-              }
+              // if (formKey.currentState!.validate()) {
+              //   if (confirmKey.currentState!.validate()) {
+              await sl<AuthProvider>()
+                  .resetPassword(newPassword: passwordController.text.trim())
+                  .then((value) => QuickAlert.show(
+                        context: context,
+                        type: QuickAlertType.success,
+                        confirmBtnColor: MyColors.kGreen,
+                        title: 'Success',
+                        text: 'Password Reset successfully',
+                        onConfirmBtnTap: () => Future.delayed(
+                          const Duration(seconds: 2),
+                          () {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const AuthenticationScreenT(
+                                  pageType: MyRes.kSignIn,
+                                ),
+                              ),
+                              (route) => false,
+                            );
+                          },
+                        ),
+                      ))
+                  .onError((error, stackTrace) => QuickAlert.show(
+                        context: context,
+                        type: QuickAlertType.error,
+                        confirmBtnColor: MyColors.kGreen,
+                        title: 'Oops...',
+                        text: 'Sorry, something went wrong'+error.toString(),
+                        onConfirmBtnTap: () => Navigator.pop(context),
+                      ));
+              //   }
+              // }
             },
           ),
           SizedBox(height: ScreenUtils.getHeight(context) * 0.40),
           buildPoweredBy(),
         ],
-      )),
+      ),
     );
   }
 }

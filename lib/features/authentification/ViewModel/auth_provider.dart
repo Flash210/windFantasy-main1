@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/authentification/Model/user_credentials.dart';
 import 'package:front/features/authentification/repository/authentification_repository.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -10,11 +11,14 @@ import 'package:front/core/services/token_manager.dart';
 import 'package:front/features/authentification/Model/user_model.dart';
 import 'package:front/features/authentification/repository/auth_repository.dart';
 import 'package:logger/logger.dart';
+import 'package:logger/web.dart';
 
 class AuthProvider extends ChangeNotifier {
   final AuthRepository _authRepository;
   final AuthentificationRepository authentificationRepository;
   bool _isAuthenticated = false;
+
+  Logger logger = Logger();
 
   bool get isAuthenticated => _isAuthenticated;
 
@@ -22,13 +26,6 @@ class AuthProvider extends ChangeNotifier {
       {required this.authentificationRepository,
       required AuthRepository authRepository})
       : _authRepository = authRepository;
-
-  //  You? userHaya;
-
-  // Future<You> getUserData() async {
-  //   userHaya = await authentificationRepository.getUserDataInfo();
-  //   return userHaya!;
-  // }
 
 // ! Sign up method
   Future<void> signUp({
@@ -141,12 +138,15 @@ class AuthProvider extends ChangeNotifier {
         final responseBody = json.decode(response.body);
 
         if (responseBody['success']) {
+          logger.i('Email verified successfully');
           notifyListeners();
         } else {}
       } else {
+        logger.e('Failed to verify email.' + response.body.toString());
         throw Exception('Failed to verify email.');
       }
     } catch (e) {
+      logger.e('Failed to verify email.' + e.toString());
       throw Exception('Error Net ');
     }
   }
@@ -166,25 +166,85 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+
+
+
   // ! Reset password method
-  Future<bool> resetPassword({required String newPassword}) async {
+  /*
+  Future<void> resetPassword({required String newPassword}) async {
+    final String? token = await sl<TokenManager>().getToken();
+
+    final Map<String, dynamic> body = {
+      'newPassword': newPassword,
+    };
+
+
     final response = await http.post(
       Uri.parse(AppConfig.kUserBaseUrl + AppConfig.kResetPasswordEndPoint),
-      body: {'newPassword': newPassword},
+     // body: {'newPassword': newPassword},
+      body: jsonEncode(body),
+
+      headers: {
+        'Authorization':'Bearer $token',
+        'Content-Type': 'application/json',
+
+
+      },
     );
-    Logger logger = Logger();
+
+
+    // Logger logger = Logger();
 
     if (response.statusCode == 200) {
       print("Yes");
       logger.i('Password reset successfully');
-      return true;
+      //return true;
     } else {
-      logger.e('Failed to reset password'+response.body.toString());
-      
+      logger.e('Failed to reset password' + response.body.toString());
+
       print("No");
-      return false;
+    //  return false;
+    }
+  }*/
+  Future<void> resetPassword({required String newPassword}) async {
+    try {
+
+
+      final String? token = await sl<TokenManager>().getToken();
+logger.i('Reset PAssword: Token is '+token.toString());
+      final String baseUrl = AppConfig.kUserBaseUrl;
+      final String resetPasswordEndpoint = AppConfig.kResetPasswordEndPoint;
+      final Uri url = Uri.parse(baseUrl + resetPasswordEndpoint);
+
+      final Map<String, String> headers = {
+        'Content-Type': 'application/json',
+      };
+      final Map<String, dynamic> requestBody = {
+        'sentToken':token,
+        'newPassword': newPassword};
+      logger.i('Reset PAssword: headers is '+headers.toString());
+
+      final http.Response response = await http.post(
+        url,
+        headers: headers,
+        body: jsonEncode(requestBody),
+      );
+
+      if (response.statusCode == 200) {
+        print("Yes");
+        logger.i('Password reset successfully');
+        // Handle success
+      } else {
+        logger.e('Failed to reset password: ' + response.body.toString());
+        print("No");
+        // Handle failure
+      }
+    } catch (error) {
+      logger.e('Error resetting password: $error');
+      // Handle error
     }
   }
+
 
   // ! password visibility
   bool _obscureText = true;
