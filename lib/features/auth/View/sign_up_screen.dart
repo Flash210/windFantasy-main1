@@ -12,7 +12,7 @@ import 'package:front/features/auth/View/auth_screen.dart';
 import 'package:front/features/auth/ViewModel/auth_provider.dart';
 import 'package:front/features/auth/keys_class.dart';
 import 'package:front/features/auth/utils/validate_fields.dart';
-import 'package:front/features/auth/utils/welcome_text.dart';
+import 'package:front/features/auth/View/widgets/welcome_text.dart';
 
 import 'package:front/generated/l10n.dart';
 import 'package:provider/provider.dart';

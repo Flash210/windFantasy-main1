@@ -7,7 +7,7 @@ import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/features/auth/View/auth_screen.dart';
 import 'package:front/features/auth/ViewModel/auth_provider.dart';
 import 'package:front/features/auth/utils/validate_fields.dart';
-import 'package:front/features/auth/utils/welcome_text.dart';
+import 'package:front/features/auth/View/widgets/welcome_text.dart';
 
 import 'package:front/features/home%20screen/View/on_boarding_home.dart';
 import 'package:front/generated/l10n.dart';

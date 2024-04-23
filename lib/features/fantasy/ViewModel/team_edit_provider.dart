@@ -102,16 +102,6 @@ class TeamEditProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // ! player availabilty
-  // int _availablePlayer = 0;
-
-  // int get availablePlayer => _availablePlayer;
-
-  // void updateAvailablePlayer() {
-  //   print("Selected List lenght ${_addTeamToList.length}");
-  //   _availablePlayer = _addTeamToList.length;
-  //   notifyListeners();
-  // }
 
   //! save team name and player name :
   String _teamName = "";

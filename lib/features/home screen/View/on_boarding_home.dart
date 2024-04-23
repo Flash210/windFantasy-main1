@@ -1,11 +1,12 @@
-import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
-import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
+
 import 'package:flutter/material.dart';
+import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/features/fixtures/View/fixtures_screen.dart';
 import 'package:front/features/home%20screen/View/profilee_screen.dart';
-import 'package:front/features/home%20screen/View/fantasy_global_screen.dart';
+import 'package:front/features/gameweek%20dashbord/View/game_week_dashbord.dart';
 import 'package:front/features/ranking/View/ranking_screen.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class Homey extends StatefulWidget {
   const Homey({super.key});
@@ -20,9 +21,9 @@ class _HomeyState extends State<Homey> {
   int currentIndex = 0;
 
   final List<Widget> pages = [
+     GameWeekDashboard(),
+    //const RankingScreen(),
     const FixturesScreen(),
-    const RankingScreen(),
-    const StatisticScreen(),
     const ProfileScreeen()
   ];
   @override
@@ -33,46 +34,70 @@ class _HomeyState extends State<Homey> {
         index: currentIndex,
         children: pages,
       ),
-      bottomNavigationBar: buildNavigationButton(context),
-    );
+      bottomNavigationBar:buildNavigationButton(context));
+      //buildNavigationButton(context));
   }
 
-  CurvedNavigationBar buildNavigationButton(BuildContext context) {
-    return CurvedNavigationBar(
-      color: MyColors.kSecondaryColor,
+
+
+  SalomonBottomBar buildNavigationButton(BuildContext context) {
+    return SalomonBottomBar(
+      currentIndex: currentIndex,
       onTap: (value) {
         setState(() {
           currentIndex = value;
         });
       },
-      backgroundColor: MyColors.kWhite,
       items: [
-        const CurvedNavigationBarItem(
-            child: Icon(
-          Icons.home,
-          size: 30,
-          color: MyColors.kWhite,
-        )),
-        const CurvedNavigationBarItem(
-            child: Icon(
-          Icons.stadium_rounded,
-          size: 30,
-          color: MyColors.kWhite,
-        )),
-        CurvedNavigationBarItem(
-            child: Image.asset(
-          'assets/stat.png',
-          width: 20,
-          height: 20,
-          color: MyColors.kWhite,
-        )),
-        const CurvedNavigationBarItem(
-          child: Icon(
-            Icons.person,
-            color: MyColors.kWhite,
-          ),
+        buildSalomonBottomItem(text: "Home",
+            textColor: const Color(0xFF3CCF4E),
+            icon: Icons.stacked_bar_chart,
+            selectedColor: const Color(0xFF3CCF4E)),
+
+        // buildSalomonBottomItem(text: "Fixtures",
+        //     textColor: const Color(0xFF3CCF4E),
+        //     icon: Icons.stacked_bar_chart,
+        //     selectedColor: const Color(0xFF3CCF4E)),
+
+        // SalomonBottomBarItem(
+        //   icon: const Icon(Icons.receipt, size: 30, color: MyColors.kPrimaryColor),
+        //   title: const MyCustomText(text:  "Fixtures"),
+        //   selectedColor: MyColors.kPrimaryColor,
+        // ),
+
+
+
+
+        buildSalomonBottomItem(text: "Fixture",
+            textColor: const Color(0xFF50C4ED),
+            icon: Icons.sports_soccer,
+            selectedColor: const Color(0xFF73A9C0)),
+
+
+        buildSalomonBottomItem(
+            text: "Profile",
+            textColor: const Color(0xFF7F27FF),
+            icon: Icons.person,
+            selectedColor: const Color(0xFF9D70D0)
         ),
+
       ],
     );
   }
+
+
+  buildSalomonBottomItem({
+    required String text ,
+    required Color textColor,
+    required IconData icon,
+    required Color selectedColor
+}){
+  return   SalomonBottomBarItem(
+      icon: Icon(icon, color: textColor),
+      title: MyCustomText(text: text,
+          style: TextStyle(color: textColor)),
+      selectedColor: selectedColor,
+    );
+  }
+
 }

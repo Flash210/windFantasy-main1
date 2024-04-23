@@ -9,19 +9,20 @@ import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/auth/View/auth_screen.dart';
 import 'package:front/features/auth/ViewModel/auth_provider.dart';
 import 'package:front/features/auth/utils/validate_fields.dart';
+import 'package:front/features/auth/utils/validator.dart';
 
 import 'package:front/generated/l10n.dart';
-
-import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
+
 
 
 class ResetPasswordScreen extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> confirmKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> passwordKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> confirmPasswordKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +42,14 @@ class ResetPasswordScreen extends StatelessWidget {
           Text(S.of(context).EnterYourNewPassword),
           const SizedBox(height: 50.0),
           CustomInputField(
-            fieldKey: formKey,
+            fieldKey: passwordKey,
             text: S.of(context).NewPassword,
             controller: passwordController,
             keyboardType: TextInputType.emailAddress,
             validator: (value) => validatePassword(value, context),
           ),
           CustomInputField(
-            fieldKey: confirmKey,
+            fieldKey: confirmPasswordKey,
             text: S.of(context).ConfirmNewPassword,
             controller: confirmPasswordController,
             keyboardType: TextInputType.emailAddress,
@@ -59,42 +60,50 @@ class ResetPasswordScreen extends StatelessWidget {
             backgroundColor: MyColors.kPrimaryColor,
             text: S.of(context).Confirm,
             onTap: () async {
-              // if (formKey.currentState!.validate()) {
-              //   if (confirmKey.currentState!.validate()) {
-              await sl<AuthProvider>()
-                  .resetPassword(newPassword: passwordController.text.trim())
-                  .then((value) => QuickAlert.show(
-                        context: context,
-                        type: QuickAlertType.success,
-                        confirmBtnColor: MyColors.kGreen,
-                        title: 'Success',
-                        text: 'Password Reset successfully',
-                        onConfirmBtnTap: () => Future.delayed(
-                          const Duration(seconds: 2),
-                          () {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const AuthenticationScreenT(
-                                  pageType: MyRes.kSignIn,
-                                ),
+              if (passwordKey.currentState!.validate()) {
+                if (confirmPasswordKey.currentState!.validate()) {
+                  if (verifyPassword(
+                      pass1: passwordController.text.trim(),
+                      pass2: confirmPasswordController.text.trim(),
+                      context: context)) {
+
+                        
+                    await sl<AuthProvider>()
+                        .resetPassword(
+                            newPassword: passwordController.text.trim())
+                        .then((value) => QuickAlert.show(
+                              context: context,
+                              type: QuickAlertType.success,
+                              confirmBtnColor: MyColors.kGreen,
+                              title: 'Success',
+                              text: 'Password Reset successfully',
+                              onConfirmBtnTap: () => Future.delayed(
+                                const Duration(seconds: 2),
+                                () {
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const AuthenticationScreenT(
+                                        pageType: MyRes.kSignIn,
+                                      ),
+                                    ),
+                                    (route) => false,
+                                  );
+                                },
                               ),
-                              (route) => false,
-                            );
-                          },
-                        ),
-                      ))
-                  .onError((error, stackTrace) => QuickAlert.show(
-                        context: context,
-                        type: QuickAlertType.error,
-                        confirmBtnColor: MyColors.kGreen,
-                        title: 'Oops...',
-                        text: 'Sorry, something went wrong'+error.toString(),
-                        onConfirmBtnTap: () => Navigator.pop(context),
-                      ));
-              //   }
-              // }
+                            ))
+                        .onError((error, stackTrace) => QuickAlert.show(
+                              context: context,
+                              type: QuickAlertType.error,
+                              confirmBtnColor: MyColors.kGreen,
+                              title: 'Oops...',
+                              text: 'Sorry, something went wrong$error',
+                              onConfirmBtnTap: () => Navigator.pop(context),
+                            ));
+                  }
+                }
+              }
             },
           ),
           SizedBox(height: ScreenUtils.getHeight(context) * 0.40),
@@ -103,4 +112,5 @@ class ResetPasswordScreen extends StatelessWidget {
       ),
     );
   }
+
 }

@@ -5,7 +5,11 @@ import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/features/fantasy/Model/player.dart';
+import 'package:front/features/fantasy/Model/show_team.dart';
+import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 
 class PlayerCard extends StatelessWidget {
   final String playerName;
@@ -13,18 +17,18 @@ class PlayerCard extends StatelessWidget {
   final String teamTshirt;
   final String teamName;
   final Player player;
+  final List<ShowTeam> listOfFantasyPlayers;
   const PlayerCard(
       {super.key,
       required this.playerName,
       required this.position,
       required this.teamTshirt,
       required this.teamName,
-      required this.player});
+      required this.player,
+      required this.listOfFantasyPlayers});
 
   @override
   Widget build(BuildContext context) {
-    print("Player is heeey  " + player.position);
-
     return Scaffold(
         backgroundColor: const Color.fromARGB(240, 255, 255, 255),
         appBar: AppBar(
@@ -61,52 +65,61 @@ class PlayerCard extends StatelessWidget {
                   cleanSHeet: player.totalCleanSheet.toString(),
                   context: context),
               MySizedBox(height: ScreenUtils.getHeight(context) * 0.05),
-              Container(
-                decoration: BoxDecoration(
-                  color: MyColors.kSecondaryColor,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Row(
-                      children: [
-                        Checkbox(
-                            overlayColor: MaterialStateColor.resolveWith(
-                                (states) => MyColors.kPrimaryColor),
-                            activeColor: MyColors.kPrimaryColor,
-                            value: false,
-                            onChanged: (value) {}),
-                        const MyCustomText(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Provider.of<ShowTeamProvider>(context,
+                                  listen: false)
+                              .setString(listOfFantasyPlayers.first.captain!,
+                                  player.id.toString());
+                          Logger logger = Logger();
+
+                          logger.i(" Capitan ${listOfFantasyPlayers.first.viceCaptain}");
+
+                        },
+                        child: const MyCustomText(
                           text: "Capitan",
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Checkbox(
-                            overlayColor: MaterialStateColor.resolveWith(
-                                (states) => MyColors.kPrimaryColor),
-                            activeColor: MyColors.kPrimaryColor,
-                            value: true,
-                            onChanged: (value) {}),
-                        MyCustomText(
+                      ),
+                    ],
+                  ),
+
+
+
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Provider.of<ShowTeamProvider>(context,
+                              listen: false)
+                              .setString(listOfFantasyPlayers[0].viceCaptain!,
+                              player.id.toString());
+                          Logger logger = Logger();
+                          logger.i("Vice Capitan ${listOfFantasyPlayers[0].viceCaptain}");
+
+                        },
+                        child: const MyCustomText(
                           text: "Vice Capitan",
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+
+                ],
               )
             ],
           ),

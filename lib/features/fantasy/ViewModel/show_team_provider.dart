@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:front/core/services/config.dart';
@@ -8,6 +9,9 @@ import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
+
+import '../../gameweek dashbord/model/game_week.dart';
 
 class ShowTeamProvider extends ChangeNotifier {
   List<ShowTeam> showTeam = [];
@@ -26,6 +30,7 @@ class ShowTeamProvider extends ChangeNotifier {
         final data = jsonData['data'] as List<dynamic>;
         showTeam = data.map((teamData) => ShowTeam.fromJson(teamData)).toList();
         print(showTeam.length);
+
         notifyListeners();
         return showTeam;
       } catch (e) {
@@ -83,6 +88,51 @@ class ShowTeamProvider extends ChangeNotifier {
   }) {
     saveTeamShirt[playerName] = teamShirt;
 
+    notifyListeners();
+  }
+
+  List<GameWeek> gameWeek = []; // Initialize as an empty list
+
+  Future<List<GameWeek>> getGameWeekAndPoints() async {
+    Logger logger = Logger();
+
+    final String? token = await sl<TokenManager>().getToken();
+
+    var response = await http.get(
+      Uri.parse("${AppConfig.kUserPlayerBaseUrl}getAllUserPlay"),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json'
+      },
+    );
+
+    if (response.statusCode == 200) {
+      try {
+        final jsonData = json.decode(response.body);
+        final data = jsonData['data'] as List<dynamic>;
+
+        List<GameWeek> showGameWeek = data
+            .map((gameWeekData) => GameWeek.fromJson(gameWeekData))
+            .toList();
+            gameWeek=showGameWeek;
+
+        logger.i("GameWeek: Good ${showGameWeek[0].gameWeek}");
+
+        notifyListeners();
+        return showGameWeek;
+      } catch (e) {
+        logger.e(
+            "Error processing JSON data: $e + ${response.body} + ${response.statusCode}");
+        return [];
+      }
+    } else {
+      logger.e(" internet Error processing JSON data: ${response.body}");
+      return [];
+    }
+  }
+
+  void setString(String ch1, String ch2) {
+    ch1 = ch2;
     notifyListeners();
   }
 }

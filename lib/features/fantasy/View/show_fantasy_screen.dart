@@ -30,86 +30,85 @@ Column buildShowFantasyTeam(
         playerPosition: MyRes.kGoalKepper1,
         isItBenched: "No",
         onTap: () {
+
           navigateToPlayerCard(context, allPlayers, listOfFantasyPlayers, myMap,
               myTshirtMap, MyRes.kGoalKepper1, S.of(context).GoalKepper);
         },
       ),
       const SizedBox(height: 15),
-      Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            buildPlayerIcon(
-              myTshirtMap: myTshirtMap,
-              context: context,
-              playerName: getTextToShow(
-                  listOfFantasyPlayers, allPlayers, myMap, MyRes.kDefenders[0]),
-              playerPosition: MyRes.kDefenders[0],
-              isItBenched: "No",
-              onTap: () {
-                navigateToPlayerCard(
-                    context,
-                    allPlayers,
-                    listOfFantasyPlayers,
-                    myMap,
-                    myTshirtMap,
-                    MyRes.kDefenders[0],
-                    S.of(context).Defender);
-              },
-            ),
-            buildPlayerIcon(
-                onTap: () {
-                  navigateToPlayerCard(
-                      context,
-                      allPlayers,
-                      listOfFantasyPlayers,
-                      myMap,
-                      myTshirtMap,
-                      MyRes.kDefenders[1],
-                      S.of(context).Defender);
-                },
-                myTshirtMap: myTshirtMap,
-                context: context,
-                playerName: getTextToShow(listOfFantasyPlayers, allPlayers,
-                    myMap, MyRes.kDefenders[1]),
-                playerPosition: MyRes.kDefenders[1],
-                isItBenched: "No"),
-            buildPlayerIcon(
-                onTap: () {
-                  navigateToPlayerCard(
-                      context,
-                      allPlayers,
-                      listOfFantasyPlayers,
-                      myMap,
-                      myTshirtMap,
-                      MyRes.kDefenders[2],
-                      S.of(context).Defender);
-                },
-                myTshirtMap: myTshirtMap,
-                context: context,
-                playerName: getTextToShow(listOfFantasyPlayers, allPlayers,
-                    myMap, MyRes.kDefenders[2]),
-                playerPosition: MyRes.kDefenders[2],
-                isItBenched: "No"),
-            buildPlayerIcon(
-                onTap: () {
-                  navigateToPlayerCard(
-                      context,
-                      allPlayers,
-                      listOfFantasyPlayers,
-                      myMap,
-                      myTshirtMap,
-                      MyRes.kDefenders[3],
-                      S.of(context).Defender);
-                },
-                myTshirtMap: myTshirtMap,
-                context: context,
-                playerName: getTextToShow(listOfFantasyPlayers, allPlayers,
-                    myMap, MyRes.kDefenders[3]),
-                playerPosition: MyRes.kDefenders[3],
-                isItBenched: "No"),
-          ]),
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        buildPlayerIcon(
+          myTshirtMap: myTshirtMap,
+          context: context,
+          playerName: getTextToShow(
+              listOfFantasyPlayers, allPlayers, myMap, MyRes.kDefenders[0]),
+          playerPosition: MyRes.kDefenders[0],
+          isItBenched: "No",
+          onTap: () {
+            navigateToPlayerCard(
+                context,
+                allPlayers,
+                listOfFantasyPlayers,
+                myMap,
+                myTshirtMap,
+                MyRes.kDefenders[0],
+                S.of(context).Defender);
+          },
+        ),
+        buildPlayerIcon(
+            onTap: () {
+              navigateToPlayerCard(
+                  context,
+                  allPlayers,
+                  listOfFantasyPlayers,
+                  myMap,
+                  myTshirtMap,
+                  MyRes.kDefenders[1],
+                  S.of(context).Defender);
+            },
+            myTshirtMap: myTshirtMap,
+            context: context,
+            playerName: getTextToShow(
+                listOfFantasyPlayers, allPlayers, myMap, MyRes.kDefenders[1]),
+            playerPosition: MyRes.kDefenders[1],
+            isItBenched: "No"),
+        buildPlayerIcon(
+            onTap: () {
+              navigateToPlayerCard(
+                  context,
+                  allPlayers,
+                  listOfFantasyPlayers,
+                  myMap,
+                  myTshirtMap,
+                  MyRes.kDefenders[2],
+                  S.of(context).Defender);
+            },
+            myTshirtMap: myTshirtMap,
+            context: context,
+            playerName: getTextToShow(
+                listOfFantasyPlayers, allPlayers, myMap, MyRes.kDefenders[2]),
+            playerPosition: MyRes.kDefenders[2],
+            isItBenched: "No"),
+        buildPlayerIcon(
+            onTap: () {
+              navigateToPlayerCard(
+                  context,
+                  allPlayers,
+                  listOfFantasyPlayers,
+                  myMap,
+                  myTshirtMap,
+                  MyRes.kDefenders[3],
+                  S.of(context).Defender);
+            },
+            myTshirtMap: myTshirtMap,
+            context: context,
+            playerName: getTextToShow(
+                listOfFantasyPlayers, allPlayers, myMap, MyRes.kDefenders[3]),
+            playerPosition: MyRes.kDefenders[3],
+            isItBenched: "No"),
+      ]),
       const SizedBox(height: 30),
-      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         buildPlayerIcon(
             onTap: () {
               navigateToPlayerCard(
@@ -181,7 +180,7 @@ Column buildShowFantasyTeam(
       ]),
       const SizedBox(height: 30),
       const SizedBox(height: 30),
-      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         buildPlayerIcon(
             onTap: () {
               navigateToPlayerCard(

@@ -38,6 +38,7 @@ class CustomInputField extends StatelessWidget {
             child: Form(
               key: fieldKey,
               child: TextFormField(
+
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
                       // border: InputBorder.none,
