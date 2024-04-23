@@ -85,6 +85,7 @@ Column buildTeamSection(
 
               for (var i in listOfFantasyPlayers) {
                 i.playingInGameweeks = i.gameweeks;
+
               }
               sl<TokenManager>()
                 ..savePlayerPositionToMap(

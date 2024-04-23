@@ -19,16 +19,13 @@ class _FantasyScreenState extends State<FantasyScreen> {
 
   @override
   void initState() {
-       playerSelected = Provider.of<AuthProvider>(context, listen: false)
+    playerSelected = Provider.of<AuthProvider>(context, listen: false)
         .userDataa!
         .playersSelected;
 
-
     setPlayerList();
     super.initState();
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -44,47 +41,35 @@ class _FantasyScreenState extends State<FantasyScreen> {
       body: Padding(
         padding: const EdgeInsets.only(top: 20, left: 5, right: 5),
         child: SingleChildScrollView(
-          child:
+          child: Column(
+            children: [
+              MySizedBox(
+                height: ScreenUtils.getHeight(context) * 0.01,
+              ),
 
-                Column(
-                  children: [
-                    MySizedBox(
-                      height: ScreenUtils.getHeight(context) * 0.01,
-                    ),
+              buildAppBard(context),
 
-                    buildAppBard(context),
+              // buildAppBar(bank: snapshot.data!.data.bank),
+              MySizedBox(
+                height: ScreenUtils.getHeight(context) * 0.033,
+              ),
 
-                    // buildAppBar(bank: snapshot.data!.data.bank),
-                    MySizedBox(
-                      height: ScreenUtils.getHeight(context) * 0.033,
-                    ),
-
-                    // ! ...............................
-                    Container(
-
-
-                    decoration: const BoxDecoration(
-                          image: DecorationImage(
-                        image: AssetImage('assets/empty.png'),
-                        fit: BoxFit.fill
-                       // fit: BoxFit.cover,
-                      )),
-                      // child: InteractiveViewer(
-                      //   constrained: false,
-                      child:
-                      Stack(
-                        children: [
-
-
-
-                          buildCreationAndShowTeam()],
-                      ),
-                    ),
-                    // ),
-                  ],
+              // ! ...............................
+              Container(
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                  image: AssetImage('assets/emptyEF.png',),
+                  fit: BoxFit.cover,
+                )),
+                // child: InteractiveViewer(
+                //   constrained: false,
+                child: Stack(
+                  children: [buildCreationAndShowTeam()],
                 ),
-
-
+              ),
+              // ),
+            ],
+          ),
         ),
       ),
     );
@@ -92,64 +77,60 @@ class _FantasyScreenState extends State<FantasyScreen> {
 
   Container buildAppBard(BuildContext context) {
     return Container(
-                    padding: const EdgeInsets.only(top: 20,bottom: 20,right: 5,left: 5),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(8),
-                            topRight: Radius.circular(8)),
-                        color: MyColors.kSecondaryColor),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        RichText(
-                          text:  TextSpan(
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 11),
-                            children: [
-                              const TextSpan(text: "Team Name: "),
-                              TextSpan(
-                                text: sl<AuthProvider>().userDataa!.teamName,
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                       Container(
-                         width: ScreenUtils.getWidth(context) * 0.3,
-                         padding: const EdgeInsets.all(8),
-                         decoration: BoxDecoration(
-                           color: Colors.white,
-                           borderRadius: BorderRadius.circular(10),
-                         ),
-                         child: Row(
-                           children: [
-                             const MyCustomText(
-                               text: "Budget:",
-                               style: TextStyle(
-                                 fontSize: 13,
-                                 color: Colors.black,
-                               )
-                             ),
-                             MyCustomText(
-                               text: "${sl<AuthProvider>().userDataa!.bank} \$",
-                               style: TextStyle(
-                                 fontSize: 16,
-                                 color: Colors.green,
-                                 fontFamily: GoogleFonts.roboto().fontFamily,
-                                 fontWeight: FontWeight.bold,
-                               ),
-                             ),
-                           ],
-                         ),)
-                      ],
-
-                    ),
-                  );
+      padding: const EdgeInsets.only(top: 20, bottom: 20, right: 5, left: 5),
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(8), topRight: Radius.circular(8)),
+          color: MyColors.kSecondaryColor),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          RichText(
+            text: TextSpan(
+              style: const TextStyle(color: Colors.white, fontSize: 11),
+              children: [
+                const TextSpan(text: "Team Name: "),
+                TextSpan(
+                  text: sl<AuthProvider>().userDataa!.teamName,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: ScreenUtils.getWidth(context) * 0.3,
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              children: [
+                const MyCustomText(
+                    text: "Budget:",
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.black,
+                    )),
+                MyCustomText(
+                  text: "${sl<AuthProvider>().userDataa!.bank} \$",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.green,
+                    fontFamily: GoogleFonts.roboto().fontFamily,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   Consumer<PlayerProvider> buildCreationAndShowTeam() {
@@ -210,7 +191,6 @@ class _FantasyScreenState extends State<FantasyScreen> {
                 myMap: myMapOfPlayersName,
                 myTshirtMap: myMapOfTshirt);
 
-        //return buildTeamSection(slectedPlayerFromMap, playerPositions, context, forwards, midfielders, defenders, goalkeepers, moneyRemaining, playersSelected);
       },
     );
   }

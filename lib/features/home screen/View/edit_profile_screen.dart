@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/btn_and_text_widget.dart';
 import 'package:front/core/common_widget/custom_text.dart';
-import 'package:front/core/common_widget/show_player_widget.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/auth/Model/user_model.dart';
 import 'package:front/features/auth/ViewModel/auth_provider.dart';
-
 import 'package:front/features/home%20screen/View/widgets/custom_app_bar.dart';
+import '../../../core/common_widget/custom_input_field.dart';
+import '../../../generated/l10n.dart';
+import '../../auth/utils/validate_fields.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -19,9 +20,13 @@ class EditProfileScreen extends StatefulWidget {
 
 class EditProfileScreenState extends State<EditProfileScreen> {
   late Future<UserModel?> _userModel;
-  TextEditingController name = TextEditingController();
-  TextEditingController teamName = TextEditingController();
-  TextEditingController phone = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController teamNameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+ final   GlobalKey<FormState> _nameKey = GlobalKey<FormState>();
+    final   GlobalKey<FormState> _phoneKey = GlobalKey<FormState>();
+ final  GlobalKey<FormState> _teamNameKey = GlobalKey<FormState>();
+
 
   @override
   void initState() {
@@ -33,7 +38,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[200],
       appBar: buildCustomAppBar("Information"),
       body: FutureBuilder<UserModel?>(
         future: _userModel,
@@ -49,7 +54,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                 child: Column(
                   children: [
                     MySizedBox(
-                      height: ScreenUtils.getHeight(context) * 0.15,
+                      height: ScreenUtils.getHeight(context) * 0.11,
                     ),
                     Container(
                         padding: const EdgeInsets.all(20.0),
@@ -62,7 +67,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                               spreadRadius: 5,
                               blurRadius: 7,
                               offset: const Offset(
-                                  0, 3), // changes position of shadow
+                                  0, 3),
                             ),
                           ],
                         ),
@@ -70,24 +75,34 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              buildEditProfile(
-                                  labelText: "Name",
-                                  controller: name,
-                                  hintText: userData.name),
-                              MySizedBox(
-                                  height:
-                                      ScreenUtils.getHeight(context) * 0.01),
-                              buildEditProfile(
-                                  labelText: "teamName",
-                                  controller: teamName,
-                                  hintText: userData.teamName),
-                              MySizedBox(
-                                  height:
-                                      ScreenUtils.getHeight(context) * 0.01),
-                              buildEditProfile(
-                                  labelText: "phone",
-                                  controller: phone,
-                                  hintText: userData.phone.toString()),
+                              CustomInputField(
+
+                                fieldKey: _nameKey,
+                                hintText: userData.name,
+                                text: S.of(context).Email,
+                                controller: nameController,
+                                keyboardType: TextInputType.emailAddress,
+                                validator: (value) => validateEmail(value, context),
+                              ),
+                              CustomInputField(
+
+                                fieldKey: _teamNameKey,
+                                hintText: userData.teamName,
+                                text: S.of(context).TeamName,
+                                controller: teamNameController,
+                                keyboardType: TextInputType.emailAddress,
+                                validator: (value) => validateTeamName(value, context),
+                              ),   CustomInputField(
+
+                                fieldKey: _phoneKey,
+                                hintText: userData.phone.toString(),
+                                text: "Phone",
+                                controller: nameController,
+                                keyboardType: TextInputType.number,
+                                validator: (value) => validatePhoneNumber(value, context),
+                              ),
+
+
                             ])),
                     const SizedBox(
                       height: 15,
@@ -99,9 +114,9 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                         onTap: () {
                           sl<AuthProvider>().updateUser(
                               userId: userData.id.toString(),
-                              name: name.text.trim(),
-                              phone: phone.text.trim(),
-                              teamName: teamName.text.trim());
+                              name: nameController.text.trim(),
+                              phone: phoneController.text.trim(),
+                              teamName: teamNameController.text.trim());
                         })
                   ],
                 ),

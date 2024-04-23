@@ -1,80 +1,123 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/custom_text.dart';
-import 'package:front/features/ranking/ViewModel/ranking_provider.dart';
+import 'package:front/core/constants/screen_utils.dart';
+import 'package:front/features/auth/ViewModel/auth_provider.dart';
 import 'package:provider/provider.dart';
+
+
+import '../../../core/constants/colors.dart';
+import '../../../core/services/injection_container.dart';
+import '../ViewModel/ranking_provider.dart';
+import '../model/top_user_gameweek.dart';
 
 class RankingScreen extends StatefulWidget {
   const RankingScreen({super.key});
+
 
   @override
   State<RankingScreen> createState() => _RankingScreenState();
 }
 
 class _RankingScreenState extends State<RankingScreen> {
+  List<TopUser> topUser = [];
+
+
   @override
   void initState() {
     super.initState();
-    // Fetch user rank when the screen is initialized
-    Provider.of<RankingProvider>(context, listen: false).fetchUserRank();
+//getListOfTopUser();
   }
 
   @override
   Widget build(BuildContext context) {
+    print("Top User is ${topUser.length}");
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ranking Screen'),
       ),
-      body: Stack(
+      body: Column(
         children: [
-          // Your main content here
-          Container(
-              // Your main content container
-              ),
-          // Ranking icon with text
-          Positioned(
-            top: 16, // Adjust top position as needed
-            right: 16, // Adjust right position as needed
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                //color: Color.fromARGB(255, 179, 204, 224),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Consumer<RankingProvider>(
-                builder: (context, rankingProvider, _) {
-                  if (rankingProvider.userRank != null) {
-                    return Row(
-                      children: [
-                        // Lottie.asset(
-                        //   'assets/coin.json',
-                        //   width: 60,
-                        //   height: 60,
-                        // ),
-                        Image.asset(
-                          "assets/ranking.png",
-                          width: 30,
-                          height: 30,
-                        ),
-                        MyCustomText(
-                          text:
-                              " ${rankingProvider.userRank!.rank} /${rankingProvider.userRank!.numberOfUser} ",
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    );
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                },
-              ),
+          MySizedBox(height: ScreenUtils.getHeight(context) * 0.1),
+const MyCustomText(text: "Hey ! User "),
+          const AutoSizeText(
+            maxLines: 2,
+            overflow: TextOverflow.visible,
+            maxFontSize: 18,
+            minFontSize: 13,
+            "Step into the world of soccer legends. Build, "
+                "manage, and compete with your fantasy team for glory! ",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+
             ),
           ),
+
+
+
+
+
+
+MySizedBox(
+    height: ScreenUtils.getHeight(context) *0.5),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              buildGetTopUser(onTap: (){}, text: "Top User \nIn GameWeek"),
+              buildGetTopUser(onTap: (){}, text: "Top User \nIn GameWeek"),
+
+            ],
+          )
+
+
+
         ],
       ),
     );
   }
+}
+
+
+
+
+getListOfTopUser()async{
+ try {
+   final response = await sl<RankingProvider>().getTopUserInGameweek(15);
+   if(response != null){
+     return response;
+   }
+ } catch (e) {
+   print(e);
+ }
+
+}
+
+
+
+buildGetTopUser ({
+  required void Function()? onTap,
+  required String text ,
+
+}){ return GestureDetector(
+onTap: onTap,
+child: Container(
+decoration: BoxDecoration(
+color: MyColors.kSecondaryColor,
+borderRadius: BorderRadius.circular(10.0),
+boxShadow: [
+BoxShadow(
+color: Colors.grey.withOpacity(0.5),
+spreadRadius: 5,
+blurRadius: 7,
+offset: const Offset(
+0, 3))]),
+
+child: Padding(
+padding: const EdgeInsets.all(20.0),
+child: MyCustomText(text:text,style: const TextStyle(
+color: MyColors.kWhite,)),
+)));
 }
