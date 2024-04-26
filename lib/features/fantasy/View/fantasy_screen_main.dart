@@ -47,7 +47,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
                 height: ScreenUtils.getHeight(context) * 0.01,
               ),
 
-              buildAppBard(context),
+              buildAppBard(context, playerSelected: playerSelected),
 
               // buildAppBar(bank: snapshot.data!.data.bank),
               MySizedBox(
@@ -58,7 +58,9 @@ class _FantasyScreenState extends State<FantasyScreen> {
               Container(
                 decoration: const BoxDecoration(
                     image: DecorationImage(
-                  image: AssetImage('assets/emptyEF.png',),
+                  image: AssetImage(
+                    'assets/emptyEF.png',
+                  ),
                   fit: BoxFit.cover,
                 )),
                 // child: InteractiveViewer(
@@ -75,7 +77,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
     );
   }
 
-  Container buildAppBard(BuildContext context) {
+  Container buildAppBard(BuildContext context, {required int playerSelected}) {
     return Container(
       padding: const EdgeInsets.only(top: 20, bottom: 20, right: 5, left: 5),
       decoration: const BoxDecoration(
@@ -102,7 +104,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
             ),
           ),
           Container(
-            width: ScreenUtils.getWidth(context) * 0.3,
+            // width: ScreenUtils.getWidth(context) * 0.3,
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -116,14 +118,20 @@ class _FantasyScreenState extends State<FantasyScreen> {
                       fontSize: 13,
                       color: Colors.black,
                     )),
-                MyCustomText(
-                  text: "${sl<AuthProvider>().userDataa!.bank} \$",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.green,
-                    fontFamily: GoogleFonts.roboto().fontFamily,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Consumer<PlayerProvider>(
+                  builder: (context, playerProvider, _) {
+                    return MyCustomText(
+                      text: playerSelected != 15
+                          ? "${playerProvider.amount} \$"
+                          : sl<AuthProvider>().userDataa!.bank.toString() +
+                              " \$",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -140,21 +148,20 @@ class _FantasyScreenState extends State<FantasyScreen> {
 
         final List<int> forwards = [
           slectedPlayerFromMap["Attaquant1"]?.id ?? 0,
-          slectedPlayerFromMap["Attaquant2"]?.id ?? 0,
           slectedPlayerFromMap["bench1"]?.id ?? 0,
-          slectedPlayerFromMap["bench2"]?.id ?? 0,
+          slectedPlayerFromMap["Attaquant2"]?.id ?? 0,
         ];
 
         final List<int> midfielders = [
+          slectedPlayerFromMap["bench2"]?.id ?? 0,
           slectedPlayerFromMap["Milieu1"]?.id ?? 0,
           slectedPlayerFromMap["Milieu2"]?.id ?? 0,
           slectedPlayerFromMap["Milieu3"]?.id ?? 0,
           slectedPlayerFromMap["Milieu4"]?.id ?? 0,
-          slectedPlayerFromMap["bench3"]?.id ?? 0,
-          slectedPlayerFromMap["bench4"]?.id ?? 0,
         ];
 
         final List<int> defenders = [
+          slectedPlayerFromMap["bench3"]?.id ?? 0,
           slectedPlayerFromMap["Defenseur1"]?.id ?? 0,
           slectedPlayerFromMap["Defenseur2"]?.id ?? 0,
           slectedPlayerFromMap["Defenseur3"]?.id ?? 0,
@@ -163,6 +170,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
 
         final List<int> goalkeepers = [
           slectedPlayerFromMap["Gardien1"]?.id ?? 0,
+          slectedPlayerFromMap["bench4"]?.id ?? 0,
         ];
         final playerPositions = {
           MyRes.kGoalKepper: 1,
@@ -190,7 +198,6 @@ class _FantasyScreenState extends State<FantasyScreen> {
                 listOfFantasyPlayers: listOfFantasyPlayers,
                 myMap: myMapOfPlayersName,
                 myTshirtMap: myMapOfTshirt);
-
       },
     );
   }
@@ -198,7 +205,6 @@ class _FantasyScreenState extends State<FantasyScreen> {
   setPlayerList() async {
     allPlayers = await sl<PlayerProvider>().fetchPlayerss();
     listOfFantasyPlayers = await sl<ShowTeamProvider>().fetchTeams();
-    // print("lenghth " + listOfFantasyPlayers[0].);
     myMapOfPlayersName = await sl<TokenManager>().getMap();
     myMapOfTshirt = await sl<TokenManager>().getTshirtMap();
   }

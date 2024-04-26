@@ -19,7 +19,6 @@ class GameWeekDashboard extends StatefulWidget {
 }
 
 class _GameWeekDashboardState extends State<GameWeekDashboard> {
-
   @override
   void initState() {
     initAh();
@@ -29,7 +28,6 @@ class _GameWeekDashboardState extends State<GameWeekDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    print(sl<ShowTeamProvider>().gameWeek.length);
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: Center(
@@ -44,8 +42,7 @@ class _GameWeekDashboardState extends State<GameWeekDashboard> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: MyCustomText(
-                  text: "GameWeek ${ sl<ShowTeamProvider>().gameWeek[0].gameWeek} Live"
-                      ,
+                  text: " Live",
                   style: const TextStyle(fontSize: 13, color: Colors.white)),
             ),
             MySizedBox(height: ScreenUtils.getHeight(context) * 0.02),
@@ -59,7 +56,7 @@ class _GameWeekDashboardState extends State<GameWeekDashboard> {
               child: Column(
                 children: [
                   MyCustomText(
-                    text:  sl<ShowTeamProvider>().gameWeek[0].points.toString() ,
+                    text: "0",
                     color: Colors.black,
                     style: const TextStyle(fontSize: 70),
                   ),
@@ -79,7 +76,7 @@ class _GameWeekDashboardState extends State<GameWeekDashboard> {
                 GestureDetector(
                   onTap: () async {
                     await sl<AuthProvider>().getUserInfo().then((value) =>
-                        value!.success==true
+                        value!.success == true
                             ? Navigator.pushNamed(context, MyRes.kFantasy)
                             : const CircularProgressIndicator());
                   },
@@ -109,6 +106,8 @@ class _GameWeekDashboardState extends State<GameWeekDashboard> {
 
   initAh() async {
     await sl<ShowTeamProvider>().getGameWeekAndPoints();
+    await sl<AuthProvider>().getUserInfo();
     sl<ShowTeamProvider>().gameWeek;
+    print(sl<ShowTeamProvider>().gameWeek[0].gameWeek);
   }
 }

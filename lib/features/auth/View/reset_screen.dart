@@ -74,7 +74,7 @@ class ResetPasswordScreen extends StatelessWidget {
                         .then((value) => QuickAlert.show(
                               context: context,
                               type: QuickAlertType.success,
-                              confirmBtnColor: MyColors.kGreen,
+                  confirmBtnColor: MyColors.kSecondaryColor,
                               title: 'Success',
                               text: 'Password Reset successfully',
                               onConfirmBtnTap: () => Future.delayed(
@@ -96,7 +96,7 @@ class ResetPasswordScreen extends StatelessWidget {
                         .onError((error, stackTrace) => QuickAlert.show(
                               context: context,
                               type: QuickAlertType.error,
-                              confirmBtnColor: MyColors.kGreen,
+                  confirmBtnColor: MyColors.kSecondaryColor,
                               title: 'Oops...',
                               text: 'Sorry, something went wrong$error',
                               onConfirmBtnTap: () => Navigator.pop(context),

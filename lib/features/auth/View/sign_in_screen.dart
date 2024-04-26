@@ -144,6 +144,7 @@ class SignInScreenT extends StatelessWidget {
             )
             .then((value) => QuickAlert.show(
                   context: context,
+                  confirmBtnColor: MyColors.kSecondaryColor,
                   type: QuickAlertType.success,
                   text: 'Sign In Completed Successfully!',
                   onConfirmBtnTap: () {
@@ -161,7 +162,7 @@ class SignInScreenT extends StatelessWidget {
             .onError((error, stackTrace) => QuickAlert.show(
                   context: context,
                   type: QuickAlertType.error,
-                  confirmBtnColor: MyColors.kGreen,
+                  confirmBtnColor: MyColors.kSecondaryColor,
                   title: 'Oops...',
                   text: 'Sorry, something went wrong',
                   onConfirmBtnTap: () => Navigator.pop(context),

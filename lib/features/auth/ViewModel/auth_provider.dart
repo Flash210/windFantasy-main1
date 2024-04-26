@@ -240,7 +240,7 @@ Future<void> updateUser({
   String? teamName,
 }) async {
   try {
-    final Uri url = Uri.parse("${AppConfig.kUserBaseUrl}Update/$userId"); // Replace with your actual API endpoint
+    final Uri url = Uri.parse("${AppConfig.kUserBaseUrl}Update/$userId");
     final Map<String, dynamic> requestBody = {
       if (name != null) 'name': name,
       if (phone != null) 'phone': phone,

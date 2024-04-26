@@ -17,7 +17,7 @@ class FixturesScreen extends StatefulWidget {
 class FixturesScreenState extends State<FixturesScreen> {
   late Future<List<Fixture>> _fixturesFuture;
   late Future<List<Team>> _teamsFuture;
-  int currentGameweek = 15; // Initial gameweek value
+  int currentGameweek = 33; // Initial gameweek value
   bool increment = false;
 
   @override

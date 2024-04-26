@@ -166,7 +166,7 @@ class SignUpScreenTState extends State<SignUpScreenT> {
           CustomOrangeButton(
             backgroundColor: MyColors.kPrimaryColor,
             text: S.of(context).SignUp,
-            textColor: Colors.black,
+            textColor: Colors.white,
             onTap: () {
               _submitForm();
             },
@@ -202,12 +202,11 @@ class SignUpScreenTState extends State<SignUpScreenT> {
                         context: context,
                         type: QuickAlertType.success,
                         text: 'Mail Send Successfully!',
-                        confirmBtnColor: MyColors.kPrimaryColor,
-
+                        confirmBtnColor: MyColors.kSecondaryColor,
                       ))
                   .onError((error, stackTrace) => QuickAlert.show(
                         context: context,
-                        confirmBtnColor: MyColors.kPrimaryColor,
+                        confirmBtnColor: MyColors.kSecondaryColor,
                         type: QuickAlertType.error,
                         title: 'Oops...',
                         text: 'Sorry, something went wrong',

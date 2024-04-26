@@ -64,10 +64,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "Reset": MessageLookupByLibrary.simpleMessage("Réinitialiser "),
         "Send": MessageLookupByLibrary.simpleMessage("Envoyer"),
         "SignIn": MessageLookupByLibrary.simpleMessage("Se connecter"),
-        "SignUp": MessageLookupByLibrary.simpleMessage("S\'/\'inscrire"),
+        "SignUp": MessageLookupByLibrary.simpleMessage("S\'inscrire"),
         "Team": MessageLookupByLibrary.simpleMessage("Equipe"),
         "Team1": MessageLookupByLibrary.simpleMessage("Equipe: "),
-        "TeamName": MessageLookupByLibrary.simpleMessage("Nom de l\'\'équipe"),
+        "TeamName": MessageLookupByLibrary.simpleMessage("Nom de l\'équipe"),
         "WelcomeSection": MessageLookupByLibrary.simpleMessage(
             "Bienvenue à\nWindFantasy App"),
         "WelcomeSubSection": MessageLookupByLibrary.simpleMessage(

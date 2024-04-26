@@ -4,8 +4,10 @@ import 'package:front/core/common_widget/card_widget.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
+import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
+import 'package:front/features/fantasy/Model/update_team.dart';
 import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
@@ -71,15 +73,8 @@ class PlayerCard extends StatelessWidget {
                   Row(
                     children: [
                       InkWell(
-                        onTap: () {
-                          Provider.of<ShowTeamProvider>(context,
-                                  listen: false)
-                              .setString(listOfFantasyPlayers.first.captain!,
-                                  player.id.toString());
-                          Logger logger = Logger();
-
-                          logger.i(" Capitan ${listOfFantasyPlayers.first.viceCaptain}");
-
+                        onTap: () async {
+                          
                         },
                         child: const MyCustomText(
                           text: "Capitan",
@@ -92,20 +87,20 @@ class PlayerCard extends StatelessWidget {
                       ),
                     ],
                   ),
-
-
-
                   Row(
                     children: [
                       InkWell(
                         onTap: () {
-                          Provider.of<ShowTeamProvider>(context,
-                              listen: false)
-                              .setString(listOfFantasyPlayers[0].viceCaptain!,
-                              player.id.toString());
+                          listOfFantasyPlayers[0].viceCaptain =
+                              player.id.toString();
+                          // Provider.of<ShowTeamProvider>(context, listen: false)
+                          //     .setString(listOfFantasyPlayers[0].viceCaptain!,
+                          //         player.id.toString());
                           Logger logger = Logger();
-                          logger.i("Vice Capitan ${listOfFantasyPlayers[0].viceCaptain}");
+                          logger.i("Vice Capitan ${player.id.toString()}");
 
+                          logger.i(
+                              "Vice Capitan ${listOfFantasyPlayers[0].viceCaptain}");
                         },
                         child: const MyCustomText(
                           text: "Vice Capitan",
@@ -118,7 +113,6 @@ class PlayerCard extends StatelessWidget {
                       ),
                     ],
                   ),
-
                 ],
               )
             ],
