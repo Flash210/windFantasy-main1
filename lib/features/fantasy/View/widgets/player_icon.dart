@@ -14,6 +14,8 @@ GestureDetector buildPlayerIcon(
     onTap: onTap,
     child: isItBenched == "No"
         ? buildPlayerContainer(
+          
+          
             playerName: playerName,
             playerPosition: playerPosition,
             teamName:

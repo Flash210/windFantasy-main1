@@ -1,5 +1,6 @@
 part of 'fantasy_screen.dart';
 
+
 class FantasyScreen extends StatefulWidget {
   const FantasyScreen({super.key});
 
@@ -19,24 +20,21 @@ class _FantasyScreenState extends State<FantasyScreen> {
 
   @override
   void initState() {
-    playerSelected = Provider.of<AuthProvider>(context, listen: false)
-        .userDataa!
-        .playersSelected;
-
-    setPlayerList();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFDEDED4),
+    return 
+    Scaffold(
+      backgroundColor: Color.fromARGB(255, 238, 238, 232),
       appBar: AppBar(
         title: Center(
-            child: MyCustomText(
-          text: "Squad Page",
-          style: GoogleFonts.blackOpsOne(),
-        )),
+          child: MyCustomText(
+            text: "Squad Page",
+            style: GoogleFonts.blackOpsOne(),
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 20, left: 5, right: 5),
@@ -46,30 +44,31 @@ class _FantasyScreenState extends State<FantasyScreen> {
               MySizedBox(
                 height: ScreenUtils.getHeight(context) * 0.01,
               ),
-
-              buildAppBard(context, playerSelected: playerSelected),
-
-              // buildAppBar(bank: snapshot.data!.data.bank),
               MySizedBox(
                 height: ScreenUtils.getHeight(context) * 0.033,
               ),
-
-              // ! ...............................
-              Container(
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                  image: AssetImage(
-                    'assets/emptyEF.png',
-                  ),
-                  fit: BoxFit.cover,
-                )),
-                // child: InteractiveViewer(
-                //   constrained: false,
-                child: Stack(
-                  children: [buildCreationAndShowTeam()],
-                ),
+              FutureBuilder<void>(
+                future: setPlayerList(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator(); // Show loading indicator
+                  } else if (snapshot.hasError) {
+                    return Text('Error fetching data'); // Handle error
+                  } else {
+                    return playerSelected != 15
+                        ? buildCreationTeam(
+                            playerSelected: playerSelected,
+                            listOfFantasyPlayers: listOfFantasyPlayers)
+                        : buildShowFantasyTeam(
+                            context: context,
+                            allPlayers: allPlayers,
+                            listOfFantasyPlayers: listOfFantasyPlayers,
+                            myMap: myMapOfPlayersName,
+                            myTshirtMap: myMapOfTshirt,
+                          );
+                  }
+                },
               ),
-              // ),
             ],
           ),
         ),
@@ -77,135 +76,13 @@ class _FantasyScreenState extends State<FantasyScreen> {
     );
   }
 
-  Container buildAppBard(BuildContext context, {required int playerSelected}) {
-    return Container(
-      padding: const EdgeInsets.only(top: 20, bottom: 20, right: 5, left: 5),
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8), topRight: Radius.circular(8)),
-          color: MyColors.kSecondaryColor),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          RichText(
-            text: TextSpan(
-              style: const TextStyle(color: Colors.white, fontSize: 11),
-              children: [
-                const TextSpan(text: "Team Name: "),
-                TextSpan(
-                  text: sl<AuthProvider>().userDataa!.teamName,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            // width: ScreenUtils.getWidth(context) * 0.3,
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              children: [
-                const MyCustomText(
-                    text: "Budget:",
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.black,
-                    )),
-                Consumer<PlayerProvider>(
-                  builder: (context, playerProvider, _) {
-                    return MyCustomText(
-                      text: playerSelected != 15
-                          ? "${playerProvider.amount} \$"
-                          : sl<AuthProvider>().userDataa!.bank.toString() +
-                              " \$",
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Consumer<PlayerProvider> buildCreationAndShowTeam() {
-    return Consumer<PlayerProvider>(
-      builder: (context, playerProvider, child) {
-        final slectedPlayerFromMap = playerProvider.selectedPlayersMap;
-
-        final List<int> forwards = [
-          slectedPlayerFromMap["Attaquant1"]?.id ?? 0,
-          slectedPlayerFromMap["bench1"]?.id ?? 0,
-          slectedPlayerFromMap["Attaquant2"]?.id ?? 0,
-        ];
-
-        final List<int> midfielders = [
-          slectedPlayerFromMap["bench2"]?.id ?? 0,
-          slectedPlayerFromMap["Milieu1"]?.id ?? 0,
-          slectedPlayerFromMap["Milieu2"]?.id ?? 0,
-          slectedPlayerFromMap["Milieu3"]?.id ?? 0,
-          slectedPlayerFromMap["Milieu4"]?.id ?? 0,
-        ];
-
-        final List<int> defenders = [
-          slectedPlayerFromMap["bench3"]?.id ?? 0,
-          slectedPlayerFromMap["Defenseur1"]?.id ?? 0,
-          slectedPlayerFromMap["Defenseur2"]?.id ?? 0,
-          slectedPlayerFromMap["Defenseur3"]?.id ?? 0,
-          slectedPlayerFromMap["Defenseur4"]?.id ?? 0,
-        ];
-
-        final List<int> goalkeepers = [
-          slectedPlayerFromMap["Gardien1"]?.id ?? 0,
-          slectedPlayerFromMap["bench4"]?.id ?? 0,
-        ];
-        final playerPositions = {
-          MyRes.kGoalKepper: 1,
-          MyRes.kDefender: 4,
-          MyRes.kMidfilder: 4,
-          MyRes.kForward: 2,
-          "bench": 4,
-        };
-
-        return playerSelected != 15
-            ? buildTeamSection(
-                slectedPlayerFromMap,
-                playerPositions,
-                context,
-                forwards,
-                midfielders,
-                defenders,
-                goalkeepers,
-                playerSelected,
-                listOfFantasyPlayers: listOfFantasyPlayers,
-              )
-            : buildShowFantasyTeam(
-                context: context,
-                allPlayers: allPlayers,
-                listOfFantasyPlayers: listOfFantasyPlayers,
-                myMap: myMapOfPlayersName,
-                myTshirtMap: myMapOfTshirt);
-      },
-    );
-  }
-
-  setPlayerList() async {
+  Future<void> setPlayerList() async {
     allPlayers = await sl<PlayerProvider>().fetchPlayerss();
     listOfFantasyPlayers = await sl<ShowTeamProvider>().fetchTeams();
     myMapOfPlayersName = await sl<TokenManager>().getMap();
     myMapOfTshirt = await sl<TokenManager>().getTshirtMap();
+    await sl<AuthProvider>().getUserInfo();
+    playerSelected = sl<AuthProvider>().userDataa!.playersSelected;
+    print("playerSelected: $playerSelected");
   }
 }

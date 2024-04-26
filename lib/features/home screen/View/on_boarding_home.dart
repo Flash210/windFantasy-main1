@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/colors.dart';
+import 'package:front/features/fantasy/View/fantasy_screen.dart';
 import 'package:front/features/fixtures/View/fixtures_screen.dart';
 import 'package:front/features/home%20screen/View/profilee_screen.dart';
 import 'package:front/features/gameweek%20dashbord/View/game_week_dashbord.dart';
@@ -21,7 +21,8 @@ class _HomeyState extends State<Homey> {
   int currentIndex = 0;
 
   final List<Widget> pages = [
-     GameWeekDashboard(),
+    FantasyScreen(),
+    //GameWeekDashboard(),
     //const RankingScreen(),
     const FixturesScreen(),
     const ProfileScreeen()
@@ -29,16 +30,14 @@ class _HomeyState extends State<Homey> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: IndexedStack(
-        index: currentIndex,
-        children: pages,
-      ),
-      bottomNavigationBar:buildNavigationButton(context));
-      //buildNavigationButton(context));
+        backgroundColor: Colors.white,
+        body: IndexedStack(
+          index: currentIndex,
+          children: pages,
+        ),
+        bottomNavigationBar: buildNavigationButton(context));
+    //buildNavigationButton(context));
   }
-
-
 
   SalomonBottomBar buildNavigationButton(BuildContext context) {
     return SalomonBottomBar(
@@ -49,7 +48,8 @@ class _HomeyState extends State<Homey> {
         });
       },
       items: [
-        buildSalomonBottomItem(text: "Home",
+        buildSalomonBottomItem(
+            text: "Home",
             textColor: const Color(0xFF3CCF4E),
             icon: Icons.stacked_bar_chart,
             selectedColor: const Color(0xFF3CCF4E)),
@@ -65,39 +65,30 @@ class _HomeyState extends State<Homey> {
         //   selectedColor: MyColors.kPrimaryColor,
         // ),
 
-
-
-
-        buildSalomonBottomItem(text: "Fixture",
+        buildSalomonBottomItem(
+            text: "Fixture",
             textColor: const Color(0xFF50C4ED),
             icon: Icons.sports_soccer,
             selectedColor: const Color(0xFF73A9C0)),
-
 
         buildSalomonBottomItem(
             text: "Profile",
             textColor: const Color(0xFF7F27FF),
             icon: Icons.person,
-            selectedColor: const Color(0xFF9D70D0)
-        ),
-
+            selectedColor: const Color(0xFF9D70D0)),
       ],
     );
   }
 
-
-  buildSalomonBottomItem({
-    required String text ,
-    required Color textColor,
-    required IconData icon,
-    required Color selectedColor
-}){
-  return   SalomonBottomBarItem(
+  buildSalomonBottomItem(
+      {required String text,
+      required Color textColor,
+      required IconData icon,
+      required Color selectedColor}) {
+    return SalomonBottomBarItem(
       icon: Icon(icon, color: textColor),
-      title: MyCustomText(text: text,
-          style: TextStyle(color: textColor)),
+      title: MyCustomText(text: text, style: TextStyle(color: textColor)),
       selectedColor: selectedColor,
     );
   }
-
 }

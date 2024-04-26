@@ -4,12 +4,10 @@ import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/core/services/injection_container.dart';
+import 'package:front/features/auth/Model/user_model.dart';
 import 'package:front/features/auth/ViewModel/auth_provider.dart';
 
 import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
-
-import '../../auth/Model/user_model.dart';
-import '../model/game_week.dart';
 
 class GameWeekDashboard extends StatefulWidget {
   GameWeekDashboard({super.key});
@@ -41,9 +39,9 @@ class _GameWeekDashboardState extends State<GameWeekDashboard> {
                 color: MyColors.kSecondaryColor,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: MyCustomText(
+              child: const MyCustomText(
                   text: " Live",
-                  style: const TextStyle(fontSize: 13, color: Colors.white)),
+                  style: TextStyle(fontSize: 13, color: Colors.white)),
             ),
             MySizedBox(height: ScreenUtils.getHeight(context) * 0.02),
             Container(
@@ -53,14 +51,14 @@ class _GameWeekDashboardState extends State<GameWeekDashboard> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Column(
+              child: const Column(
                 children: [
                   MyCustomText(
                     text: "0",
                     color: Colors.black,
-                    style: const TextStyle(fontSize: 70),
+                    style: TextStyle(fontSize: 70),
                   ),
-                  const MyCustomText(
+                  MyCustomText(
                     text: "Points ",
                     color: Colors.black,
                   ),
@@ -73,10 +71,11 @@ class _GameWeekDashboardState extends State<GameWeekDashboard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                GestureDetector(
+                InkWell(
                   onTap: () async {
+                    // Navigator.pushNamed(context, MyRes.kFantasy);
                     await sl<AuthProvider>().getUserInfo().then((value) =>
-                        value!.success == true
+                        value!.success
                             ? Navigator.pushNamed(context, MyRes.kFantasy)
                             : const CircularProgressIndicator());
                   },

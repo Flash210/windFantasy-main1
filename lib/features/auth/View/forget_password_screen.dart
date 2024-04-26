@@ -17,7 +17,6 @@ import 'package:front/generated/l10n.dart';
 import 'package:logger/logger.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:uni_links/uni_links.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ForgetPasswordScreenT extends StatefulWidget {
   const ForgetPasswordScreenT({super.key});

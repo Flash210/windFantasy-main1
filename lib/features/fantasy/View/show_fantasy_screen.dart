@@ -8,7 +8,6 @@ import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
-import 'package:front/features/fantasy/Model/update_team.dart';
 import 'package:front/features/fantasy/View/widgets/player_icon.dart';
 import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:front/features/player%20card/functions/player_statistics.dart';
@@ -35,7 +34,6 @@ Column buildShowFantasyTeam(
         playerPosition: MyRes.kGoalKepper1,
         isItBenched: "No",
         onTap: () async {
-          //  setPlayingInGameWeek(allPlayers, myMap, [34]);
 
           await sl<ShowTeamProvider>().fetchTeams();
           sl<ShowTeamProvider>().showTeam.forEach(
@@ -142,7 +140,6 @@ Column buildShowFantasyTeam(
             isItBenched: "No"),
         buildPlayerIcon(
             onTap: () {
-              setPlayingInGameWeek(allPlayers, myMap, [34]);
 
               navigateToPlayerCard(
                   context,
@@ -161,7 +158,6 @@ Column buildShowFantasyTeam(
             isItBenched: "No"),
         buildPlayerIcon(
             onTap: () {
-              setPlayingInGameWeek(allPlayers, myMap, [34]);
 
               navigateToPlayerCard(
                   context,
@@ -180,7 +176,6 @@ Column buildShowFantasyTeam(
             isItBenched: "No"),
         buildPlayerIcon(
             onTap: () {
-              setPlayingInGameWeek(allPlayers, myMap, [34]);
 
               navigateToPlayerCard(
                   context,
@@ -203,7 +198,6 @@ Column buildShowFantasyTeam(
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         buildPlayerIcon(
             onTap: () {
-              setPlayingInGameWeek(allPlayers, myMap, [34]);
 
               navigateToPlayerCard(
                   context,
@@ -222,7 +216,6 @@ Column buildShowFantasyTeam(
             isItBenched: "No"),
         buildPlayerIcon(
             onTap: () {
-              setPlayingInGameWeek(allPlayers, myMap, [34]);
               navigateToPlayerCard(
                   context,
                   allPlayers,
@@ -321,29 +314,4 @@ String getPlayerName(List<Player> allPlayers, int id) {
     (player) => player.id == id,
   );
   return matchingPlayer?.name ?? 'No Match';
-}
-
-setPlayingInGameWeek(List<Player> allPlayers, Map<String, dynamic> myMap,
-    List<int> playIn) async {
-  int id = 0;
-  await sl<ShowTeamProvider>().fetchTeams();
-  sl<ShowTeamProvider>().showTeam.forEach((element) {
-    //print(" | ${getPlayerName(allPlayers, element.playerId!)} | => Playing in  ${element.playingInGameweeks} + Captain ${element.captain} + ViceCaptain ${element.viceCaptain} ");
-
-    // print("   ****************  ");
-    id = getPlayerId(allPlayers, myMap);
-  });
-  List<Update> updateList = [
-    Update(
-        id: sl<ShowTeamProvider>().showTeam[id].id!,
-        userId: sl<ShowTeamProvider>().showTeam[id].userId!,
-        playerId: id,
-        playingInGameweeks: playIn,
-        captain: [],
-        viceCaptain: []),
-  ];
-  await sl<ShowTeamProvider>()
-      .updateUserTeam(updateList)
-      .then((value) => print("Update Team value Yes"))
-      .onError((error, stackTrace) => print("Update Team value No"));
 }
