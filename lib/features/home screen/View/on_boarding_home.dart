@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/custom_text.dart';
-import 'package:front/core/constants/colors.dart';
-import 'package:front/features/fantasy/View/fantasy_screen.dart';
 import 'package:front/features/fixtures/View/fixtures_screen.dart';
 import 'package:front/features/home%20screen/View/profilee_screen.dart';
 import 'package:front/features/gameweek%20dashbord/View/game_week_dashbord.dart';
-import 'package:front/features/ranking/View/ranking_screen.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class Homey extends StatefulWidget {
@@ -21,8 +18,8 @@ class _HomeyState extends State<Homey> {
   int currentIndex = 0;
 
   final List<Widget> pages = [
-    FantasyScreen(),
-    //GameWeekDashboard(),
+    //FantasyScreen(),
+    GameWeekDashboard(),
     //const RankingScreen(),
     const FixturesScreen(),
     const ProfileScreeen()

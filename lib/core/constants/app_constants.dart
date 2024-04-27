@@ -50,4 +50,14 @@ class MyRes {
     'Attaquant3',
     'Attaquant4'
   ];
+
+
+
+  static const List<String> kAllPlayersPositions =[
+    kGoalKepper1,
+    
+    ...kDefenders,
+    ...kMidfielders,
+    ...kForwards
+  ];
 }

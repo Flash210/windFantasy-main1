@@ -2,7 +2,7 @@
 import 'package:front/core/common_functions/extract_player_name.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
-import 'package:front/features/player%20card/View/pal_shape.dart';
+import 'package:front/features/player%20card/widgets/pal_shape.dart';
 import 'package:front/generated/l10n.dart';
 
 ParallelogramShape buildParallelogrameShape(

@@ -15,34 +15,63 @@ import '../../gameweek dashbord/model/game_week.dart';
 
 class ShowTeamProvider extends ChangeNotifier {
   List<ShowTeam> showTeam = [];
-
+  
+  
   Future<List<ShowTeam>> fetchTeams() async {
-    final String? token = await sl<TokenManager>().getToken();
-    final response = await http
-        .get(Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/34"), headers: {
+  final String? token = await sl<TokenManager>().getToken();
+  final response = await http.get(
+    Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/34"),
+    headers: {
       'Authorization': 'Bearer $token',
-      'Content-Type': 'application/json'
-    });
-    final jsonData = json.decode(response.body);
+      'Content-Type': 'application/json',
+    },
+  );
 
-    if (response.statusCode == 200) {
-      try {
-        final data = jsonData['data'] as List<dynamic>;
-        showTeam = data.map((teamData) => ShowTeam.fromJson(teamData)).toList();
-        print(showTeam.length);
+  final jsonData = json.decode(response.body);
 
-        notifyListeners();
-        return showTeam;
-      } catch (e) {
-        print("Error processing JSON data: $e");
-        return [];
-      }
-    } else {
-      print("Error processing JSON data: $jsonData");
+  if (response.statusCode == 200) {
+    try {
+      final data = jsonData['data'] as List<dynamic>;
+      final showTeamList = data.map((teamData) {
+        return ShowTeam.fromJson(teamData);
+      }).toList();
+
+      // Update your showTeam list with the new data
+      showTeam = showTeamList;
+
+      // Notify listeners to update UI
+      notifyListeners();
+
+      return showTeam;
+    } catch (e) {
+      print("Error processing JSON data: $e");
+      return [];
     }
-
-    return [];
+  } else {
+    print("Error processing JSON data: $jsonData");
   }
+
+  return [];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   List<ShowTeam> showFantasyTeamList = [];
 
@@ -114,7 +143,7 @@ class ShowTeamProvider extends ChangeNotifier {
         List<GameWeek> showGameWeek = data
             .map((gameWeekData) => GameWeek.fromJson(gameWeekData))
             .toList();
-            gameWeek=showGameWeek;
+        gameWeek = showGameWeek;
 
         logger.i("GameWeek: Good ${showGameWeek[0].gameWeek}");
 
@@ -136,18 +165,14 @@ class ShowTeamProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-      
-
-       Future<Update> updateUserTeam(List<Update> updates) async {
-            final String? token = await sl<TokenManager>().getToken();
-            Logger logger = Logger();
+  Future<Update> updateUserTeam(List<Update> updates) async {
+    final String? token = await sl<TokenManager>().getToken();
+    Logger logger = Logger();
 
     final response = await http.post(
       Uri.parse("${AppConfig.kUserBaseUrl}updateUserTeam"),
       headers: <String, String>{
-                'Authorization': 'Bearer $token',
-
+        'Authorization': 'Bearer $token',
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(updates),
@@ -163,10 +188,4 @@ class ShowTeamProvider extends ChangeNotifier {
       throw Exception('Failed to update user team: ${response.statusCode}');
     }
   }
-
-
-
-
-
-
 }

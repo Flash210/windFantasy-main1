@@ -4,14 +4,9 @@ import 'package:front/core/common_widget/card_widget.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
-import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
-import 'package:front/features/fantasy/Model/update_team.dart';
-import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:logger/logger.dart';
-import 'package:provider/provider.dart';
 
 class PlayerCard extends StatelessWidget {
   final String playerName;
@@ -20,6 +15,7 @@ class PlayerCard extends StatelessWidget {
   final String teamName;
   final Player player;
   final List<ShowTeam> listOfFantasyPlayers;
+  final bool showCaptain;
   const PlayerCard(
       {super.key,
       required this.playerName,
@@ -27,7 +23,7 @@ class PlayerCard extends StatelessWidget {
       required this.teamTshirt,
       required this.teamName,
       required this.player,
-      required this.listOfFantasyPlayers});
+      required this.listOfFantasyPlayers, required this.showCaptain});
 
   @override
   Widget build(BuildContext context) {
@@ -67,48 +63,29 @@ class PlayerCard extends StatelessWidget {
                   cleanSHeet: player.totalCleanSheet.toString(),
                   context: context),
               MySizedBox(height: ScreenUtils.getHeight(context) * 0.05),
-              Row(
+               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Row(
                     children: [
-                      InkWell(
-                        onTap: () async {
-                          
-                        },
-                        child: const MyCustomText(
-                          text: "Capitan",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      MyCustomText(
+                        text:showCaptain ?  "Show Yes Capitan" : "No Capitan",
+                        style: const TextStyle(
+                          color:  Colors.black,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
                   ),
-                  Row(
+                  const Row(
                     children: [
-                      InkWell(
-                        onTap: () {
-                          listOfFantasyPlayers[0].viceCaptain =
-                              player.id.toString();
-                          // Provider.of<ShowTeamProvider>(context, listen: false)
-                          //     .setString(listOfFantasyPlayers[0].viceCaptain!,
-                          //         player.id.toString());
-                          Logger logger = Logger();
-                          logger.i("Vice Capitan ${player.id.toString()}");
-
-                          logger.i(
-                              "Vice Capitan ${listOfFantasyPlayers[0].viceCaptain}");
-                        },
-                        child: const MyCustomText(
-                          text: "Vice Capitan",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      MyCustomText(
+                        text: "Vice Capitan",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],

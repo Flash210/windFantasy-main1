@@ -1,6 +1,5 @@
 part of 'fantasy_screen.dart';
 
-
 class FantasyScreen extends StatefulWidget {
   const FantasyScreen({super.key});
 
@@ -17,6 +16,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
 
   Map<String, dynamic> myMapOfPlayersName = {};
   Map<String, dynamic> myMapOfTshirt = {};
+  List<bool> isCaptainList = List.generate(15, (index) => false);
 
   @override
   void initState() {
@@ -25,8 +25,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Scaffold(
+    return Scaffold(
       backgroundColor: Color.fromARGB(255, 238, 238, 232),
       appBar: AppBar(
         title: Center(
@@ -47,28 +46,43 @@ class _FantasyScreenState extends State<FantasyScreen> {
               MySizedBox(
                 height: ScreenUtils.getHeight(context) * 0.033,
               ),
-              FutureBuilder<void>(
-                future: setPlayerList(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator(); // Show loading indicator
-                  } else if (snapshot.hasError) {
-                    return Text('Error fetching data'); // Handle error
-                  } else {
-                    return playerSelected != 15
-                        ? buildCreationTeam(
-                            playerSelected: playerSelected,
-                            listOfFantasyPlayers: listOfFantasyPlayers)
-                        : buildShowFantasyTeam(
-                            context: context,
-                            allPlayers: allPlayers,
-                            listOfFantasyPlayers: listOfFantasyPlayers,
-                            myMap: myMapOfPlayersName,
-                            myTshirtMap: myMapOfTshirt,
-                          );
-                  }
-                },
-              ),
+              Stack(children: [
+                Image.asset(
+                  "assets/halff.png",
+                  height: ScreenUtils.getHeight(context) * 1.01,
+                  width: ScreenUtils.getWidth(context),
+                  fit: BoxFit.cover,
+                ),
+                FutureBuilder<void>(
+                  future: setPlayerList(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator(); // Show loading indicator
+                    } else if (snapshot.hasError) {
+                      return Container(
+                          child: Text('Error fetching data')); // Handle error
+                    } else {
+                      return playerSelected != 15
+                          ? buildCreationTeam(
+                              playerSelected: playerSelected,
+                              listOfFantasyPlayers: listOfFantasyPlayers)
+                          : ShowFantasyTeam(
+                              allPlayers: allPlayers,
+                              listOfFantasyPlayers: listOfFantasyPlayers,
+                              myMapOfPlayersName: myMapOfPlayersName,
+                              myTshirtMap: myMapOfTshirt);
+
+                      // buildShowFantasyTeam(
+                      //     context: context,
+                      //     allPlayers: allPlayers,
+                      //     listOfFantasyPlayers: listOfFantasyPlayers,
+                      //     myMapOfPlayersName: myMapOfPlayersName,
+                      //     myTshirtMap: myMapOfTshirt,
+                      //   );
+                    }
+                  },
+                ),
+              ]),
             ],
           ),
         ),
@@ -84,5 +98,17 @@ class _FantasyScreenState extends State<FantasyScreen> {
     await sl<AuthProvider>().getUserInfo();
     playerSelected = sl<AuthProvider>().userDataa!.playersSelected;
     print("playerSelected: $playerSelected");
+
+    // for (int i = 0; i < MyRes.kAllPlayersPositions.length; i++) {
+    //   isCaptainList[i] = showIsCaptain(
+    //       allPlayers: allPlayers,
+    //       playerPosition: MyRes.kAllPlayersPositions[i],
+    //       myMapOfPlayersName: myMapOfPlayersName,
+    //       listOfFantasyPlayers: listOfFantasyPlayers);
+    // }
+
+    // isCaptainList.map((element) {
+    //   print("isCaptainList: $element");
+    // });
   }
 }

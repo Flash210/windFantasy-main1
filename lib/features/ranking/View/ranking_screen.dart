@@ -2,8 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/screen_utils.dart';
-import 'package:front/features/auth/ViewModel/auth_provider.dart';
-import 'package:provider/provider.dart';
 
 
 import '../../../core/constants/colors.dart';
