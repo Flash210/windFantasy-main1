@@ -57,6 +57,7 @@
   "Langue": "Language",
   "Filter":"Filter",
   "NameOfPlayer":"Name: ",
-  "Team1": "Team: "
+  "Team1": "Team: ",
+  "Budget":"Budget"
   
 }

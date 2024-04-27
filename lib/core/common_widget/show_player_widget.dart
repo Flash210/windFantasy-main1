@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:front/core/common_functions/extract_player_name.dart';
 import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
+import 'package:front/features/fixtures/utils/commun_function.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 
@@ -87,13 +87,13 @@ Column buildPlayerContainer({
               bottomRight: Radius.circular(10), bottomLeft: Radius.circular(7)),
           color: Colors.white,
         ),
-        child: const AutoSizeText(
+        child: AutoSizeText(
           maxLines: 1,
           overflow: TextOverflow.visible,
           maxFontSize: 15,
           minFontSize: 8,
-          "",
-          style: TextStyle(
+          "${getTeamAbbreviation(getTeamShirtNameReversed(teamName: teamName))} (${playerPosition[0]})",
+          style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
             fontSize: 15,
@@ -113,20 +113,16 @@ String getTextToShow(List<ShowTeam> listOfFantasyPlayers,
       : " No PLayer Found";
 }
 
-TextField buildEditProfile(
-    {required String labelText,
-    required TextEditingController controller,
-    required String hintText,
-      required GlobalKey globalKey,
-   
-    }) {
+TextField buildEditProfile({
+  required String labelText,
+  required TextEditingController controller,
+  required String hintText,
+  required GlobalKey globalKey,
+}) {
   return TextField(
-
-    
     controller: controller,
     key: globalKey,
     decoration: InputDecoration(
-
       labelText: labelText,
       hintText: hintText,
       labelStyle: const TextStyle(color: Colors.black),
@@ -138,19 +134,20 @@ TextField buildEditProfile(
   );
 }
 
-
- buildQuicAlert({required QuickAlertType  quickAlertType,
- required BuildContext context,String? confirmBtnText ,required Color confirmBtnColor,
- required String title ,required String text,required Function() onConfirmBtnTap
- }){
-
- return QuickAlert.show(
-                      context: context,
-                      type: quickAlertType,
-                      confirmBtnColor: confirmBtnColor,
-                      title: title,
-                      text: text,
-                      confirmBtnText:confirmBtnText ?? "",
-                      onConfirmBtnTap: () => onConfirmBtnTap());
-
- }
+buildQuicAlert(
+    {required QuickAlertType quickAlertType,
+    required BuildContext context,
+    String? confirmBtnText,
+    required Color confirmBtnColor,
+    required String title,
+    required String text,
+    required Function() onConfirmBtnTap}) {
+  return QuickAlert.show(
+      context: context,
+      type: quickAlertType,
+      confirmBtnColor: confirmBtnColor,
+      title: title,
+      text: text,
+      confirmBtnText: confirmBtnText ?? "",
+      onConfirmBtnTap: () => onConfirmBtnTap());
+}

@@ -56,7 +56,7 @@ class TokenManager {
   Future<Map<String, dynamic>> getMap() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jsonString = prefs.getString(_mapKey) ?? '{}';
-   // print("json is " + jsonString);
+    //print("json is " + jsonString);
     return json.decode(jsonString);
   }
 
@@ -75,7 +75,7 @@ class TokenManager {
   Future<Map<String, dynamic>> getTshirtMap() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jsonString = prefs.getString(_tShirt) ?? '{}';
-  //  print("Tshirt player  " + jsonString);
+    // print("Tshirt player  " + jsonString);
     return json.decode(jsonString);
   }
 

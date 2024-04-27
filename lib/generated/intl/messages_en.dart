@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Apply": MessageLookupByLibrary.simpleMessage("Apply"),
         "AreYouSure": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to log out?"),
+        "Budget": MessageLookupByLibrary.simpleMessage("Budget"),
         "Cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "ComeBackForConnect":
             MessageLookupByLibrary.simpleMessage("Come Back For Connect"),
