@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:front/core/services/config.dart';
@@ -7,6 +6,7 @@ import 'package:front/core/services/injection_container.dart';
 import 'package:front/core/services/token_manager.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
+import 'package:front/features/fantasy/Model/update_team.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
@@ -19,7 +19,7 @@ class ShowTeamProvider extends ChangeNotifier {
   Future<List<ShowTeam>> fetchTeams() async {
     final String? token = await sl<TokenManager>().getToken();
     final response = await http
-        .get(Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/33"), headers: {
+        .get(Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/34"), headers: {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json'
     });
@@ -135,4 +135,38 @@ class ShowTeamProvider extends ChangeNotifier {
     ch1 = ch2;
     notifyListeners();
   }
+
+
+      
+
+       Future<Update> updateUserTeam(List<Update> updates) async {
+            final String? token = await sl<TokenManager>().getToken();
+            Logger logger = Logger();
+
+    final response = await http.post(
+      Uri.parse("${AppConfig.kUserBaseUrl}updateUserTeam"),
+      headers: <String, String>{
+                'Authorization': 'Bearer $token',
+
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(updates),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      logger.i(data.toString());
+      logger.i("User team updated successfully");
+      return Update.fromJson(data);
+    } else {
+      logger.e(" internet Error processing JSON data: ${response.body}");
+      throw Exception('Failed to update user team: ${response.statusCode}');
+    }
+  }
+
+
+
+
+
+
 }

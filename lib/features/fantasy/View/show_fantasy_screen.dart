@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:front/core/common_functions/extract_player_name.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/common_widget/show_player_widget.dart';
 import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
+import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
+import 'package:front/features/fantasy/Model/update_team.dart';
 import 'package:front/features/fantasy/View/widgets/player_icon.dart';
+import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:front/features/player%20card/functions/player_statistics.dart';
 import 'package:front/generated/l10n.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 Column buildShowFantasyTeam(
@@ -29,10 +34,19 @@ Column buildShowFantasyTeam(
             listOfFantasyPlayers, allPlayers, myMap, MyRes.kGoalKepper1),
         playerPosition: MyRes.kGoalKepper1,
         isItBenched: "No",
-        onTap: () {
+        onTap: () async {
+          //  setPlayingInGameWeek(allPlayers, myMap, [34]);
 
-          navigateToPlayerCard(context, allPlayers, listOfFantasyPlayers, myMap,
-              myTshirtMap, MyRes.kGoalKepper1, S.of(context).GoalKepper);
+          await sl<ShowTeamProvider>().fetchTeams();
+          sl<ShowTeamProvider>().showTeam.forEach(
+            (element) {
+              print(
+                  " | ${getPlayerName(allPlayers, element.playerId!)} | => Playing in  ${element.playingInGameweeks} + Captain ${element.captain} + ViceCaptain ${element.viceCaptain}  + ${element.playerId} ");
+            },
+          );
+
+          // navigateToPlayerCard(context, allPlayers, listOfFantasyPlayers, myMap,
+          //     myTshirtMap, MyRes.kGoalKepper1, S.of(context).GoalKepper);
         },
       ),
       const SizedBox(height: 15),
@@ -128,6 +142,8 @@ Column buildShowFantasyTeam(
             isItBenched: "No"),
         buildPlayerIcon(
             onTap: () {
+              setPlayingInGameWeek(allPlayers, myMap, [34]);
+
               navigateToPlayerCard(
                   context,
                   allPlayers,
@@ -145,6 +161,8 @@ Column buildShowFantasyTeam(
             isItBenched: "No"),
         buildPlayerIcon(
             onTap: () {
+              setPlayingInGameWeek(allPlayers, myMap, [34]);
+
               navigateToPlayerCard(
                   context,
                   allPlayers,
@@ -162,6 +180,8 @@ Column buildShowFantasyTeam(
             isItBenched: "No"),
         buildPlayerIcon(
             onTap: () {
+              setPlayingInGameWeek(allPlayers, myMap, [34]);
+
               navigateToPlayerCard(
                   context,
                   allPlayers,
@@ -183,6 +203,8 @@ Column buildShowFantasyTeam(
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         buildPlayerIcon(
             onTap: () {
+              setPlayingInGameWeek(allPlayers, myMap, [34]);
+
               navigateToPlayerCard(
                   context,
                   allPlayers,
@@ -200,6 +222,7 @@ Column buildShowFantasyTeam(
             isItBenched: "No"),
         buildPlayerIcon(
             onTap: () {
+              setPlayingInGameWeek(allPlayers, myMap, [34]);
               navigateToPlayerCard(
                   context,
                   allPlayers,
@@ -237,37 +260,90 @@ Column buildShowFantasyTeam(
             const SizedBox(height: 16),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               buildBenchedPlayerIcon(
-                  myTshirtMap: myTshirtMap,
-                  context: context,
-                  playerName: getTextToShow(
-                      listOfFantasyPlayers, allPlayers, myMap, "bench1"),
-                  playerPosition: "bench1",
-                  isItBenched: "Yes"),
+                myTshirtMap: myTshirtMap,
+                context: context,
+                playerName: getTextToShow(
+                    listOfFantasyPlayers, allPlayers, myMap, "bench1"),
+                playerPosition: "bench1",
+                isItBenched: "Yes",
+                onTap: () async {
+                },
+              ),
               buildBenchedPlayerIcon(
-                  myTshirtMap: myTshirtMap,
-                  context: context,
-                  playerName: getTextToShow(
-                      listOfFantasyPlayers, allPlayers, myMap, "bench2"),
-                  playerPosition: "bench2",
-                  isItBenched: "Yes"),
+                myTshirtMap: myTshirtMap,
+                context: context,
+                playerName: getTextToShow(
+                    listOfFantasyPlayers, allPlayers, myMap, "bench2"),
+                playerPosition: "bench2",
+                isItBenched: "Yes",
+                onTap: () async {
+                },
+              ),
               buildBenchedPlayerIcon(
-                  myTshirtMap: myTshirtMap,
-                  context: context,
-                  playerName: getTextToShow(
-                      listOfFantasyPlayers, allPlayers, myMap, "bench3"),
-                  playerPosition: "bench3",
-                  isItBenched: "Yes"),
+                myTshirtMap: myTshirtMap,
+                context: context,
+                playerName: getTextToShow(
+                    listOfFantasyPlayers, allPlayers, myMap, "bench3"),
+                playerPosition: "bench3",
+                isItBenched: "Yes",
+                onTap: () async {
+                },
+              ),
               buildBenchedPlayerIcon(
-                  myTshirtMap: myTshirtMap,
-                  context: context,
-                  playerName: getTextToShow(
-                      listOfFantasyPlayers, allPlayers, myMap, "bench4"),
-                  playerPosition: "bench4",
-                  isItBenched: "Yes"),
+                myTshirtMap: myTshirtMap,
+                context: context,
+                playerName: getTextToShow(
+                    listOfFantasyPlayers, allPlayers, myMap, "bench4"),
+                playerPosition: "bench4",
+                isItBenched: "Yes",
+                onTap: () async {
+                },
+              ),
             ]),
           ],
         ),
       ),
     ],
   );
+}
+
+int getPlayerId(List<Player> allPlayers, Map<String, dynamic> myMap) {
+  return allPlayers
+      .firstWhere(
+        (player) => myMap.containsValue(player.name),
+        orElse: () => Player.empty(),
+      )
+      .id;
+}
+
+String getPlayerName(List<Player> allPlayers, int id) {
+  Player? matchingPlayer = allPlayers.firstWhereOrNull(
+    (player) => player.id == id,
+  );
+  return matchingPlayer?.name ?? 'No Match';
+}
+
+setPlayingInGameWeek(List<Player> allPlayers, Map<String, dynamic> myMap,
+    List<int> playIn) async {
+  int id = 0;
+  await sl<ShowTeamProvider>().fetchTeams();
+  sl<ShowTeamProvider>().showTeam.forEach((element) {
+    //print(" | ${getPlayerName(allPlayers, element.playerId!)} | => Playing in  ${element.playingInGameweeks} + Captain ${element.captain} + ViceCaptain ${element.viceCaptain} ");
+
+    // print("   ****************  ");
+    id = getPlayerId(allPlayers, myMap);
+  });
+  List<Update> updateList = [
+    Update(
+        id: sl<ShowTeamProvider>().showTeam[id].id!,
+        userId: sl<ShowTeamProvider>().showTeam[id].userId!,
+        playerId: id,
+        playingInGameweeks: playIn,
+        captain: [],
+        viceCaptain: []),
+  ];
+  await sl<ShowTeamProvider>()
+      .updateUserTeam(updateList)
+      .then((value) => print("Update Team value Yes"))
+      .onError((error, stackTrace) => print("Update Team value No"));
 }

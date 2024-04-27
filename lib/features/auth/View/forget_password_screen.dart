@@ -19,7 +19,6 @@ import 'package:quickalert/quickalert.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class ForgetPasswordScreenT extends StatefulWidget {
   const ForgetPasswordScreenT({super.key});
 
@@ -123,24 +122,18 @@ class ForgetPasswordScreenTState extends State<ForgetPasswordScreenT> {
                         quickAlertType: QuickAlertType.success,
                         context: context,
                         confirmBtnText: "Check Email",
-                        confirmBtnColor: MyColors.kGreen,
+                        confirmBtnColor: MyColors.kSecondaryColor,
                         title: 'Success',
                         text: 'Email sent successfully',
-                      
-                        
-                        onConfirmBtnTap: () =>lancherUrlToMail()
-)
-                        
-                    )
+                        onConfirmBtnTap: () => lancherUrlToMail()))
                     .onError((error, stackTrace) => buildQuicAlert(
                         quickAlertType: QuickAlertType.error,
                         context: context,
-                        confirmBtnColor: MyColors.kGreen,
+                        confirmBtnColor: MyColors.kSecondaryColor,
                         title: 'Oops...',
-                        
                         text: 'Sorry, something went wrong',
                         onConfirmBtnTap: () => Navigator.pop(context)));
-            }
+              }
             },
           ),
 
@@ -152,8 +145,4 @@ class ForgetPasswordScreenTState extends State<ForgetPasswordScreenT> {
       ),
     );
   }
-
-
 }
-
-
