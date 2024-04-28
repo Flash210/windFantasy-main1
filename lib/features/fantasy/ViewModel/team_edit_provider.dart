@@ -29,7 +29,7 @@ class TeamEditProvider with ChangeNotifier {
       userPlay = await teamRepository.getUserPLay();
       notifyListeners();
     } catch (e) {
-      print("Error" + e.toString());
+      print("Error$e");
     }
 
     return userPlay!;
@@ -133,7 +133,7 @@ class TeamEditProvider with ChangeNotifier {
   List<Player> playersAfterMaxReached = [];
 
   void fillPlayersMaxReached(Player player) {
-    print("Team Reached" + player.toString());
+    print("Team Reached$player");
 
     playersAfterMaxReached.add(player);
     notifyListeners();

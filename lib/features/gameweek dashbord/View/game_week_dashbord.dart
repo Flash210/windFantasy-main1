@@ -4,7 +4,6 @@ import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/core/services/injection_container.dart';
-import 'package:front/features/auth/Model/user_model.dart';
 import 'package:front/features/auth/ViewModel/auth_provider.dart';
 
 import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';

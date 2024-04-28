@@ -29,12 +29,12 @@ class GameWeek {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['gameWeek'] = this.gameWeek;
-    data['points'] = this.points;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['userId'] = this.userId;
+    data['id'] = id;
+    data['gameWeek'] = gameWeek;
+    data['points'] = points;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['userId'] = userId;
     return data;
   }
 }
