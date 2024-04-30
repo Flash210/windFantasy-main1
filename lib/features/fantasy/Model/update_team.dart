@@ -1,39 +1,35 @@
-class Update {
-  final int id;
-  final int playerId;
-  final int userId;
-  final List<int>? playingInGameweeks;
-  final List<int>? captain;
-  final List<int>? viceCaptain;
+class UpdateTeam {
+  final int? id;
+  final int? playerId;
+  final int? userId;
+  final String? playingInGameweeks;
+  final String? captain;
+  final String? viceCaptain;
 
-  Update({
+  UpdateTeam({
     required this.id,
     required this.playerId,
     required this.userId,
-    this.playingInGameweeks,
-    this.captain,
-    this.viceCaptain,
+    required this.playingInGameweeks,
+    required this.captain,
+    required this.viceCaptain,
   });
 
-  factory Update.fromJson(Map<String, dynamic> json) {
-    return Update(
-      id: json['id'] as int,
-      playerId: json['playerId'] as int,
-      userId: json['userId'] as int,
-      playingInGameweeks: (json['playingInGameweeks'] as List?)?.cast<int>(),
-      captain: (json['captain'] as List?)?.cast<int>(),
-      viceCaptain: (json['viceCaptain'] as List?)?.cast<int>(),
-    );
-  }
+  factory UpdateTeam.fromJson(Map<String, dynamic> json) => UpdateTeam(
+        id: json['id'] ?? 0,
+        playerId: json['playerId'] ?? 0,
+        userId: json['userId'] ?? 0,
+        playingInGameweeks: json['PlayingInGameweeks'] ?? '',
+        captain: json['captain'] ?? '',
+        viceCaptain: json['viceCaptain'] ?? '',
+      );
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'playerId': playerId,
-      'userId': userId,
-      'playingInGameweeks': playingInGameweeks,
-      'captain': captain,
-      'viceCaptain': viceCaptain,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'playerId': playerId,
+        'userId': userId,
+        'PlayingInGameweeks': playingInGameweeks,
+        'captain': captain,
+        'viceCaptain': viceCaptain,
+      };
 }
