@@ -15,8 +15,9 @@ void navigateToPlayerCard(
     Map<String, dynamic> myTshirtMap,
     String playerPostionName,
     String playerPostionName2,
-    bool showCaptain
-    ) {
+    bool showCaptain,
+    bool showViceCaptain) 
+     {
   Navigator.push(
     context,
     MaterialPageRoute(
@@ -25,6 +26,7 @@ void navigateToPlayerCard(
 
           // player: listOfFantasyPlayers.any((element) =>
           // getPlayerStatistic(element.id, allPlayers) ),
+          showViceCaptain: showViceCaptain,
           showCaptain: showCaptain,
           player: getPlayerStatistic(
               list: listOfFantasyPlayers, players: allPlayers),

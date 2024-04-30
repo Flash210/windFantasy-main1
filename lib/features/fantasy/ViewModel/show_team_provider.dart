@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:math';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:front/core/services/config.dart';
 import 'package:front/core/services/injection_container.dart';
@@ -15,63 +17,43 @@ import '../../gameweek dashbord/model/game_week.dart';
 
 class ShowTeamProvider extends ChangeNotifier {
   List<ShowTeam> showTeam = [];
-  
-  
+
   Future<List<ShowTeam>> fetchTeams() async {
-  final String? token = await sl<TokenManager>().getToken();
-  final response = await http.get(
-    Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/34"),
-    headers: {
-      'Authorization': 'Bearer $token',
-      'Content-Type': 'application/json',
-    },
-  );
+    final String? token = await sl<TokenManager>().getToken();
+    final response = await http.get(
+      Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/35"),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
 
-  final jsonData = json.decode(response.body);
+    final jsonData = json.decode(response.body);
 
-  if (response.statusCode == 200) {
-    try {
-      final data = jsonData['data'] as List<dynamic>;
-      final showTeamList = data.map((teamData) {
-        return ShowTeam.fromJson(teamData);
-      }).toList();
+    if (response.statusCode == 200) {
+      try {
+        final data = jsonData['data'] as List<dynamic>;
+        final showTeamList = data.map((teamData) {
+          return ShowTeam.fromJson(teamData);
+        }).toList();
 
-      // Update your showTeam list with the new data
-      showTeam = showTeamList;
+        // Update your showTeam list with the new data
+        showTeam = showTeamList;
 
-      // Notify listeners to update UI
-      notifyListeners();
+        // Notify listeners to update UI
+        notifyListeners();
 
-      return showTeam;
-    } catch (e) {
-      print("Error processing JSON data: $e");
-      return [];
+        return showTeam;
+      } catch (e) {
+        print("Error processing JSON data: $e");
+        return [];
+      }
+    } else {
+      print("Error processing JSON data: $jsonData");
     }
-  } else {
-    print("Error processing JSON data: $jsonData");
+
+    return [];
   }
-
-  return [];
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   List<ShowTeam> showFantasyTeamList = [];
 
@@ -164,28 +146,148 @@ class ShowTeamProvider extends ChangeNotifier {
     ch1 = ch2;
     notifyListeners();
   }
+  //
+  // Future<bool> updateUserTeam(List<UpdateTeam> updates) async {
+  //   final String? token = await sl<TokenManager>().getToken();
+  //
+  //
+  //
+  //   final Map<String, dynamic> requestBody =
+  //     {
+  //       "id": 1388,
+  //       "playerId": 309,
+  //       "userId": 14,
+  //       "PlayingInGameweeks": "34",
+  //       "captain": "",
+  //       "viceCaptain": ""
+  //     };
+  //
+  // //  print("Request body: $requestBody");
+  //
+  //   print(jsonEncode(requestBody));
+  //
+  //   final response = await http.patch(
+  //     Uri.parse("${AppConfig.kUserBaseUrl}updateUserTeam"),
+  //     headers: <String, String>{
+  //       'Authorization': 'Bearer $token',
+  //     },
+  //     body: [ {
+  //       "id": 1388,
+  //       "playerId": 309,
+  //       "userId": 14,
+  //       "PlayingInGameweeks": "34",
+  //       "captain": "",
+  //       "viceCaptain": ""
+  //     }].toList().cast<Map<String, Object>>(),
+  //   );
+  //
+  //   if (response.statusCode == 200) {
+  //     // Update successful
+  //     notifyListeners(); // Notify listeners about data change
+  //     return true;
+  //   } else {
+  //     // Handle error
+  //     Logger logger = Logger();
+  //     logger.e("Error updating user team: ${response.body}");
+  //     logger.e("Error updating user team: ${response.request}");
+  //     logger.e("Error updating user team: ${response.headers}");
+  //     print("Error updating user team: ${response.statusCode}");
+  //     return false;
+  //   }
+  // }
 
-  Future<Update> updateUserTeam(List<Update> updates) async {
+  //
+  // Future<bool> updateUserTeam(List<UpdateTeam> updates) async {
+  //   final String? token = await sl<TokenManager>().getToken();
+  //
+  //   final Map<String, dynamic> requestBody = {
+  //     "id": 1388,
+  //     "playerId": 309,
+  //     "userId": 14,
+  //     "PlayingInGameweeks": "34",
+  //     "captain": "",
+  //     "viceCaptain": ""
+  //   };
+  //
+  //
+  //   final dio = Dio();
+  //   dio.options.headers['Authorization'] = 'Bearer $token';
+  //
+  //   try {
+  //     final response = await dio.patch(
+  //       "${AppConfig.kUserBaseUrl}updateUserTeam",
+  //       data: [
+  //         {
+  //           "id": 1388,
+  //           "playerId": 309,
+  //           "userId": 14,
+  //           "PlayingInGameweeks": "",
+  //           "captain": "",
+  //           "viceCaptain": ""
+  //         }
+  //       ].toList()
+  //           //.cast<Map<String, Object>>(),
+  //     );
+  //
+  //     if (response.statusCode == 200) {
+  //       notifyListeners();
+  //       print("Response: ${response.data}");
+  //       return true;
+  //     } else {
+  //
+  //       print("Error updating user team: ${response.statusCode}");
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     Logger logger = Logger();
+  //     logger.e("Error updating user team: $e");
+  //     return false;
+  //   }
+  // }
+
+  Future<bool> updateUserTeam(List<UpdateTeam> updates) async {
     final String? token = await sl<TokenManager>().getToken();
-    Logger logger = Logger();
 
-    final response = await http.post(
-      Uri.parse("${AppConfig.kUserBaseUrl}updateUserTeam"),
-      headers: <String, String>{
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(updates),
-    );
+    final dio = Dio();
+    dio.options.headers['Authorization'] = 'Bearer $token';
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      logger.i(data.toString());
-      logger.i("User team updated successfully");
-      return Update.fromJson(data);
-    } else {
-      logger.e(" internet Error processing JSON data: ${response.body}");
-      throw Exception('Failed to update user team: ${response.statusCode}');
+    try {
+      final response = await dio.patch(
+        "${AppConfig.kUserBaseUrl}updateUserTeam",
+        data: updates
+            .map((update) => {
+                  "id": update.id,
+                  "playerId": update.playerId,
+                  "userId": update.userId,
+                  "PlayingInGameweeks": update.playingInGameweeks,
+                  "captain": update.captain,
+                  "viceCaptain": update.viceCaptain
+                })
+            .toList(),
+      );
+
+      if (response.statusCode == 200) {
+        notifyListeners();
+        print("Response: ${response.data}");
+        return true;
+      } else {
+        print("Error updating user team: ${response.statusCode}");
+        return false;
+      }
+    } catch (e) {
+      Logger logger = Logger();
+      logger.e("Error updating user team: $e");
+      return false;
     }
+  }
+
+  List<String> listOfSwitch = [];
+
+  addToSwitchList({required String name}) {
+    listOfSwitch.add(name);
+    for (var i in listOfSwitch) {
+      print("List of switch: $i");
+    }
+    notifyListeners();
   }
 }

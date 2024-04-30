@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/app_constants.dart';
@@ -7,6 +9,7 @@ import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/auth/ViewModel/auth_provider.dart';
 
 import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
+import 'package:front/features/gameweek%20dashbord/model/game_week.dart';
 
 class GameWeekDashboard extends StatefulWidget {
   GameWeekDashboard({super.key});
@@ -16,9 +19,11 @@ class GameWeekDashboard extends StatefulWidget {
 }
 
 class _GameWeekDashboardState extends State<GameWeekDashboard> {
+  List<GameWeek> getGameWeek = [];
+
   @override
   void initState() {
-    initAh();
+    //initAh();
 
     super.initState();
   }
@@ -28,82 +33,86 @@ class _GameWeekDashboardState extends State<GameWeekDashboard> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: Center(
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            MySizedBox(height: ScreenUtils.getHeight(context) * 0.19),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: MyColors.kSecondaryColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const MyCustomText(
-                  text: " Live",
-                  style: TextStyle(fontSize: 13, color: Colors.white)),
-            ),
-            MySizedBox(height: ScreenUtils.getHeight(context) * 0.02),
-            Container(
-              padding: const EdgeInsets.only(
-                  top: 10, bottom: 10, left: 35, right: 35),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Column(
+        child: FutureBuilder(
+            future: initAh(),
+            builder: (context, snapshot) {
+              return Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  MyCustomText(
-                    text: "0",
-                    color: Colors.black,
-                    style: TextStyle(fontSize: 70),
+                  MySizedBox(height: ScreenUtils.getHeight(context) * 0.19),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: MyColors.kSecondaryColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: MyCustomText(
+                        text: "GameWeek ${getGameWeek[0].gameWeek} Live",
+                        style: TextStyle(fontSize: 13, color: Colors.white)),
                   ),
-                  MyCustomText(
-                    text: "Points ",
-                    color: Colors.black,
+                  MySizedBox(height: ScreenUtils.getHeight(context) * 0.02),
+                  Container(
+                    padding: const EdgeInsets.only(
+                        top: 10, bottom: 10, left: 35, right: 35),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      children: [
+                        MyCustomText(
+                          text: getGameWeek[0].points.toString(),
+                          color: Colors.black,
+                          style: TextStyle(fontSize: 70),
+                        ),
+                        const MyCustomText(
+                          text: "Points ",
+                          color: Colors.black,
+                        ),
+                      ],
+                    ),
+                  ),
+                  MySizedBox(
+                    height: ScreenUtils.getHeight(context) * 0.09,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      InkWell(
+                        onTap: () async {
+                          // Navigator.pushNamed(context, MyRes.kFantasy);
+                          await sl<AuthProvider>().getUserInfo().then((value) =>
+                              value!.success
+                                  ? Navigator.pushNamed(context, MyRes.kFantasy)
+                                  : const CircularProgressIndicator());
+                        },
+                        child: const MyCustomText(
+                          text: "Pick A Team",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                      const MyCustomText(text: "Transfert"),
+                    ],
+                  ),
+                  MySizedBox(
+                    height: ScreenUtils.getHeight(context) * 0.09,
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      MyCustomText(text: "Transfert"),
+                      MyCustomText(text: "Fixtures"),
+                    ],
                   ),
                 ],
-              ),
-            ),
-            MySizedBox(
-              height: ScreenUtils.getHeight(context) * 0.09,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                InkWell(
-                  onTap: () async {
-                    // Navigator.pushNamed(context, MyRes.kFantasy);
-                    await sl<AuthProvider>().getUserInfo().then((value) =>
-                        value!.success
-                            ? Navigator.pushNamed(context, MyRes.kFantasy)
-                            : const CircularProgressIndicator());
-                  },
-                  child: const MyCustomText(
-                    text: "Pick A Team",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                const MyCustomText(text: "Transfert"),
-              ],
-            ),
-            MySizedBox(
-              height: ScreenUtils.getHeight(context) * 0.09,
-            ),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                MyCustomText(text: "Transfert"),
-                MyCustomText(text: "Fixtures"),
-              ],
-            ),
-          ],
-        ),
+              );
+            }),
       ),
     );
   }
 
   initAh() async {
-    await sl<ShowTeamProvider>().getGameWeekAndPoints();
+    getGameWeek = await sl<ShowTeamProvider>().getGameWeekAndPoints();
     await sl<AuthProvider>().getUserInfo();
     sl<ShowTeamProvider>().gameWeek;
     print(sl<ShowTeamProvider>().gameWeek[0].gameWeek);

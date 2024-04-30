@@ -16,7 +16,6 @@ class _FantasyScreenState extends State<FantasyScreen> {
 
   Map<String, dynamic> myMapOfPlayersName = {};
   Map<String, dynamic> myMapOfTshirt = {};
-  List<bool> isCaptainList = List.generate(15, (index) => false);
 
   @override
   void initState() {
@@ -43,6 +42,10 @@ class _FantasyScreenState extends State<FantasyScreen> {
               MySizedBox(
                 height: ScreenUtils.getHeight(context) * 0.01,
               ),
+
+              //Text("l"),
+
+              buildAppBard(context),
               MySizedBox(
                 height: ScreenUtils.getHeight(context) * 0.033,
               ),
@@ -62,6 +65,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
                       return Container(
                           child: Text('Error fetching data')); // Handle error
                     } else {
+                      print("playerSelected: $playerSelected");
                       return playerSelected != 15
                           ? buildCreationTeam(
                               playerSelected: playerSelected,
@@ -97,7 +101,6 @@ class _FantasyScreenState extends State<FantasyScreen> {
     myMapOfTshirt = await sl<TokenManager>().getTshirtMap();
     await sl<AuthProvider>().getUserInfo();
     playerSelected = sl<AuthProvider>().userDataa!.playersSelected;
-    print("playerSelected: $playerSelected");
 
     // for (int i = 0; i < MyRes.kAllPlayersPositions.length; i++) {
     //   isCaptainList[i] = showIsCaptain(
@@ -111,4 +114,62 @@ class _FantasyScreenState extends State<FantasyScreen> {
     //   print("isCaptainList: $element");
     // });
   }
+}
+
+Container buildAppBard(BuildContext context) {
+  return Container(
+    padding: const EdgeInsets.only(top: 20, bottom: 20, right: 5, left: 5),
+    decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(8), topRight: Radius.circular(8)),
+        color: MyColors.kSecondaryColor),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        RichText(
+          text: TextSpan(
+            style: const TextStyle(color: Colors.white, fontSize: 11),
+            children: [
+              const TextSpan(text: "Team Name: "),
+              TextSpan(
+                text: sl<AuthProvider>().userDataa!.teamName,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          width: ScreenUtils.getWidth(context) * 0.3,
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            children: [
+              const MyCustomText(
+                  text: "Budget:",
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.black,
+                  )),
+              MyCustomText(
+                text: "${sl<AuthProvider>().userDataa!.bank} \$",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.green,
+                  fontFamily: GoogleFonts.roboto().fontFamily,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    ),
+  );
 }

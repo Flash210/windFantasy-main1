@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/show_player_widget.dart';
 
-GestureDetector buildPlayerIcon(
+InkWell buildPlayerIcon(
     {required String playerName,
     required String playerPosition,
     required String isItBenched,
     required Map<String, dynamic> myTshirtMap,
     VoidCallback? onTap,
     VoidCallback? onDoubleTap,
+    VoidCallback? onLongPress,
     required BuildContext context}) {
-  return GestureDetector(
-    onDoubleTap: onDoubleTap,
-    onTap: onTap,
-    child: isItBenched == "No"
-        ? buildPlayerContainer(
-          
-          
-            playerName: playerName,
-            playerPosition: playerPosition,
-            teamName:
-                getTshirtTeamToShow(map: myTshirtMap, nameOfPlayer: playerName),
-            context: context)
-        : buildbenchedPlayerContainer(
-            playerName: playerName,
-            teamName:
-                getTshirtTeamToShow(map: myTshirtMap, nameOfPlayer: playerName),
-            context: context),
-  );
+  return InkWell(
+    onLongPress: onLongPress,
+      onDoubleTap: onDoubleTap,
+      onTap: onTap,
+      child:
+          // isItBenched == "No"
+          //     ?
+          buildPlayerContainer(
+              playerName: playerName,
+              playerPosition: playerPosition,
+              teamName: getTshirtTeamToShow(
+                  map: myTshirtMap, nameOfPlayer: playerName),
+              context: context)
+      // : buildbenchedPlayerContainer(
+      //     playerName: playerName,
+      //     teamName:
+      //         getTshirtTeamToShow(map: myTshirtMap, nameOfPlayer: playerName),
+      //     context: context),
+      );
 }
 
 Column buildBenchedPlayerIcon(

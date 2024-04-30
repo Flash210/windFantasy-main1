@@ -16,6 +16,7 @@ class PlayerCard extends StatelessWidget {
   final Player player;
   final List<ShowTeam> listOfFantasyPlayers;
   final bool showCaptain;
+  final bool showViceCaptain;
   const PlayerCard(
       {super.key,
       required this.playerName,
@@ -23,7 +24,9 @@ class PlayerCard extends StatelessWidget {
       required this.teamTshirt,
       required this.teamName,
       required this.player,
-      required this.listOfFantasyPlayers, required this.showCaptain});
+      required this.listOfFantasyPlayers,
+      required this.showCaptain,
+      required this.showViceCaptain});
 
   @override
   Widget build(BuildContext context) {
@@ -63,25 +66,25 @@ class PlayerCard extends StatelessWidget {
                   cleanSHeet: player.totalCleanSheet.toString(),
                   context: context),
               MySizedBox(height: ScreenUtils.getHeight(context) * 0.05),
-               Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Row(
                     children: [
                       MyCustomText(
-                        text:showCaptain ?  "Show Yes Capitan" : "No Capitan",
+                        text: showCaptain ? "Show Yes Capitan" : "No Capitan",
                         style: const TextStyle(
-                          color:  Colors.black,
+                          color: Colors.black,
                           fontSize: 17,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
                   ),
-                  const Row(
+                  Row(
                     children: [
                       MyCustomText(
-                        text: "Vice Capitan",
+                        text: showViceCaptain ? "Show Yes V" : "No VV",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 17,
