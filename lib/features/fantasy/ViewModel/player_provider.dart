@@ -19,6 +19,32 @@ class PlayerProvider extends ChangeNotifier {
     return players;
   }
 
+
+
+
+  List<Player> _lazyPlayers = [];
+  List<Player> get lazyPlayers => _lazyPlayers;
+
+  int _currentPage = 1;
+  int get currentPage => _currentPage;
+
+  Future<void> fetchNextPage() async {
+    final newPlayers = List.generate(20, (index) => players[index + 1]);
+    _lazyPlayers.addAll(newPlayers);
+    _currentPage++;
+    notifyListeners();
+  }
+
+
+
+
+
+
+
+
+
+
+
 //! list of players in the bottom sheet
   List<Player> _listForFilter = [];
 
@@ -50,7 +76,6 @@ class PlayerProvider extends ChangeNotifier {
 
   Map<String, Player> get selectedPlayersMap => _selectedPlayersMap;
 
-
   void addSelectedPlayerToMap(
       {required String position, required Player player}) {
     _selectedPlayersMap[position] = player;
@@ -66,7 +91,6 @@ class PlayerProvider extends ChangeNotifier {
     }
   }
 
- 
   //! update user bank budget and chekc team selected (max 3)
 
   // ! bank
@@ -75,26 +99,26 @@ class PlayerProvider extends ChangeNotifier {
   bool amountSubstraction({required int value, required bool longPress}) {
     if (longPress) {
       amount == 100 ? amount = 100 : amount += value;
-     
+
       print("Amount $amount");
-      
+
       notifyListeners();
-      return true; 
+      return true;
     } else {
       if (amount < value) {
-        return false; 
+        return false;
       } else {
         amount == 0 ? amount = 0 : amount -= value;
-        
+
         notifyListeners();
-        return true; 
+        return true;
       }
     }
   }
-
 
   setNewList(List<Player> l1, List<Player> l2) {
     l1 = l2;
     notifyListeners();
   }
+
 }

@@ -37,53 +37,48 @@ class _FantasyScreenState extends State<FantasyScreen> {
       body: Padding(
         padding: const EdgeInsets.only(top: 20, left: 5, right: 5),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              MySizedBox(
-                height: ScreenUtils.getHeight(context) * 0.01,
-              ),
-              buildAppBard(context),
-              MySizedBox(
-                height: ScreenUtils.getHeight(context) * 0.033,
-              ),
-              Stack(children: [
-                Image.asset(
-                  "assets/halff.png",
-                  height: ScreenUtils.getHeight(context) * 1.01,
-                  // width: ScreenUtils.getWidth(context),
-                  fit: BoxFit.cover,
-                ),
-                FutureBuilder<void>(
-                  future: setPlayerList(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator(); // Show loading indicator
-                    } else if (snapshot.hasError) {
-                      return Container(
-                          child: Text('Error fetching data')); // Handle error
-                    } else {
-                      return playerSelected != 15
-                          ? buildCreationTeam(
-                              playerSelected: playerSelected,
-                              listOfFantasyPlayers: listOfFantasyPlayers)
-                          : ShowFantasyTeam(
-                              allPlayers: allPlayers,
-                              listOfFantasyPlayers: listOfFantasyPlayers,
-                              myMapOfPlayersName: myMapOfPlayersName,
-                              myTshirtMap: myMapOfTshirt);
-
-                      // buildShowFantasyTeam(
-                      //     context: context,
-                      //     allPlayers: allPlayers,
-                      //     listOfFantasyPlayers: listOfFantasyPlayers,
-                      //     myMapOfPlayersName: myMapOfPlayersName,
-                      //     myTshirtMap: myMapOfTshirt,
-                      //   );
-                    }
-                  },
-                ),
-              ]),
-            ],
+          child: FutureBuilder<void>(
+            future: setPlayerList(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator(); // Show loading indicator
+              } else if (snapshot.hasError) {
+                return Container(
+                  child: Text('Error fetching data'),
+                ); // Handle error
+              } else {
+                return Column(
+                  children: [
+                    MySizedBox(
+                      height: ScreenUtils.getHeight(context) * 0.01,
+                    ),
+                    buildAppBard(context, playerSelected != 15),
+                    MySizedBox(
+                      height: ScreenUtils.getHeight(context) * 0.033,
+                    ),
+                    Stack(
+                      children: [
+                        Image.asset(
+                          "assets/halff.png",
+                          height: ScreenUtils.getHeight(context) * 1.01,
+                          // width: ScreenUtils.getWidth(context),
+                          fit: BoxFit.cover,
+                        ),
+                        playerSelected != 15
+                            ? buildCreationTeam(
+                                playerSelected: playerSelected,
+                                listOfFantasyPlayers: listOfFantasyPlayers)
+                            : ShowFantasyTeam(
+                                allPlayers: allPlayers,
+                                listOfFantasyPlayers: listOfFantasyPlayers,
+                                myMapOfPlayersName: myMapOfPlayersName,
+                                myTshirtMap: myMapOfTshirt),
+                      ],
+                    )
+                  ],
+                );
+              }
+            },
           ),
         ),
       ),
@@ -112,7 +107,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
   }
 }
 
-Container buildAppBard(BuildContext context) {
+Container buildAppBard(BuildContext context, bool budget) {
   return Container(
     padding: const EdgeInsets.only(top: 20, bottom: 20, right: 5, left: 5),
     decoration: const BoxDecoration(
@@ -151,13 +146,17 @@ Container buildAppBard(BuildContext context) {
                     fontSize: 13,
                     color: Colors.black,
                   )),
-              MyCustomText(
-                text: "${sl<AuthProvider>().userDataa!.bank} \$",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.green,
-                  fontFamily: GoogleFonts.roboto().fontFamily,
-                  fontWeight: FontWeight.bold,
+              Consumer<PlayerProvider>(
+                builder: (context, value, child) => MyCustomText(
+                  text: budget
+                      ? "${value.amount} \$"
+                      : "${sl<AuthProvider>().userDataa!.bank} \$",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.green,
+                    fontFamily: GoogleFonts.roboto().fontFamily,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
@@ -167,3 +166,85 @@ Container buildAppBard(BuildContext context) {
     ),
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+  //   return Scaffold(
+  //     backgroundColor: Color.fromARGB(255, 238, 238, 232),
+  //     appBar: AppBar(
+  //       title: Center(
+  //         child: MyCustomText(
+  //           text: "Squad Page",
+  //           style: GoogleFonts.blackOpsOne(),
+  //         ),
+  //       ),
+  //     ),
+  //     body: Padding(
+  //       padding: const EdgeInsets.only(top: 20, left: 5, right: 5),
+  //       child: SingleChildScrollView(
+  //         child:
+  //          Column(
+  //           children: [
+  //             MySizedBox(
+  //               height: ScreenUtils.getHeight(context) * 0.01,
+  //             ),
+  //             buildAppBard(context),
+  //             MySizedBox(
+  //               height: ScreenUtils.getHeight(context) * 0.033,
+  //             ),
+  //             Stack(children: [
+  //               Image.asset(
+  //                 "assets/halff.png",
+  //                 height: ScreenUtils.getHeight(context) * 1.01,
+  //                 // width: ScreenUtils.getWidth(context),
+  //                 fit: BoxFit.cover,
+  //               ),
+  //               FutureBuilder<void>(
+  //                 future: setPlayerList(),
+  //                 builder: (context, snapshot) {
+  //                   if (snapshot.connectionState == ConnectionState.waiting) {
+  //                     return const CircularProgressIndicator(); // Show loading indicator
+  //                   } else if (snapshot.hasError) {
+  //                     return Container(
+  //                         child: Text('Error fetching data')); // Handle error
+  //                   } else {
+  //                     return playerSelected != 15
+  //                         ? buildCreationTeam(
+  //                             playerSelected: playerSelected,
+  //                             listOfFantasyPlayers: listOfFantasyPlayers)
+  //                         : ShowFantasyTeam(
+  //                             allPlayers: allPlayers,
+  //                             listOfFantasyPlayers: listOfFantasyPlayers,
+  //                             myMapOfPlayersName: myMapOfPlayersName,
+  //                             myTshirtMap: myMapOfTshirt);
+
+  //                     // buildShowFantasyTeam(
+  //                     //     context: context,
+  //                     //     allPlayers: allPlayers,
+  //                     //     listOfFantasyPlayers: listOfFantasyPlayers,
+  //                     //     myMapOfPlayersName: myMapOfPlayersName,
+  //                     //     myTshirtMap: myMapOfTshirt,
+  //                     //   );
+  //                   }
+  //                 },
+  //               ),
+  //             ]),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+
+
+

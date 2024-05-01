@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/app_constants.dart';
@@ -7,12 +5,15 @@ import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/auth/ViewModel/auth_provider.dart';
+import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 
 import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:front/features/gameweek%20dashbord/model/game_week.dart';
+import 'package:front/features/show%20players/View/show_all_players.dart';
+import 'package:front/features/show%20players/View/show_all_teams.dart';
 
 class GameWeekDashboard extends StatefulWidget {
-  GameWeekDashboard({super.key});
+  const GameWeekDashboard({super.key});
 
   @override
   State<GameWeekDashboard> createState() => _GameWeekDashboardState();
@@ -46,7 +47,7 @@ class _GameWeekDashboardState extends State<GameWeekDashboard> {
                       color: MyColors.kSecondaryColor,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: MyCustomText(
+                    child: const MyCustomText(
                         text: "GameWeek 35 Live ",
                         style: TextStyle(fontSize: 13, color: Colors.white)),
                   ),
@@ -77,33 +78,38 @@ class _GameWeekDashboardState extends State<GameWeekDashboard> {
                   MySizedBox(
                     height: ScreenUtils.getHeight(context) * 0.09,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      InkWell(
-                        onTap: () async {
-                          // Navigator.pushNamed(context, MyRes.kFantasy);
-                          await sl<AuthProvider>().getUserInfo().then((value) =>
-                              value!.success
-                                  ? Navigator.pushNamed(context, MyRes.kFantasy)
-                                  : const CircularProgressIndicator());
-                        },
-                        child: const MyCustomText(
-                          text: "Pick A Team",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
-                      const MyCustomText(text: "Transfert"),
-                    ],
-                  ),
+                  buildFields(
+                      fieldName: "Check Your Team",
+                      onPressed: () async {
+                        await sl<AuthProvider>().getUserInfo().then((value) =>
+                            value!.success
+                                ? Navigator.pushNamed(context, MyRes.kFantasy)
+                                : const CircularProgressIndicator());
+                      }),
                   MySizedBox(
                     height: ScreenUtils.getHeight(context) * 0.09,
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      MyCustomText(text: "Transfert"),
-                      MyCustomText(text: "Fixtures"),
+                      buildFields(
+                          fieldName: "Players",
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ShowAllPlayers()),
+                            );
+                          }),
+                      buildFields(
+                          fieldName: "Teams",
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ShowAllTeams()),
+                            );
+                          }),
                     ],
                   ),
                 ],
@@ -117,6 +123,24 @@ class _GameWeekDashboardState extends State<GameWeekDashboard> {
     getGameWeek = await sl<ShowTeamProvider>().getGameWeekAndPoints();
     await sl<AuthProvider>().getUserInfo();
     sl<ShowTeamProvider>().gameWeek;
+    sl<PlayerProvider>().fetchPlayerss();
     print(sl<ShowTeamProvider>().gameWeek[0].gameWeek);
   }
+}
+
+buildFields({required String fieldName, Function()? onPressed}) {
+  return Container(
+      padding: const EdgeInsets.all(1),
+      decoration: BoxDecoration(
+        color: MyColors.kWhite,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: MyColors.kSecondaryColor),
+      ),
+      child: IconButton(
+        icon: MyCustomText(
+          text: fieldName,
+          style: const TextStyle(color: MyColors.kSecondaryColor),
+        ),
+        onPressed: onPressed,
+      ));
 }

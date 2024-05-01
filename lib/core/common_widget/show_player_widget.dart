@@ -92,7 +92,9 @@ Column buildPlayerContainer({
           overflow: TextOverflow.visible,
           maxFontSize: 15,
           minFontSize: 8,
-          "${getTeamAbbreviation(getTeamShirtNameReversed(teamName: teamName))} (${playerPosition[0]})",
+          teamName == "anonymTeam"
+              ? ""
+              : "${getTeamAbbreviation(getTeamShirtNameReversed(teamName: teamName))} (${playerPosition[0]})",
           style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
