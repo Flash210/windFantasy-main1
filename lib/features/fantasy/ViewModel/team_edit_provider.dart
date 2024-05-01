@@ -78,7 +78,6 @@ class TeamEditProvider with ChangeNotifier {
       String lastKey = _maxSelectedTeams.keys.last;
       // Remove the last item from the map
       _maxSelectedTeams.remove(lastKey);
-      print("Player was deleted Yes ");
       notifyListeners();
     }
   }

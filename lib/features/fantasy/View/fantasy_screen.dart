@@ -16,5 +16,6 @@ import 'package:front/features/show%20team/View/show_fantasy_screen.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 part "fantasy_screen_main.dart";

@@ -71,26 +71,50 @@ class PlayerCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      MyCustomText(
-                        text: showCaptain ? "Show Yes Capitan" : "No Capitan",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      Container(
+                          padding: const EdgeInsets.all(1),
+                          decoration: BoxDecoration(
+                            color:
+                                showCaptain ? MyColors.kGreen : MyColors.greyF,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: MyColors.kSecondaryColor),
+                          ),
+                          child: IconButton(
+                            icon: const MyCustomText(
+                              text: " Captain",
+                              style: TextStyle(color: MyColors.kWhite),
+                            ),
+                            onPressed: () {},
+                          ))
                     ],
                   ),
                   Row(
                     children: [
-                      MyCustomText(
-                        text: showViceCaptain ? "Show Yes V" : "No VV",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      Container(
+                          padding: const EdgeInsets.all(1),
+                          decoration: BoxDecoration(
+                            color: showViceCaptain
+                                ? MyColors.kGreen
+                                : MyColors.greyF,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: MyColors.kSecondaryColor),
+                          ),
+                          child: IconButton(
+                            icon: const MyCustomText(
+                              text: "Vice Captain",
+                              style: TextStyle(color: MyColors.kWhite),
+                            ),
+                            onPressed: () {},
+                          ))
+
+                      // MyCustomText(
+                      //   text: showViceCaptain ? "Show Yes V" : "No VV",
+                      //   style: TextStyle(
+                      //     color: Colors.black,
+                      //     fontSize: 17,
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ],

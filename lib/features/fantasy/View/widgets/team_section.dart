@@ -45,7 +45,7 @@ Column buildTeamSection(
     buildPlayerPositionInTheStatdium(MyRes.kForward, slectedPlayerFromMap,
         playerPositions, context, playersSelected),
 
-    MySizedBox(height: ScreenUtils.getHeight(context) * 0.23),
+    MySizedBox(height: ScreenUtils.getHeight(context) * 0.08),
     // ! Bench Row
     Container(
       decoration: BoxDecoration(
@@ -74,27 +74,57 @@ Column buildTeamSection(
 
     const MySizedBox(height: 10),
 
-    CustomOrangeButton(
-        textColor: MyColors.kWhite,
-        backgroundColor: MyColors.kSecondaryColor,
-        customWidh: 100,
-        text: "Submit",
-        onTap: () {
+    IconButton(
+        onPressed: () {
           sl<TokenManager>()
             ..savePlayerPositionToMap(
                 map: sl<ShowTeamProvider>().savePlayerPostion)
             ..saveTshirtTeamToMap(map: sl<ShowTeamProvider>().saveTeamShirt);
 
-          sl<TeamEditProvider>().createUserTeam(
-            TeamEdit(
-              forwards: forwards,
-              midfielders: midfielders,
-              defenders: defenders,
-              goalkeepers: goalkeepers,
-              moneyRemaining: sl<PlayerProvider>().amount,
-              playersSelected: 15,
-            ),
-          ).then((value) => print("team created successfully"));
-        }),
+            
+
+          sl<TeamEditProvider>()
+              .createUserTeam(
+                TeamEdit(
+                  forwards: forwards,
+                  midfielders: midfielders,
+                  defenders: defenders,
+                  goalkeepers: goalkeepers,
+                  moneyRemaining: sl<PlayerProvider>().amount,
+                  playersSelected: 15,
+                ),
+              )
+              .then((value) => print("team created successfully"));
+        },
+        icon: Image.asset(
+          "assets/TeamDone.png",
+          width: 50,
+          height: 50,
+        )),
+
+    // CustomOrangeButton(
+    //     textColor: MyColors.kWhite,
+    //     backgroundColor: MyColors.kSecondaryColor,
+    //     customWidh: 100,
+    //     text: "Submit",
+    //     onTap: () {
+    //       sl<TokenManager>()
+    //         ..savePlayerPositionToMap(
+    //             map: sl<ShowTeamProvider>().savePlayerPostion)
+    //         ..saveTshirtTeamToMap(map: sl<ShowTeamProvider>().saveTeamShirt);
+
+    //       sl<TeamEditProvider>()
+    //           .createUserTeam(
+    //             TeamEdit(
+    //               forwards: forwards,
+    //               midfielders: midfielders,
+    //               defenders: defenders,
+    //               goalkeepers: goalkeepers,
+    //               moneyRemaining: sl<PlayerProvider>().amount,
+    //               playersSelected: 15,
+    //             ),
+    //           )
+    //           .then((value) => print("team created successfully"));
+    //     }),
   ]);
 }
