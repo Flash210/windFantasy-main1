@@ -91,4 +91,10 @@ class PlayerProvider extends ChangeNotifier {
       }
     }
   }
+
+
+  setNewList(List<Player> l1, List<Player> l2) {
+    l1 = l2;
+    notifyListeners();
+  }
 }

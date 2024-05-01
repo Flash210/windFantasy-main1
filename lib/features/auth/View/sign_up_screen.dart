@@ -13,6 +13,7 @@ import 'package:front/features/auth/ViewModel/auth_provider.dart';
 import 'package:front/features/auth/keys_class.dart';
 import 'package:front/features/auth/utils/validate_fields.dart';
 import 'package:front/features/auth/View/widgets/welcome_text.dart';
+import 'package:front/features/auth/utils/validator.dart';
 
 import 'package:front/generated/l10n.dart';
 import 'package:provider/provider.dart';
@@ -203,6 +204,18 @@ class SignUpScreenTState extends State<SignUpScreenT> {
                         type: QuickAlertType.success,
                         text: 'Mail Send Successfully!',
                         confirmBtnColor: MyColors.kSecondaryColor,
+                        onConfirmBtnTap: () {
+                          print("Mail Send Successfully");
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //       builder: (context) =>
+                          //           const AuthenticationScreenT(
+                          //             pageType: MyRes.kSignIn,
+                          //           )),
+                          // );
+                          lancherUrlToMail();
+                        },
                       ))
                   .onError((error, stackTrace) => QuickAlert.show(
                         context: context,

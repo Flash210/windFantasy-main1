@@ -146,104 +146,6 @@ class ShowTeamProvider extends ChangeNotifier {
     ch1 = ch2;
     notifyListeners();
   }
-  //
-  // Future<bool> updateUserTeam(List<UpdateTeam> updates) async {
-  //   final String? token = await sl<TokenManager>().getToken();
-  //
-  //
-  //
-  //   final Map<String, dynamic> requestBody =
-  //     {
-  //       "id": 1388,
-  //       "playerId": 309,
-  //       "userId": 14,
-  //       "PlayingInGameweeks": "34",
-  //       "captain": "",
-  //       "viceCaptain": ""
-  //     };
-  //
-  // //  print("Request body: $requestBody");
-  //
-  //   print(jsonEncode(requestBody));
-  //
-  //   final response = await http.patch(
-  //     Uri.parse("${AppConfig.kUserBaseUrl}updateUserTeam"),
-  //     headers: <String, String>{
-  //       'Authorization': 'Bearer $token',
-  //     },
-  //     body: [ {
-  //       "id": 1388,
-  //       "playerId": 309,
-  //       "userId": 14,
-  //       "PlayingInGameweeks": "34",
-  //       "captain": "",
-  //       "viceCaptain": ""
-  //     }].toList().cast<Map<String, Object>>(),
-  //   );
-  //
-  //   if (response.statusCode == 200) {
-  //     // Update successful
-  //     notifyListeners(); // Notify listeners about data change
-  //     return true;
-  //   } else {
-  //     // Handle error
-  //     Logger logger = Logger();
-  //     logger.e("Error updating user team: ${response.body}");
-  //     logger.e("Error updating user team: ${response.request}");
-  //     logger.e("Error updating user team: ${response.headers}");
-  //     print("Error updating user team: ${response.statusCode}");
-  //     return false;
-  //   }
-  // }
-
-  //
-  // Future<bool> updateUserTeam(List<UpdateTeam> updates) async {
-  //   final String? token = await sl<TokenManager>().getToken();
-  //
-  //   final Map<String, dynamic> requestBody = {
-  //     "id": 1388,
-  //     "playerId": 309,
-  //     "userId": 14,
-  //     "PlayingInGameweeks": "34",
-  //     "captain": "",
-  //     "viceCaptain": ""
-  //   };
-  //
-  //
-  //   final dio = Dio();
-  //   dio.options.headers['Authorization'] = 'Bearer $token';
-  //
-  //   try {
-  //     final response = await dio.patch(
-  //       "${AppConfig.kUserBaseUrl}updateUserTeam",
-  //       data: [
-  //         {
-  //           "id": 1388,
-  //           "playerId": 309,
-  //           "userId": 14,
-  //           "PlayingInGameweeks": "",
-  //           "captain": "",
-  //           "viceCaptain": ""
-  //         }
-  //       ].toList()
-  //           //.cast<Map<String, Object>>(),
-  //     );
-  //
-  //     if (response.statusCode == 200) {
-  //       notifyListeners();
-  //       print("Response: ${response.data}");
-  //       return true;
-  //     } else {
-  //
-  //       print("Error updating user team: ${response.statusCode}");
-  //       return false;
-  //     }
-  //   } catch (e) {
-  //     Logger logger = Logger();
-  //     logger.e("Error updating user team: $e");
-  //     return false;
-  //   }
-  // }
 
   Future<bool> updateUserTeam(List<UpdateTeam> updates) async {
     final String? token = await sl<TokenManager>().getToken();
@@ -275,8 +177,6 @@ class ShowTeamProvider extends ChangeNotifier {
         return false;
       }
     } catch (e) {
-      Logger logger = Logger();
-      logger.e("Error updating user team: $e");
       return false;
     }
   }
@@ -285,9 +185,12 @@ class ShowTeamProvider extends ChangeNotifier {
 
   addToSwitchList({required String name}) {
     listOfSwitch.add(name);
-    for (var i in listOfSwitch) {
-      print("List of switch: $i");
-    }
+  
+    notifyListeners();
+  }
+
+  resetSwitchList() {
+    listOfSwitch.clear();
     notifyListeners();
   }
 }

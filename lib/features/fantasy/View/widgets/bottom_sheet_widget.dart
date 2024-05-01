@@ -30,93 +30,119 @@ void showListOfPlayers222(
       // .where((element) => !sl<TeamEditProvider>()
       //     .playersAfterMaxReached
       //     .any((playerReached) => playerReached == element)
-          
+
       .toList(); // Copy all players initially
 
-  
-  String searchCriteria = 'Search by Player Name'; 
+  String searchCriteria = 'Search by Player Name';
 
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     builder: (BuildContext context) {
-      return DraggableScrollableSheet(
-        initialChildSize: 0.4,
-        maxChildSize: 1.0,
-        minChildSize: 0.2,
-        expand: false,
-        builder: (BuildContext context, ScrollController scrollController) {
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        onChanged: (value) {
-                          // setState(() {
-                          //    sl<PlayerProvider>().listForFilter = _filterPlayers(
-                          //       value,
-                          //       searchCriteria,
-                          //       listOfPlayersFromApi,
-                          //       teams);
-                          // });
-                        },
-                        decoration: InputDecoration(
-                          labelText: searchCriteria,
-                          prefixIcon: const Icon(Icons.search),
+      return StatefulBuilder(builder: (context, setState) {
+        return DraggableScrollableSheet(
+          initialChildSize: 0.4,
+          maxChildSize: 1.0,
+          minChildSize: 0.2,
+          expand: false,
+          builder: (BuildContext context, ScrollController scrollController) {
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              sl<PlayerProvider>().listForFilter =
+                                  _filterPlayers(value, searchCriteria,
+                                      listOfPlayersFromApi, teams);
+                            });
+                          },
+                          decoration: InputDecoration(
+                            labelText: searchCriteria,
+                            prefixIcon: const Icon(Icons.search),
+                          ),
                         ),
                       ),
-                    ),
-                    IconButton(
-                        icon: const Icon(Icons.filter_list),
-                        onPressed: () {
-                          // String? selectedCriteria =
-                          //     await _showSearchCriteriaDialog(context);
-                          // if (selectedCriteria != null) {
-                          //   setState(() {
-                          //     searchCriteria = selectedCriteria;
-                          //   });
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => FilteredPage(
-                                position: positionPlayer,
+                      IconButton(
+                          icon: const Icon(Icons.filter_list),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FilteredPage(
+                                  position: positionPlayer,
+                                ),
                               ),
-                            ),
-                          );
-                        }),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Consumer<PlayerProvider>(
-                  builder: (BuildContext context, PlayerProvider playerProvider,
-                          Widget? child) =>
-                      ListWheelScrollView(
-                    controller: scrollController,
-                    itemExtent: 100, // Adjust the height of each item
-                    children: List.generate(playerProvider.listForFilter.length, (index) {
-                      final player = playerProvider.listForFilter[index];
-                      final team = teams.firstWhere(
-                        (team) => team.id == player.teamId,
-                        orElse: () => Team(
-                          id: 0,
-                          name: 'Unknown',
-                          logo: '',
-                        ),
-                      );
-                      return buildBottomSheetListTitle(team, player, context,
-                          positionPlayer, playerProvider.listForFilter);
-                    }),
+                            );
+                          }),
+                    ],
                   ),
                 ),
-              ),
-            ],
-          );
-        },
-      );
+                Expanded(
+                  child: Consumer<PlayerProvider>(
+                    builder: (BuildContext context,
+                            PlayerProvider playerProvider, Widget? child) =>
+                        ListWheelScrollView(
+                      controller: scrollController,
+                      itemExtent: 100, // Adjust the height of each item
+                      children: List.generate(
+                          playerProvider.listForFilter.length, (index) {
+                        final player = playerProvider.listForFilter[index];
+                        final team = teams.firstWhere(
+                          (team) => team.id == player.teamId,
+                          orElse: () => Team(
+                            id: 0,
+                            name: 'Unknown',
+                            logo: '',
+                          ),
+                        );
+                        return buildBottomSheetListTitle(team, player, context,
+                            positionPlayer, playerProvider.listForFilter);
+                      }),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      });
     },
   );
+}
+
+List<Player> _filterPlayers(String value, String searchCriteria,
+    List<Player> listOfPlayers, List<Team> teams) {
+  switch (searchCriteria) {
+    case 'Search by Player Name':
+      return listOfPlayers
+          .where((player) =>
+              player.name.toLowerCase().startsWith(value.toLowerCase()))
+          .toList();
+    case 'Search by Player Position':
+      return listOfPlayers
+          .where((player) =>
+              player.position.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+    case 'Search by Player Price':
+      return listOfPlayers
+          .where((player) => player.price
+              .toString()
+              .toLowerCase()
+              .contains(value.toLowerCase()))
+          .toList();
+
+    case 'Search by Team Name':
+      return listOfPlayers
+          .where((player) => teams.any((team) =>
+              team.id == player.teamId &&
+              team.name!.toLowerCase().contains(value.toLowerCase())))
+          .toList();
+    default:
+      return listOfPlayers;
+  }
 }

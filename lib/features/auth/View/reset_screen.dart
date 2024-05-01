@@ -12,10 +12,9 @@ import 'package:front/features/auth/utils/validate_fields.dart';
 import 'package:front/features/auth/utils/validator.dart';
 
 import 'package:front/generated/l10n.dart';
+import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
-
-
 
 class ResetPasswordScreen extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
@@ -41,22 +40,53 @@ class ResetPasswordScreen extends StatelessWidget {
           ),
           Text(S.of(context).EnterYourNewPassword),
           const SizedBox(height: 50.0),
-          CustomInputField(
-            fieldKey: passwordKey,
-            text: S.of(context).NewPassword,
-            controller: passwordController,
-            keyboardType: TextInputType.emailAddress,
-            validator: (value) => validatePassword(value, context),
-          ),
-          CustomInputField(
-            fieldKey: confirmPasswordKey,
-            text: S.of(context).ConfirmNewPassword,
-            controller: confirmPasswordController,
-            keyboardType: TextInputType.emailAddress,
-            validator: (value) => validatePassword(value, context),
-          ),
+          Consumer<AuthProvider>(builder: (context, provider, _) {
+            return CustomInputField(
+                fieldKey: passwordKey,
+                obscureText: provider.obscureText,
+                text: S.of(context).NewPassword,
+                controller: passwordController,
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) => validatePassword(value, context),
+                suffixIcon: IconButton(
+                  icon: Icon(provider.obscureText
+                      ? Icons.visibility
+                      : Icons.visibility_off),
+                  onPressed: () {
+                    provider.togglePasswordVisibility();
+                  },
+                ));
+          }),
+
+          Consumer<AuthProvider>(builder: (context, provider, _) {
+            return CustomInputField(
+                obscureText: provider.obscureText,
+                fieldKey: confirmPasswordKey,
+                text: S.of(context).ConfirmNewPassword,
+                controller: confirmPasswordController,
+                keyboardType: TextInputType.visiblePassword,
+                validator: (value) => validatePassword(value, context),
+                suffixIcon: IconButton(
+                  icon: Icon(provider.obscureText
+                      ? Icons.visibility
+                      : Icons.visibility_off),
+                  onPressed: () {
+                    provider.togglePasswordVisibility();
+                  },
+                ));
+          }),
+
+          // CustomInputField(
+          //   //obscureText: provider.obscureText,
+          //   fieldKey: confirmPasswordKey,
+          //   text: S.of(context).ConfirmNewPassword,
+          //   controller: confirmPasswordController,
+          //   keyboardType: TextInputType.visiblePassword,
+          //   validator: (value) => validatePassword(value, context),
+          // ),
           const SizedBox(height: 16.0),
           CustomOrangeButton(
+            textColor: Colors.white,
             backgroundColor: MyColors.kPrimaryColor,
             text: S.of(context).Confirm,
             onTap: () async {
@@ -66,15 +96,13 @@ class ResetPasswordScreen extends StatelessWidget {
                       pass1: passwordController.text.trim(),
                       pass2: confirmPasswordController.text.trim(),
                       context: context)) {
-
-                        
                     await sl<AuthProvider>()
                         .resetPassword(
                             newPassword: passwordController.text.trim())
                         .then((value) => QuickAlert.show(
                               context: context,
                               type: QuickAlertType.success,
-                  confirmBtnColor: MyColors.kSecondaryColor,
+                              confirmBtnColor: MyColors.kSecondaryColor,
                               title: 'Success',
                               text: 'Password Reset successfully',
                               onConfirmBtnTap: () => Future.delayed(
@@ -96,7 +124,7 @@ class ResetPasswordScreen extends StatelessWidget {
                         .onError((error, stackTrace) => QuickAlert.show(
                               context: context,
                               type: QuickAlertType.error,
-                  confirmBtnColor: MyColors.kSecondaryColor,
+                              confirmBtnColor: MyColors.kSecondaryColor,
                               title: 'Oops...',
                               text: 'Sorry, something went wrong$error',
                               onConfirmBtnTap: () => Navigator.pop(context),
@@ -112,5 +140,4 @@ class ResetPasswordScreen extends StatelessWidget {
       ),
     );
   }
-
 }

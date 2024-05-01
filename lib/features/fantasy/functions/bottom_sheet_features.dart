@@ -99,7 +99,7 @@ Column buildPlayerPriceAndName(Player player) {
   return Column(
     children: [
       // Text(player.name),
-      MyCustomText(text: extractLastName(player.name)),
+      MyCustomText(text: player.name),
       const SizedBox(width: 10),
       MyCustomText(
         text: '£${player.price}m',

@@ -50,7 +50,7 @@ String extractDate(String dateTimeString) {
 
 // ! build win,lose or draw  result container
 
-Widget buildResultContainer(int res1, int res2) {
+Widget buildResultContainer(int res1, int res2, bool result) {
   return Container(
     decoration: BoxDecoration(
       shape: BoxShape.circle,
@@ -64,7 +64,7 @@ Widget buildResultContainer(int res1, int res2) {
     child: Padding(
       padding: const EdgeInsets.all(9.0),
       child: Text(
-        res1.toString(),
+        result ? "-" : res1.toString(),
         style: const TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
@@ -100,7 +100,25 @@ Map<String, List<Fixture>> groupFixturesByDate(List<Fixture> fixtures) {
       groupedFixtures[date] = [fixture];
     }
   }
-  return groupedFixtures;
+
+  // Sort the groupedFixtures map by day of the month
+  List<String> sortedDates = groupedFixtures.keys.toList();
+  sortedDates.sort((a, b) {
+    int dayA = int.parse(a.split('-')[2]); // Extract day from date string
+    int dayB = int.parse(b.split('-')[2]);
+    return dayA.compareTo(dayB);
+  });
+
+  // Create a new map with sorted dates and sorted fixtures
+  Map<String, List<Fixture>> sortedGroupedFixtures = {};
+  for (var date in sortedDates) {
+    sortedGroupedFixtures[date] = groupedFixtures[date]!;
+    sortedGroupedFixtures[date]!.sort((a, b) => a.date!.compareTo(b.date!));
+  }
+
+  return sortedGroupedFixtures;
+
+  // return groupedFixtures;
 }
 
 //
@@ -117,10 +135,12 @@ Column buildTeamDetails(Team homeTeam, Team awayTeam, Fixture fixture) {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // ? Build result container for home team
-              buildResultContainer(fixture.resultHome!, fixture.resultAway!),
+              buildResultContainer(fixture.resultHome!, fixture.resultAway!,
+                  fixture.result!.isEmpty),
               // ? Build result container for away team
 
-              buildResultContainer(fixture.resultAway!, fixture.resultHome!),
+              buildResultContainer(fixture.resultAway!, fixture.resultHome!,
+                  fixture.result!.isEmpty),
             ],
           ),
           buildTeamAndName(team: awayTeam, textRight: true),

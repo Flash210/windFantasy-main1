@@ -1,6 +1,11 @@
 import 'package:front/core/common_functions/extract_player_name.dart';
+import 'package:front/core/common_widget/show_player_widget.dart';
+import 'package:front/core/services/injection_container.dart';
+import 'package:front/core/services/token_manager.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
+import 'package:front/features/fantasy/Model/update_team.dart';
+import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:get/get.dart';
 
 int getPlayerId(List<Player> allPlayers, Map<String, dynamic> myMap) {
@@ -61,3 +66,78 @@ playerData.viceCaptain!.contains("34") ? true : false;
 
 
 }
+
+
+
+
+
+switchPlayersInFanatsyTeam()async{
+    Map<String, dynamic> retrievedMap = {};
+
+              retrievedMap = await sl<TokenManager>().getMap();
+
+              List<String> listOfSwitch = sl<ShowTeamProvider>().listOfSwitch;
+              retrievedMap[listOfSwitch[0]] = listOfSwitch[3];
+              retrievedMap[listOfSwitch[2]] = listOfSwitch[1];
+
+              sl<ShowTeamProvider>().resetSwitchList();
+                 print("retrievedMap: $retrievedMap");
+
+             // sl<TokenManager>().savePlayerPositionToMap(map: retrievedMap);
+}
+
+
+
+
+
+
+setPlayerInOrOutGameWeek({required List<ShowTeam> listOfFantasyPlayers,required int numberOfPlayerInList,required bool inOrOut})async{
+     bool captainValue =
+                        listOfFantasyPlayers[numberOfPlayerInList].captain!.contains("35");
+                    bool viceCaptainValue =
+                        listOfFantasyPlayers[numberOfPlayerInList].viceCaptain!.contains("35");
+
+                    var x = UpdateTeam(
+                      id: listOfFantasyPlayers[numberOfPlayerInList].id!,
+                      playerId: listOfFantasyPlayers[numberOfPlayerInList].playerId!,
+                      userId: listOfFantasyPlayers[numberOfPlayerInList].userId!,
+                      playingInGameweeks:  inOrOut ? "35" : "",
+                      captain: captainValue ? "35" : "",
+                      viceCaptain: viceCaptainValue ? "35" : "",
+                    );
+                    List<UpdateTeam> updateTeam = [x];
+await sl<ShowTeamProvider>().updateUserTeam(updateTeam);
+
+}
+
+
+
+
+addPlayerToSwitchList({
+  required List<ShowTeam> listOfFantasyPlayers,
+  required List<Player> allPlayers,
+  required Map<String, dynamic> myMapOfPlayersName,
+  required String playerPosition,
+  
+
+}){
+
+        sl<ShowTeamProvider>().addToSwitchList(name: playerPosition);
+
+                    sl<ShowTeamProvider>().addToSwitchList(
+                        name: getTextToShow(listOfFantasyPlayers, allPlayers,
+                            myMapOfPlayersName, playerPosition));
+
+}
+
+
+showAllPlayersDetails({required List<Player> allPlayers})async{
+     await sl<ShowTeamProvider>().fetchTeams();
+            sl<ShowTeamProvider>().showTeam.forEach(
+              (element) {
+                print(
+                    " | ${getPlayerName(allPlayers, element.playerId!)} | => Playing in  ${element.playingInGameweeks} + Captain ${element.captain} + ViceCaptain ${element.viceCaptain}  + ${element.playerId} ");
+              },
+            );
+}
+
