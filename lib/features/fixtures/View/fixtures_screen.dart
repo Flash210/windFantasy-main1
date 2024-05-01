@@ -68,13 +68,7 @@ class FixturesScreenState extends State<FixturesScreen> {
                       return Column(
                         children: [
                           ListTile(
-                            // title: Text(
-                            //   date,
-                            //   style: const TextStyle(
-                            //     fontSize: 16,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),
-                            // ),
+                       
                             title: Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(

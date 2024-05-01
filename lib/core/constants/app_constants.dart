@@ -52,6 +52,10 @@ class MyRes {
   ];
 
 
+static const List<String> kBencheds=[
+  "bench1","bench2","bench3","bench4"
+];
+
 
   static const List<String> kAllPlayersPositions =[
     kGoalKepper1,

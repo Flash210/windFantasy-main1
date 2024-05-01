@@ -47,7 +47,7 @@ class _GameWeekDashboardState extends State<GameWeekDashboard> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: MyCustomText(
-                        text: "GameWeek ${getGameWeek[0].gameWeek} Live",
+                        text: "GameWeek 35 Live ",
                         style: TextStyle(fontSize: 13, color: Colors.white)),
                   ),
                   MySizedBox(height: ScreenUtils.getHeight(context) * 0.02),
@@ -61,7 +61,9 @@ class _GameWeekDashboardState extends State<GameWeekDashboard> {
                     child: Column(
                       children: [
                         MyCustomText(
-                          text: getGameWeek[0].points.toString(),
+                          text: snapshot.data != null
+                              ? getGameWeek[0].points.toString()
+                              : "0",
                           color: Colors.black,
                           style: TextStyle(fontSize: 70),
                         ),

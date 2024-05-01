@@ -8,7 +8,6 @@ import 'package:front/core/services/injection_container.dart';
 import 'package:front/core/services/token_manager.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
-import 'package:front/features/fantasy/Model/update_team.dart';
 import 'package:front/features/fantasy/View/widgets/player_icon.dart';
 import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:front/features/player%20card/functions/player_statistics.dart';
@@ -35,23 +34,27 @@ class ShowFantasyTeam extends StatelessWidget {
     return Column(
       children: [
         MySizedBox(
-          height: ScreenUtils.getHeight(context) * 0.06,
+          height: ScreenUtils.getHeight(context) * 0.02,
         ),
-        ElevatedButton(
-            onPressed: () async {
-              retrievedMap = await sl<TokenManager>().getMap();
+        // ElevatedButton(
+        //     onPressed: () async {
+        //       retrievedMap = await sl<TokenManager>().getMap();
 
-              List<String> listOfSwitch = sl<ShowTeamProvider>().listOfSwitch;
-              retrievedMap[listOfSwitch[0]] = listOfSwitch[3];
-              retrievedMap[listOfSwitch[2]] = listOfSwitch[1];
-              //   print("retrievedMap: $retrievedMap");
+        //       List<String> listOfSwitch = sl<ShowTeamProvider>().listOfSwitch;
+        //       retrievedMap[listOfSwitch[0]] = listOfSwitch[3];
+        //       retrievedMap[listOfSwitch[2]] = listOfSwitch[1];
 
-              sl<TokenManager>().savePlayerPositionToMap(map: retrievedMap);
-            },
-            child: Text("Switch")),
-        MySizedBox(
-          height: ScreenUtils.getHeight(context) * 0.06,
-        ),
+        //       sl<ShowTeamProvider>().resetSwitchList();
+        //       print("retrievedMap: $retrievedMap");
+
+        //          sl<TokenManager>().savePlayerPositionToMap(map: retrievedMap);
+        //     },
+        //     child: Text("Switch")),
+        // MySizedBox(
+        //   height: ScreenUtils.getHeight(context) * 0.06,
+        // ),
+
+        // ! Goal Keeper  ***************
         buildPlayerIcon(
           onLongPress: () {
             navigateToPlayerCard(
@@ -83,151 +86,122 @@ class ShowFantasyTeam extends StatelessWidget {
           playerPosition: MyRes.kGoalKepper1,
           isItBenched: "No",
           onTap: () async {
-            bool captainValue =
-                listOfFantasyPlayers[13].captain!.contains("34");
-            bool viceCaptainValue =
-                listOfFantasyPlayers[13].viceCaptain!.contains("34");
-
-            var x = UpdateTeam(
-              id: listOfFantasyPlayers[13].id!,
-              playerId: listOfFantasyPlayers[13].playerId!,
-              userId: listOfFantasyPlayers[13].userId!,
-              playingInGameweeks: "",
-              captain: captainValue ? "34" : "",
-              viceCaptain: viceCaptainValue ? "34" : "",
-            );
-            List<UpdateTeam> updateTeam = [x];
-
-            sl<ShowTeamProvider>().addToSwitchList(name: MyRes.kGoalKepper1);
-            sl<ShowTeamProvider>().addToSwitchList(
-                name: getTextToShow(listOfFantasyPlayers, allPlayers,
-                    myMapOfPlayersName, MyRes.kGoalKepper1));
-
-            //await sl<ShowTeamProvider>().updateUserTeam(updateTeam);
-
-            // await sl<ShowTeamProvider>().fetchTeams();
-            // sl<ShowTeamProvider>().showTeam.forEach(
-            //   (element) {
-            //     print(
-            //         " | ${getPlayerName(allPlayers, element.playerId!)} | => Playing in  ${element.playingInGameweeks} + Captain ${element.captain} + ViceCaptain ${element.viceCaptain}  + ${element.playerId} ");
-            //   },
-            // );
+            //13
+            setPlayerInOrOutGameWeek(
+                listOfFantasyPlayers: listOfFantasyPlayers,
+                numberOfPlayerInList: 13,
+                inOrOut: false);
+            addPlayerToSwitchList(
+                listOfFantasyPlayers: listOfFantasyPlayers,
+                allPlayers: allPlayers,
+                myMapOfPlayersName: myMapOfPlayersName,
+                playerPosition: MyRes.kGoalKepper1);
+            //  showAllPlayersDetails(allPlayers: allPlayers);
           },
-          // buildCaptainOrVice(isCaptain: true, allPlayers:allPlayers,playerPosition:"Gardien1", myMapOfPlayersName: myMapOfPlayersName,
-          //  listOfFantasyPlayers:listOfFantasyPlayers
-          //  );
         ),
+
+        // ! ********************************            Defenders  ********************************
         const SizedBox(height: 15),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           buildPlayerIcon(
+            onTap: () {
+              setPlayerInOrOutGameWeek(
+                  listOfFantasyPlayers: listOfFantasyPlayers,
+                  numberOfPlayerInList: 9,
+                  inOrOut: false);
+              addPlayerToSwitchList(
+                  listOfFantasyPlayers: listOfFantasyPlayers,
+                  allPlayers: allPlayers,
+                  myMapOfPlayersName: myMapOfPlayersName,
+                  playerPosition: MyRes.kDefenders[0]);
+            },
             myTshirtMap: myTshirtMap,
             context: context,
             playerName: getTextToShow(listOfFantasyPlayers, allPlayers,
                 myMapOfPlayersName, MyRes.kDefenders[0]),
             playerPosition: MyRes.kDefenders[0],
             isItBenched: "No",
-            onTap: () async {
-              // navigateToPlayerCard(
-              //     context,
-              //     allPlayers,
-              //     listOfFantasyPlayers,
-              //     myMapOfPlayersName,
-              //     myTshirtMap,
-              //     MyRes.kDefenders[0],
-              //     S.of(context).Defender,
-              //     buildCaptainOrVice(
-              //         isCaptain: true,
-              //         allPlayers: allPlayers,
-              //         playerPosition: MyRes.kDefenders[0],
-              //         myMapOfPlayersName: myMapOfPlayersName,
-              //         listOfFantasyPlayers: listOfFantasyPlayers),
-              //     buildCaptainOrVice(
-              //         isCaptain: false,
-              //         allPlayers: allPlayers,
-              //         playerPosition: MyRes.kDefenders[0],
-              //         myMapOfPlayersName: myMapOfPlayersName,
-              //         listOfFantasyPlayers: listOfFantasyPlayers));
+            onLongPress: () async {
+              navigateToPlayerCard(
+                  context,
+                  allPlayers,
+                  listOfFantasyPlayers,
+                  myMapOfPlayersName,
+                  myTshirtMap,
+                  MyRes.kDefenders[0],
+                  S.of(context).Defender,
+                  buildCaptainOrVice(
+                      isCaptain: true,
+                      allPlayers: allPlayers,
+                      playerPosition: MyRes.kDefenders[0],
+                      myMapOfPlayersName: myMapOfPlayersName,
+                      listOfFantasyPlayers: listOfFantasyPlayers),
+                  buildCaptainOrVice(
+                      isCaptain: false,
+                      allPlayers: allPlayers,
+                      playerPosition: MyRes.kDefenders[0],
+                      myMapOfPlayersName: myMapOfPlayersName,
+                      listOfFantasyPlayers: listOfFantasyPlayers));
             },
           ),
 
+//? -------------------------------------------------------
           buildPlayerIcon(
+            onTap: () {
+              setPlayerInOrOutGameWeek(
+                  listOfFantasyPlayers: listOfFantasyPlayers,
+                  numberOfPlayerInList: 10,
+                  inOrOut: false);
+              addPlayerToSwitchList(
+                  listOfFantasyPlayers: listOfFantasyPlayers,
+                  allPlayers: allPlayers,
+                  myMapOfPlayersName: myMapOfPlayersName,
+                  playerPosition: MyRes.kDefenders[1]);
+            },
             myTshirtMap: myTshirtMap,
             context: context,
             playerName: getTextToShow(listOfFantasyPlayers, allPlayers,
                 myMapOfPlayersName, MyRes.kDefenders[1]),
             playerPosition: MyRes.kDefenders[1],
             isItBenched: "No",
-            onTap: () {
-              print("MyRes.kDefenders[1] ${MyRes.kDefenders[1]}");
-
-//           int playerId = allPlayers
-//       .firstWhere(
-//         (player) =>
-//             myMapOfPlayersName[playerPosition] == extractLastName(player.name),
-//         orElse: () => Player.empty(),
-//       )
-//       .id;
-
-//   ShowTeam playerData = listOfFantasyPlayers
-//       .firstWhere((element) => element.playerId == playerId);
-
-//   return  isCaptain ?   playerData.captain!.contains("34") ? true : false :
-// playerData.viceCaptain!.contains("34") ? true : false;
-
-              // navigateToPlayerCard(
-              //     context,
-              //     allPlayers,
-              //     listOfFantasyPlayers,
-              //     myMapOfPlayersName,
-              //     myTshirtMap,
-              //     MyRes.kDefenders[1],
-              //     S.of(context).Defender,
-              //     buildCaptainOrVice(
-              //         isCaptain: true,
-              //         allPlayers: allPlayers,
-              //         playerPosition:   MyRes.kDefenders[1],
-              //         myMapOfPlayersName: myMapOfPlayersName,
-              //         listOfFantasyPlayers: listOfFantasyPlayers),
-              //     buildCaptainOrVice(
-              //         isCaptain: false,
-              //         allPlayers: allPlayers,
-              //         playerPosition:   MyRes.kDefenders[1],
-              //         myMapOfPlayersName: myMapOfPlayersName,
-              //         listOfFantasyPlayers: listOfFantasyPlayers));
+            onLongPress: () {
+              navigateToPlayerCard(
+                  context,
+                  allPlayers,
+                  listOfFantasyPlayers,
+                  myMapOfPlayersName,
+                  myTshirtMap,
+                  MyRes.kDefenders[1],
+                  S.of(context).Defender,
+                  buildCaptainOrVice(
+                      isCaptain: true,
+                      allPlayers: allPlayers,
+                      playerPosition: MyRes.kDefenders[1],
+                      myMapOfPlayersName: myMapOfPlayersName,
+                      listOfFantasyPlayers: listOfFantasyPlayers),
+                  buildCaptainOrVice(
+                      isCaptain: false,
+                      allPlayers: allPlayers,
+                      playerPosition: MyRes.kDefenders[1],
+                      myMapOfPlayersName: myMapOfPlayersName,
+                      listOfFantasyPlayers: listOfFantasyPlayers));
             },
           ),
-          // buildPlayerIcon(
-          //     onTap: () {
-          //       navigateToPlayerCard(
-          //           context,
-          //           allPlayers,
-          //           listOfFantasyPlayers,
-          //           myMapOfPlayersName,
-          //           myTshirtMap,
-          //           MyRes.kDefenders[1],
-          //           S.of(context).Defender,
-          //           buildCaptainOrVice(
-          //               isCaptain: true,
-          //               allPlayers: allPlayers,
-          //               playerPosition: MyRes.kDefenders[1],
-          //               myMapOfPlayersName: myMapOfPlayersName,
-          //               listOfFantasyPlayers: listOfFantasyPlayers),
-          //           buildCaptainOrVice(
-          //               isCaptain: false,
-          //               allPlayers: allPlayers,
-          //               playerPosition: MyRes.kDefenders[1],
-          //               myMapOfPlayersName: myMapOfPlayersName,
-          //               listOfFantasyPlayers: listOfFantasyPlayers));
-          //     },
-          //     myTshirtMap: myTshirtMap,
-          //     context: context,
-          //     playerName: getTextToShow(listOfFantasyPlayers, allPlayers,
-          //         myMapOfPlayersName, MyRes.kDefenders[1]),
-          //     playerPosition: MyRes.kDefenders[1],
-          //     isItBenched: "No"),
 
+//? --------------------------
           buildPlayerIcon(
               onTap: () {
+                setPlayerInOrOutGameWeek(
+                    listOfFantasyPlayers: listOfFantasyPlayers,
+                    numberOfPlayerInList: 11,
+                    inOrOut: false);
+                addPlayerToSwitchList(
+                    listOfFantasyPlayers: listOfFantasyPlayers,
+                    allPlayers: allPlayers,
+                    myMapOfPlayersName: myMapOfPlayersName,
+                    playerPosition: MyRes.kDefenders[2]);
+              },
+              onLongPress: () {
                 navigateToPlayerCard(
                     context,
                     allPlayers,
@@ -255,8 +229,21 @@ class ShowFantasyTeam extends StatelessWidget {
                   myMapOfPlayersName, MyRes.kDefenders[2]),
               playerPosition: MyRes.kDefenders[2],
               isItBenched: "No"),
+
+          //? ------------------------
           buildPlayerIcon(
               onTap: () {
+                setPlayerInOrOutGameWeek(
+                    listOfFantasyPlayers: listOfFantasyPlayers,
+                    numberOfPlayerInList: 12,
+                    inOrOut: false);
+                addPlayerToSwitchList(
+                    listOfFantasyPlayers: listOfFantasyPlayers,
+                    allPlayers: allPlayers,
+                    myMapOfPlayersName: myMapOfPlayersName,
+                    playerPosition: MyRes.kDefenders[3]);
+              },
+              onLongPress: () {
                 navigateToPlayerCard(
                     context,
                     allPlayers,
@@ -285,10 +272,22 @@ class ShowFantasyTeam extends StatelessWidget {
               playerPosition: MyRes.kDefenders[3],
               isItBenched: "No"),
         ]),
+        // ! ******************** Midfildiers ***********************
         const SizedBox(height: 30),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           buildPlayerIcon(
               onTap: () {
+                setPlayerInOrOutGameWeek(
+                    listOfFantasyPlayers: listOfFantasyPlayers,
+                    numberOfPlayerInList: 4,
+                    inOrOut: false);
+                addPlayerToSwitchList(
+                    listOfFantasyPlayers: listOfFantasyPlayers,
+                    allPlayers: allPlayers,
+                    myMapOfPlayersName: myMapOfPlayersName,
+                    playerPosition: MyRes.kMidfielders[0]);
+              },
+              onLongPress: () {
                 navigateToPlayerCard(
                     context,
                     allPlayers,
@@ -316,8 +315,21 @@ class ShowFantasyTeam extends StatelessWidget {
                   myMapOfPlayersName, MyRes.kMidfielders[0]),
               playerPosition: MyRes.kMidfielders[0],
               isItBenched: "No"),
+
+          //? --------------------------------------------------
           buildPlayerIcon(
               onTap: () {
+                setPlayerInOrOutGameWeek(
+                    listOfFantasyPlayers: listOfFantasyPlayers,
+                    numberOfPlayerInList: 5,
+                    inOrOut: false);
+                addPlayerToSwitchList(
+                    listOfFantasyPlayers: listOfFantasyPlayers,
+                    allPlayers: allPlayers,
+                    myMapOfPlayersName: myMapOfPlayersName,
+                    playerPosition: MyRes.kMidfielders[1]);
+              },
+              onLongPress: () {
                 navigateToPlayerCard(
                     context,
                     allPlayers,
@@ -345,8 +357,22 @@ class ShowFantasyTeam extends StatelessWidget {
                   myMapOfPlayersName, MyRes.kMidfielders[1]),
               playerPosition: MyRes.kMidfielders[1],
               isItBenched: "No"),
+
+          //? --------------------------------------------------
+
           buildPlayerIcon(
               onTap: () {
+                setPlayerInOrOutGameWeek(
+                    listOfFantasyPlayers: listOfFantasyPlayers,
+                    numberOfPlayerInList: 6,
+                    inOrOut: false);
+                addPlayerToSwitchList(
+                    listOfFantasyPlayers: listOfFantasyPlayers,
+                    allPlayers: allPlayers,
+                    myMapOfPlayersName: myMapOfPlayersName,
+                    playerPosition: MyRes.kMidfielders[2]);
+              },
+              onLongPress: () {
                 navigateToPlayerCard(
                     context,
                     allPlayers,
@@ -374,8 +400,22 @@ class ShowFantasyTeam extends StatelessWidget {
                   myMapOfPlayersName, MyRes.kMidfielders[2]),
               playerPosition: MyRes.kMidfielders[2],
               isItBenched: "No"),
+
+          //? --------------------------------------------------
+
           buildPlayerIcon(
               onTap: () {
+                setPlayerInOrOutGameWeek(
+                    listOfFantasyPlayers: listOfFantasyPlayers,
+                    numberOfPlayerInList: 7,
+                    inOrOut: false);
+                addPlayerToSwitchList(
+                    listOfFantasyPlayers: listOfFantasyPlayers,
+                    allPlayers: allPlayers,
+                    myMapOfPlayersName: myMapOfPlayersName,
+                    playerPosition: MyRes.kMidfielders[3]);
+              },
+              onLongPress: () {
                 navigateToPlayerCard(
                     context,
                     allPlayers,
@@ -404,11 +444,23 @@ class ShowFantasyTeam extends StatelessWidget {
               playerPosition: MyRes.kMidfielders[3],
               isItBenched: "No"),
         ]),
-        const SizedBox(height: 30),
-        const SizedBox(height: 30),
+        MySizedBox(height: ScreenUtils.getHeight(context) * 0.06),
+
+        //! ************************** Forwards****************
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           buildPlayerIcon(
               onTap: () {
+                setPlayerInOrOutGameWeek(
+                    listOfFantasyPlayers: listOfFantasyPlayers,
+                    numberOfPlayerInList: 0,
+                    inOrOut: false);
+                addPlayerToSwitchList(
+                    listOfFantasyPlayers: listOfFantasyPlayers,
+                    allPlayers: allPlayers,
+                    myMapOfPlayersName: myMapOfPlayersName,
+                    playerPosition: MyRes.kForwards[0]);
+              },
+              onLongPress: () {
                 navigateToPlayerCard(
                     context,
                     allPlayers,
@@ -438,6 +490,17 @@ class ShowFantasyTeam extends StatelessWidget {
               isItBenched: "No"),
           buildPlayerIcon(
               onTap: () {
+                setPlayerInOrOutGameWeek(
+                    listOfFantasyPlayers: listOfFantasyPlayers,
+                    numberOfPlayerInList: 2,
+                    inOrOut: false);
+                addPlayerToSwitchList(
+                    listOfFantasyPlayers: listOfFantasyPlayers,
+                    allPlayers: allPlayers,
+                    myMapOfPlayersName: myMapOfPlayersName,
+                    playerPosition: MyRes.kForwards[1]);
+              },
+              onLongPress: () {
                 navigateToPlayerCard(
                     context,
                     allPlayers,
@@ -468,6 +531,8 @@ class ShowFantasyTeam extends StatelessWidget {
         ]),
         const SizedBox(height: 30),
         const SizedBox(height: 30),
+
+        // ! *****************************  Benched *************************
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
@@ -477,24 +542,69 @@ class ShowFantasyTeam extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Text('Benched Players',
-                  style: GoogleFonts.rubik(
-                    textStyle: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600),
-                  )),
-              
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () async {},
+                    icon: Image.asset(
+                      "assets/Cswitch.png",
+                      width: 20,
+                      height: 20,
+                    ),
+                  ),
+                  Text('Benched Players',
+                      style: GoogleFonts.rubik(
+                        textStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600),
+                      )),
+                  IconButton(
+                    onPressed: () async {
+                      retrievedMap = await sl<TokenManager>().getMap();
+
+                      List<String> listOfSwitch =
+                          sl<ShowTeamProvider>().listOfSwitch;
+                      retrievedMap[listOfSwitch[0]] = listOfSwitch[3];
+                      retrievedMap[listOfSwitch[2]] = listOfSwitch[1];
+
+                      print(sl<ShowTeamProvider>().listOfSwitch);
+
+                      sl<ShowTeamProvider>().resetSwitchList();
+
+                      sl<TokenManager>()
+                          .savePlayerPositionToMap(map: retrievedMap);
+                      sl<ShowTeamProvider>().resetSwitchList();
+                    },
+                    icon: Image.asset(
+                      "assets/switch.png",
+                      width: 20,
+                      height: 20,
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 16),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 buildBenchedPlayerIcon(
                   myTshirtMap: myTshirtMap,
                   context: context,
                   playerName: getTextToShow(listOfFantasyPlayers, allPlayers,
-                      myMapOfPlayersName, "bench1"),
+                      myMapOfPlayersName, MyRes.kBencheds[0]),
                   playerPosition: "A0",
                   isItBenched: "Yes",
-                  onTap: () async {},
+                  onTap: () {
+                    setPlayerInOrOutGameWeek(
+                        listOfFantasyPlayers: listOfFantasyPlayers,
+                        numberOfPlayerInList: 1,
+                        inOrOut: true);
+                    addPlayerToSwitchList(
+                        listOfFantasyPlayers: listOfFantasyPlayers,
+                        allPlayers: allPlayers,
+                        myMapOfPlayersName: myMapOfPlayersName,
+                        playerPosition: MyRes.kBencheds[0]);
+                  },
                 ),
                 buildBenchedPlayerIcon(
                   myTshirtMap: myTshirtMap,
@@ -503,47 +613,56 @@ class ShowFantasyTeam extends StatelessWidget {
                       myMapOfPlayersName, "bench2"),
                   playerPosition: "M",
                   isItBenched: "Yes",
-                  onTap: () async {},
+                  onTap: () async {
+                    setPlayerInOrOutGameWeek(
+                        listOfFantasyPlayers: listOfFantasyPlayers,
+                        numberOfPlayerInList: 3,
+                        inOrOut: true);
+                    addPlayerToSwitchList(
+                        listOfFantasyPlayers: listOfFantasyPlayers,
+                        allPlayers: allPlayers,
+                        myMapOfPlayersName: myMapOfPlayersName,
+                        playerPosition: MyRes.kBencheds[1]);
+                  },
                 ),
                 buildBenchedPlayerIcon(
                   myTshirtMap: myTshirtMap,
                   context: context,
                   playerName: getTextToShow(listOfFantasyPlayers, allPlayers,
-                      myMapOfPlayersName, "bench3"),
+                      myMapOfPlayersName, MyRes.kBencheds[2]),
                   playerPosition: "D",
                   isItBenched: "Yes",
-                  onTap: () async {},
+                  onTap: () async {
+                    setPlayerInOrOutGameWeek(
+                        listOfFantasyPlayers: listOfFantasyPlayers,
+                        numberOfPlayerInList: 8,
+                        inOrOut: true);
+                    addPlayerToSwitchList(
+                        listOfFantasyPlayers: listOfFantasyPlayers,
+                        allPlayers: allPlayers,
+                        myMapOfPlayersName: myMapOfPlayersName,
+                        playerPosition: MyRes.kBencheds[2]);
+                  },
                 ),
                 buildBenchedPlayerIcon(
                   myTshirtMap: myTshirtMap,
                   context: context,
                   playerName: getTextToShow(listOfFantasyPlayers, allPlayers,
-                      myMapOfPlayersName, "bench4"),
+                      myMapOfPlayersName, MyRes.kBencheds[3]),
                   playerPosition: "G",
                   isItBenched: "Yes",
                   onTap: () async {
-                    bool captainValue =
-                        listOfFantasyPlayers[14].captain!.contains("34");
-                    bool viceCaptainValue =
-                        listOfFantasyPlayers[14].viceCaptain!.contains("34");
-
-                    var x = UpdateTeam(
-                      id: listOfFantasyPlayers[14].id!,
-                      playerId: listOfFantasyPlayers[14].playerId!,
-                      userId: listOfFantasyPlayers[14].userId!,
-                      playingInGameweeks: "34",
-                      captain: captainValue ? "34" : "",
-                      viceCaptain: viceCaptainValue ? "34" : "",
-                    );
-                    List<UpdateTeam> updateTeam = [x];
-
-                    sl<ShowTeamProvider>().addToSwitchList(name: "bench4");
-
-                    sl<ShowTeamProvider>().addToSwitchList(
-                        name: getTextToShow(listOfFantasyPlayers, allPlayers,
-                            myMapOfPlayersName, "bench4"));
-
-                    await sl<ShowTeamProvider>().updateUserTeam(updateTeam);
+                    //bench 4
+                    //14
+                    setPlayerInOrOutGameWeek(
+                        listOfFantasyPlayers: listOfFantasyPlayers,
+                        numberOfPlayerInList: 14,
+                        inOrOut: true);
+                    addPlayerToSwitchList(
+                        listOfFantasyPlayers: listOfFantasyPlayers,
+                        allPlayers: allPlayers,
+                        myMapOfPlayersName: myMapOfPlayersName,
+                        playerPosition: MyRes.kBencheds[3]);
                   },
                 ),
               ]),

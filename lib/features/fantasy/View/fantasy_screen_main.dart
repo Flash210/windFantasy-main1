@@ -42,9 +42,6 @@ class _FantasyScreenState extends State<FantasyScreen> {
               MySizedBox(
                 height: ScreenUtils.getHeight(context) * 0.01,
               ),
-
-              //Text("l"),
-
               buildAppBard(context),
               MySizedBox(
                 height: ScreenUtils.getHeight(context) * 0.033,
@@ -53,7 +50,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
                 Image.asset(
                   "assets/halff.png",
                   height: ScreenUtils.getHeight(context) * 1.01,
-                  width: ScreenUtils.getWidth(context),
+                  // width: ScreenUtils.getWidth(context),
                   fit: BoxFit.cover,
                 ),
                 FutureBuilder<void>(
@@ -65,7 +62,6 @@ class _FantasyScreenState extends State<FantasyScreen> {
                       return Container(
                           child: Text('Error fetching data')); // Handle error
                     } else {
-                      print("playerSelected: $playerSelected");
                       return playerSelected != 15
                           ? buildCreationTeam(
                               playerSelected: playerSelected,
@@ -120,8 +116,7 @@ Container buildAppBard(BuildContext context) {
   return Container(
     padding: const EdgeInsets.only(top: 20, bottom: 20, right: 5, left: 5),
     decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(8), topRight: Radius.circular(8)),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
         color: MyColors.kSecondaryColor),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -143,7 +138,6 @@ Container buildAppBard(BuildContext context) {
           ),
         ),
         Container(
-          width: ScreenUtils.getWidth(context) * 0.3,
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: Colors.white,
