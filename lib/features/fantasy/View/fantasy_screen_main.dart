@@ -34,54 +34,59 @@ class _FantasyScreenState extends State<FantasyScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 20, left: 5, right: 5),
-        child: SingleChildScrollView(
-          child: FutureBuilder<void>(
-            future: setPlayerList(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator(); // Show loading indicator
-              } else if (snapshot.hasError) {
-                return Container(
-                  child: Text('Error fetching data'),
-                ); // Handle error
-              } else {
-                return Column(
-                  children: [
-                    MySizedBox(
-                      height: ScreenUtils.getHeight(context) * 0.01,
-                    ),
-                    buildAppBard(context, playerSelected != 15),
-                    MySizedBox(
-                      height: ScreenUtils.getHeight(context) * 0.033,
-                    ),
-                    Stack(
-                      children: [
-                        Image.asset(
-                          "assets/halff.png",
-                          height: ScreenUtils.getHeight(context) * 1.01,
-                          // width: ScreenUtils.getWidth(context),
-                          fit: BoxFit.cover,
-                        ),
-                        playerSelected != 15
-                            ? buildCreationTeam(
-                                playerSelected: playerSelected,
-                                listOfFantasyPlayers: listOfFantasyPlayers)
-                            : ShowFantasyTeam(
-                                allPlayers: allPlayers,
-                                listOfFantasyPlayers: listOfFantasyPlayers,
-                                myMapOfPlayersName: myMapOfPlayersName,
-                                myTshirtMap: myMapOfTshirt),
-                      ],
-                    )
-                  ],
-                );
-              }
-            },
-          ),
-        ),
-      ),
+      body: Column(
+          // padding: const EdgeInsets.only(top: 20, left: 5, right: 5),
+          children: [
+            buildAppBard(context, playerSelected != 15),
+            Expanded(
+              child: SingleChildScrollView(
+                child: FutureBuilder<void>(
+                  future: setPlayerList(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator(); // Show loading indicator
+                    } else if (snapshot.hasError) {
+                      return Container(
+                        child: Text('Error fetching data'),
+                      ); // Handle error
+                    } else {
+                      return Column(
+                        children: [
+                          MySizedBox(
+                            height: ScreenUtils.getHeight(context) * 0.01,
+                          ),
+                          MySizedBox(
+                            height: ScreenUtils.getHeight(context) * 0.033,
+                          ),
+                          Stack(
+                            children: [
+                              Image.asset(
+                                "assets/halff.png",
+                                height: ScreenUtils.getHeight(context) * 1.01,
+                                // width: ScreenUtils.getWidth(context),
+                                fit: BoxFit.cover,
+                              ),
+                              playerSelected != 15
+                                  ? buildCreationTeam(
+                                      playerSelected: playerSelected,
+                                      listOfFantasyPlayers:
+                                          listOfFantasyPlayers)
+                                  : ShowFantasyTeam(
+                                      allPlayers: allPlayers,
+                                      listOfFantasyPlayers:
+                                          listOfFantasyPlayers,
+                                      myMapOfPlayersName: myMapOfPlayersName,
+                                      myTshirtMap: myMapOfTshirt),
+                            ],
+                          )
+                        ],
+                      );
+                    }
+                  },
+                ),
+              ),
+            ),
+          ]),
     );
   }
 

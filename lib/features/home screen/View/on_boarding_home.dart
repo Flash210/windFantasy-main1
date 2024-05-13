@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/custom_text.dart';
+import 'package:front/core/constants/colors.dart';
 import 'package:front/features/fixtures/View/fixtures_screen.dart';
 import 'package:front/features/home%20screen/View/profilee_screen.dart';
 import 'package:front/features/gameweek%20dashbord/View/game_week_dashbord.dart';
@@ -46,10 +47,11 @@ class _HomeyState extends State<Homey> {
       },
       items: [
         buildSalomonBottomItem(
-            text: "Home",
-            textColor: const Color(0xFF3CCF4E),
-            icon: Icons.stacked_bar_chart,
-            selectedColor: const Color(0xFF3CCF4E)),
+          text: "Home",
+          textColor: MyColors.kSecondaryColor,
+          icon: Icons.stacked_bar_chart,
+          selectedColor: MyColors.kSecondaryColor,
+        ),
 
         // buildSalomonBottomItem(text: "Fixtures",
         //     textColor: const Color(0xFF3CCF4E),
@@ -63,16 +65,18 @@ class _HomeyState extends State<Homey> {
         // ),
 
         buildSalomonBottomItem(
-            text: "Fixture",
-            textColor: const Color(0xFF50C4ED),
-            icon: Icons.sports_soccer,
-            selectedColor: const Color(0xFF73A9C0)),
+          text: "Fixture",
+          textColor: MyColors.kSecondaryColor,
+          icon: Icons.sports_soccer,
+          selectedColor: MyColors.kSecondaryColor,
+        ),
 
         buildSalomonBottomItem(
-            text: "Profile",
-            textColor: const Color(0xFF7F27FF),
-            icon: Icons.person,
-            selectedColor: const Color(0xFF9D70D0)),
+          text: "Profile",
+          textColor: MyColors.kSecondaryColor,
+          icon: Icons.person,
+          selectedColor: MyColors.kSecondaryColor,
+        ),
       ],
     );
   }

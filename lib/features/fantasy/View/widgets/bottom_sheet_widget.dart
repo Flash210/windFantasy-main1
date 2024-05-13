@@ -14,7 +14,7 @@ void showListOfPlayers222(
   final List<Player> listOfPlayersFromApi =
       await sl<PlayerProvider>().fetchPlayerss();
 
-      print('listOfPlayersFromApi: ${listOfPlayersFromApi.length}');
+  print('listOfPlayersFromApi: ${listOfPlayersFromApi.length}');
 
   final List<Team> teams = await sl<PlayerProvider>().fetchTeams();
 
@@ -24,16 +24,47 @@ void showListOfPlayers222(
       .values
       .map((e) => e.id)
       .toList();
-  sl<PlayerProvider>().listForFilter = List.from(listOfPlayersFromApi)
-      .cast<Player>()
-      .where((element) => !selc.contains(element.id))
-      .where((element) => isPositionValidForPlayer(element, positionPlayer))
-      .where((element) => element.price < sl<PlayerProvider>().amount)
-      // .where((element) => !sl<TeamEditProvider>()
-      //     .playersAfterMaxReached
-      //     .any((playerReached) => playerReached == element)
 
-      .toList(); // Copy all players initially
+  String posy = "";
+  switch (positionPlayer) {
+    case 'bench1':
+      posy = 'Attaquant';
+      break;
+    case 'bench2':
+      posy = 'Milieu';
+      break;
+    case 'bench3':
+      posy = 'Defenseur';
+      break;
+    case 'bench4':
+      posy = 'Gardien';
+      break;
+    default:
+      posy = 'Unknown';
+  }
+
+  posy == 'Unknown'
+      ? sl<PlayerProvider>().listForFilter = List.from(listOfPlayersFromApi)
+          .cast<Player>()
+          .where((element) => !selc.contains(element.id))
+          .where((element) => isPositionValidForPlayer(element, positionPlayer))
+          .where((element) => element.price < sl<PlayerProvider>().amount)
+
+          // .where((element) => !sl<TeamEditProvider>()
+          //     .playersAfterMaxReached
+          //     .any((playerReached) => playerReached == element)
+          .toList()
+      : sl<PlayerProvider>().listForFilter = List.from(listOfPlayersFromApi)
+          .cast<Player>()
+          .where((element) => !selc.contains(element.id))
+          .where((element) => isPositionValidForPlayer(element, positionPlayer))
+          .where((element) => element.price < sl<PlayerProvider>().amount)
+          .where((element) => element.position == posy)
+
+          // .where((element) => !sl<TeamEditProvider>()
+          //     .playersAfterMaxReached
+          //     .any((playerReached) => playerReached == element)
+          .toList();
 
   String searchCriteria = 'Search by Player Name';
 
@@ -123,7 +154,7 @@ List<Player> _filterPlayers(String value, String searchCriteria,
     case 'Search by Player Name':
       return listOfPlayers
           .where((player) =>
-              player.name.toLowerCase().startsWith(value.toLowerCase()))
+              player.name.toLowerCase().contains(value.toLowerCase()))
           .toList();
     case 'Search by Player Position':
       return listOfPlayers
