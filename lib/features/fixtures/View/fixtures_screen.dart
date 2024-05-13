@@ -66,6 +66,7 @@ class FixturesScreenState extends State<FixturesScreen> {
                       String date = groupedFixtures.keys.elementAt(index);
                       List<Fixture> fixtures = groupedFixtures[date]!;
                       return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ListTile(
                             title: Container(

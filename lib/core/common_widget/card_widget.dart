@@ -75,3 +75,64 @@ ParallelogramShape buildParallelogrameShape(
     ),
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ParallelogramShape buildParallelogrameShape2(
+      {required String playerName,
+      required String position,
+      required BuildContext context,
+      required String teamTshirt,
+  }) {
+    return ParallelogramShape(
+      width: ScreenUtils.getWidth(context) * 0.9,
+      height: ScreenUtils.getHeight(context) * 0.2,
+      gradient: const LinearGradient(
+        colors: [MyColors.kSecondaryColor, Colors.white],
+        end: Alignment.topLeft,
+        begin: Alignment.bottomRight,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 10, left: 30, bottom: 10),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Image.asset(
+                  teamTshirt == "anonymTeam"
+                      ? "assets/kits/anonymTeam.png"
+                      : "assets/kits/$teamTshirt.png",
+                  width: 80,
+                  height: 80,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildRichText(
+                        textSpan: S.of(context).NameOfPlayer,
+                        textSpnaValue: playerName),
+                    buildRichText(
+                        textSpan: "Position: ", textSpnaValue: position),
+                  
+                  ],
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+

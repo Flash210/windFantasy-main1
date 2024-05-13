@@ -6,7 +6,7 @@ class MyColors {
   // static const Color kPrimaryColor = Color.fromARGB(255, 25, 48, 82);
 
   // 0xFF41C9E2
-  static const Color kSecondaryColor = Color.fromARGB(255, 7, 42, 95);
+  static const Color kSecondaryColor = Color(0xFF6DC5D1);
   // static const Color kThirdColor = Color(0xFFDAC0A3);
 
   // static const Color kSecondaryColor = Color(0xFF000000);

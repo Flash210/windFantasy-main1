@@ -52,8 +52,10 @@ String extractDate(String dateTimeString) {
 
 Widget buildResultContainer(int res1, int res2, bool result) {
   return Container(
+    width: 30,
+    height: 30,
     decoration: BoxDecoration(
-      shape: BoxShape.circle,
+      shape: BoxShape.rectangle,
       color: res1 > res2
           ? Colors.green
           : res1 < res2
@@ -61,8 +63,7 @@ Widget buildResultContainer(int res1, int res2, bool result) {
               : Colors.grey,
       // borderRadius: BorderRadius.circular(8),
     ),
-    child: Padding(
-      padding: const EdgeInsets.all(9.0),
+    child: Center(
       child: Text(
         result ? "-" : res1.toString(),
         style: const TextStyle(
@@ -128,16 +129,16 @@ Column buildTeamDetails(Team homeTeam, Team awayTeam, Fixture fixture) {
   return Column(
     children: [
       Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           buildTeamAndName(team: homeTeam, textRight: false),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // ? Build result container for home team
               buildResultContainer(fixture.resultHome!, fixture.resultAway!,
                   fixture.result!.isEmpty),
               // ? Build result container for away team
+              SizedBox(width: 5),
 
               buildResultContainer(fixture.resultAway!, fixture.resultHome!,
                   fixture.result!.isEmpty),
@@ -146,7 +147,6 @@ Column buildTeamDetails(Team homeTeam, Team awayTeam, Fixture fixture) {
           buildTeamAndName(team: awayTeam, textRight: true),
         ],
       ),
-      const SizedBox(height: 10)
     ],
   );
 }
