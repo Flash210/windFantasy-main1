@@ -15,8 +15,7 @@ class ShowAllPlayers extends StatelessWidget {
         builder: (context, playerProvider, _) {
           if (playerProvider.players.isEmpty) {
             return const Center(
-                child:
-                    CircularProgressIndicator()); // Show loading indicator
+                child: CircularProgressIndicator()); // Show loading indicator
           } else {
             return ListView.builder(
               itemCount: playerProvider.players.length,
@@ -24,8 +23,18 @@ class ShowAllPlayers extends StatelessWidget {
                 final player = playerProvider.players[index];
                 return ListTile(
                   title: MyCustomText(text: player.name),
-                  subtitle: MyCustomText(text: player.position.toString()),
-                  trailing: MyCustomText(text: "${player.price}\$"),
+                  subtitle: Row(
+                    children: [
+                      MyCustomText(text: player.position.toString()),
+                      MyCustomText(text: "  ${player.price}\$"),
+                    ],
+                  ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.add),
+                    onPressed: () {
+                      
+                    },
+                  ),
                 );
               },
             );
@@ -35,3 +44,4 @@ class ShowAllPlayers extends StatelessWidget {
     );
   }
 }
+

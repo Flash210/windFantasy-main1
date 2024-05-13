@@ -14,6 +14,8 @@ void showListOfPlayers222(
   final List<Player> listOfPlayersFromApi =
       await sl<PlayerProvider>().fetchPlayerss();
 
+      print('listOfPlayersFromApi: ${listOfPlayersFromApi.length}');
+
   final List<Team> teams = await sl<PlayerProvider>().fetchTeams();
 
   List<int> selc = context

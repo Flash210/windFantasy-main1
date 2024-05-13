@@ -21,7 +21,7 @@ class ShowTeamProvider extends ChangeNotifier {
   Future<List<ShowTeam>> fetchTeams() async {
     final String? token = await sl<TokenManager>().getToken();
     final response = await http.get(
-      Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/35"),
+      Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/36"),
       headers: {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',
@@ -185,7 +185,7 @@ class ShowTeamProvider extends ChangeNotifier {
 
   addToSwitchList({required String name}) {
     listOfSwitch.add(name);
-  
+
     notifyListeners();
   }
 

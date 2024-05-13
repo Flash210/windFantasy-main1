@@ -46,6 +46,12 @@ String? validateName(String? value, BuildContext context) {
   if (value.contains(RegExp(r'[0-9]'))) {
     return S.of(context).kNameContainsNumberError;
   }
+
+
+ if (value.contains(RegExp(r'[^a-zA-Z0-9\s]'))) {
+    return S.of(context).kNameContainsSymbolError;
+  }
+
   return null;
 
 

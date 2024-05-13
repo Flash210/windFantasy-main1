@@ -16,20 +16,24 @@ void navigateToPlayerCard(
     String playerPostionName,
     String playerPostionName2,
     bool showCaptain,
-    bool showViceCaptain) 
-     {
+    bool showViceCaptain) {
   Navigator.push(
     context,
     MaterialPageRoute(
       builder: (context) => PlayerCard(
-        listOfFantasyPlayers: listOfFantasyPlayers,
+          listOfFantasyPlayers: listOfFantasyPlayers,
 
           // player: listOfFantasyPlayers.any((element) =>
           // getPlayerStatistic(element.id, allPlayers) ),
           showViceCaptain: showViceCaptain,
           showCaptain: showCaptain,
-          player: getPlayerStatistic(
-              list: listOfFantasyPlayers, players: allPlayers),
+          player: getLkolllll(
+              list: listOfFantasyPlayers,
+              players: allPlayers,
+              myMap: myMap,
+              position: playerPostionName),
+          // getPlayerStatistic(
+          //     list: listOfFantasyPlayers, players: allPlayers),
           teamName: getTshirtTeamToShow(
             nameOfPlayer: getTextToShow(
                 listOfFantasyPlayers, allPlayers, myMap, playerPostionName),

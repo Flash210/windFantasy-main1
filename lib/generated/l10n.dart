@@ -649,6 +649,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Name should not contain a symbol`
+  String get kNameContainsSymbolError {
+    return Intl.message(
+      'Name should not contain a symbol',
+      name: 'kNameContainsSymbolError',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
