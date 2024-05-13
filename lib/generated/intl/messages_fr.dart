@@ -80,6 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "L\'\'adresse e-mail ne doit pas commencer par un chiffre"),
         "kNameContainsNumberError": MessageLookupByLibrary.simpleMessage(
             "Le nom ne doit pas contenir de chiffres"),
+        "kNameContainsSymbolError": MessageLookupByLibrary.simpleMessage(
+            "Le nom ne doit pas contenir de symboles"),
         "kNameEmptyError":
             MessageLookupByLibrary.simpleMessage("Veuillez saisir votre nom"),
         "kNameStartsWithNumberError": MessageLookupByLibrary.simpleMessage(

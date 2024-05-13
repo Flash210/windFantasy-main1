@@ -144,9 +144,10 @@ class SignInScreenT extends StatelessWidget {
             )
             .then((value) => QuickAlert.show(
                   context: context,
-                  confirmBtnColor: MyColors.kSecondaryColor,
+                  confirmBtnColor: MyColors.kGreen,
                   type: QuickAlertType.success,
                   text: 'Sign In Completed Successfully!',
+                  confirmBtnText: 'Welcome',
                   onConfirmBtnTap: () {
                     Future.delayed(const Duration(seconds: 2), () {
                       if (Provider.of<AuthProvider>(context, listen: false)
@@ -162,9 +163,10 @@ class SignInScreenT extends StatelessWidget {
             .onError((error, stackTrace) => QuickAlert.show(
                   context: context,
                   type: QuickAlertType.error,
-                  confirmBtnColor: MyColors.kSecondaryColor,
+                  confirmBtnColor: MyColors.kRed2,
                   title: 'Oops...',
                   text: 'Sorry, something went wrong',
+                  confirmBtnText: 'Try again',
                   onConfirmBtnTap: () => Navigator.pop(context),
                 ));
       }

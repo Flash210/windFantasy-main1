@@ -56,6 +56,7 @@
   "Langue": "Langue ",
   "Filter": "Filtrer",
   "NameOfPlayer": "Nom: ",
-  "Team1": "Equipe: "
+  "Team1": "Equipe: ",
+  "kNameContainsSymbolError": "Le nom ne doit pas contenir de symboles"
   
 }

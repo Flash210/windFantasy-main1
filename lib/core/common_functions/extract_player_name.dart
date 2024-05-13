@@ -38,11 +38,10 @@ String getPlayerName(int playerID, List<Player> players) {
 //!......
 Player getPlayerStatistic(
     {required List<ShowTeam> list, required List<Player> players}) {
-
-
-ShowTeam playerShowed = list.firstWhere((element) => element.id != null);
+  ShowTeam playerShowed = list.firstWhere((element) => element.id != null);
   final player = players.firstWhere((element) => element.id == playerShowed.id,
       orElse: () => Player.empty());
+  print("+++++++++++++++++" + player.totalMatchesPlayed.toString());
   return player;
 }
 
@@ -138,4 +137,33 @@ String getTeamShirtNameReversed({required String teamName}) {
     default:
       return "anonymTeam";
   }
+}
+
+
+
+
+
+Player getLkolllll(
+    {required List<ShowTeam> list, required List<Player> players, required Map<String, dynamic> myMap, required String position}) {
+  String playerPos = myMap[position] ?? "";
+  
+  // Find the fantasy player with the specified position
+  ShowTeam? fantasyPlayer = list.firstWhere(
+    (element) => getPlayerName(element.playerId!, players) == playerPos,
+ 
+  );
+
+  // If a fantasy player with the specified position is found, return the corresponding player
+  if (fantasyPlayer != null && fantasyPlayer.playerId != null) {
+    Player? player = players.firstWhere(
+      (element) => element.id == fantasyPlayer.playerId,
+      orElse: () => Player.empty()
+    );
+    
+    if (player != null) {
+      return player;
+    }
+  }
+
+  throw Exception("No Player Found"); // Throw an exception if no player is found
 }

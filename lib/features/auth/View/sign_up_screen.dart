@@ -204,6 +204,7 @@ class SignUpScreenTState extends State<SignUpScreenT> {
                         type: QuickAlertType.success,
                         text: 'Mail Send Successfully!',
                         confirmBtnColor: MyColors.kSecondaryColor,
+                        confirmBtnText: 'Check Your Mail',
                         onConfirmBtnTap: () {
                           print("Mail Send Successfully");
                           // Navigator.push(
@@ -219,9 +220,10 @@ class SignUpScreenTState extends State<SignUpScreenT> {
                       ))
                   .onError((error, stackTrace) => QuickAlert.show(
                         context: context,
-                        confirmBtnColor: MyColors.kSecondaryColor,
+                        confirmBtnColor: MyColors.kRed2,
                         type: QuickAlertType.error,
                         title: 'Oops...',
+                        confirmBtnText: 'Try again',
                         text: 'Sorry, something went wrong',
                       ));
             }

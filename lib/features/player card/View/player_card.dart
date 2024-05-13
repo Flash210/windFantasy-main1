@@ -30,6 +30,9 @@ class PlayerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("+++++++++++++++" + player.name.toString());
+
+    print("+++++++++++++++" + player.totalMatchesPlayed.toString());
     return Scaffold(
         backgroundColor: const Color.fromARGB(240, 255, 255, 255),
         appBar: AppBar(

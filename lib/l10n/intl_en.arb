@@ -58,6 +58,7 @@
   "Filter":"Filter",
   "NameOfPlayer":"Name: ",
   "Team1": "Team: ",
-  "Budget":"Budget"
+  "Budget":"Budget",
+  "kNameContainsSymbolError": "Name should not contain a symbol"
   
 }

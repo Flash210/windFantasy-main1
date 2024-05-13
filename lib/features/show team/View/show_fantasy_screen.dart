@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/core/common_functions/extract_player_name.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/common_widget/show_player_widget.dart';
 import 'package:front/core/constants/app_constants.dart';
@@ -57,6 +58,8 @@ class ShowFantasyTeam extends StatelessWidget {
         // ! Goal Keeper  ***************
         buildPlayerIcon(
           onLongPress: () {
+         
+
             navigateToPlayerCard(
               context,
               allPlayers,
@@ -96,7 +99,7 @@ class ShowFantasyTeam extends StatelessWidget {
                 allPlayers: allPlayers,
                 myMapOfPlayersName: myMapOfPlayersName,
                 playerPosition: MyRes.kGoalKepper1);
-            //  showAllPlayersDetails(allPlayers: allPlayers);
+            showAllPlayersDetails(allPlayers: allPlayers);
           },
         ),
 

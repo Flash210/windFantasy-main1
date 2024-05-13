@@ -34,6 +34,7 @@ ListTile buildBottomSheetListTitle(Team team, Player player,
             playerName: extractLastName(player.name));
         //!
         final List<Team> teams = sl<PlayerProvider>().teams;
+        print('teams: ${teams.length}');
         final teamName = teams.firstWhere(
           (team) => team.id == player.teamId,
           orElse: () => Team(
