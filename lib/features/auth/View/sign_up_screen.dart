@@ -203,7 +203,7 @@ class SignUpScreenTState extends State<SignUpScreenT> {
                         context: context,
                         type: QuickAlertType.success,
                         text: 'Mail Send Successfully!',
-                        confirmBtnColor: MyColors.kSecondaryColor,
+                        confirmBtnColor: Color(0xFFBFF6C3),
                         confirmBtnText: 'Check Your Mail',
                         onConfirmBtnTap: () {
                           print("Mail Send Successfully");

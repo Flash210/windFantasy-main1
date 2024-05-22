@@ -76,10 +76,7 @@ buildBenchPlayer(
           child: buildbenchedPlayerContainer(
               playerName: extractLastName(title),
               teamName: teamName,
-              context: context)
-
-       
-          )
+              context: context))
     ],
   );
 }
@@ -111,8 +108,6 @@ Widget buildPlayerPositionInTheStatdium(
             name: 'Unknown',
           ),
         );
-
-        
 
         return buildPlayer(
           title: playerName,

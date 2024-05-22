@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/show_player_widget.dart';
 
-InkWell buildPlayerIcon(
-    {required String playerName,
-    required String playerPosition,
-    required String isItBenched,
-    required Map<String, dynamic> myTshirtMap,
-    VoidCallback? onTap,
-    VoidCallback? onDoubleTap,
-    VoidCallback? onLongPress,
-    required BuildContext context}) {
+buildPlayerIcon({
+  required String playerName,
+  required String playerPosition,
+  required String isItBenched,
+  required Map<String, dynamic> myTshirtMap,
+  VoidCallback? onTap,
+  VoidCallback? onDoubleTap,
+  VoidCallback? onLongPress,
+  required BuildContext context,
+}) {
   return InkWell(
-    onLongPress: onLongPress,
+      splashColor: Colors.green,
+      onLongPress: onLongPress,
       onDoubleTap: onDoubleTap,
       onTap: onTap,
       child:
@@ -43,6 +45,7 @@ Column buildBenchedPlayerIcon(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       buildPlayerIcon(
+         
           myTshirtMap: myTshirtMap,
           playerName: playerName,
           playerPosition: playerPosition,

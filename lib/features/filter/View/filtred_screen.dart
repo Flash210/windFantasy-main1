@@ -5,12 +5,11 @@ import 'package:front/features/filter/utils/functions.dart';
 import 'package:front/generated/l10n.dart';
 
 class FilteredPage extends StatefulWidget {
-
   final String position;
- 
+
   const FilteredPage({
-    super.key, required this.position,
-    
+    super.key,
+    required this.position,
   });
 
   @override
@@ -18,11 +17,9 @@ class FilteredPage extends StatefulWidget {
 }
 
 class FilteredPageState extends State<FilteredPage> {
-  
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -43,12 +40,12 @@ class FilteredPageState extends State<FilteredPage> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            buildFilterByTeam(context,position:widget.position),
+            buildFilterByTeam(context, position: widget.position),
             const SizedBox(height: 5),
-            buildFilterByPrice(postion:widget.position),
+            buildFilterByPrice(postion: widget.position),
             const SizedBox(height: 5),
-            builFilterByPositions(position:widget.position),
-            buildApplyFilterBtn(positon:widget.position),
+            builFilterByPositions(position: widget.position),
+            buildApplyFilterBtn(positon: widget.position, context: context),
           ],
         ),
       ),

@@ -95,6 +95,8 @@ class _GameWeekDashboardState extends State<GameWeekDashboard> {
                       buildFields(
                           fieldName: "Players",
                           onPressed: () {
+                            sl<PlayerProvider>().fillViewAllPlayers();
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(

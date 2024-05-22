@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/team.dart';
 import 'package:front/features/fantasy/repository/player_repository.dart';
+import 'package:get/get.dart';
 
 class PlayerProvider extends ChangeNotifier {
   final PlayerRepository playerRepository;
@@ -19,9 +21,6 @@ class PlayerProvider extends ChangeNotifier {
     return players;
   }
 
-
-
-
   List<Player> _lazyPlayers = [];
   List<Player> get lazyPlayers => _lazyPlayers;
 
@@ -34,16 +33,6 @@ class PlayerProvider extends ChangeNotifier {
     _currentPage++;
     notifyListeners();
   }
-
-
-
-
-
-
-
-
-
-
 
 //! list of players in the bottom sheet
   List<Player> _listForFilter = [];
@@ -121,4 +110,50 @@ class PlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<Player> _nameOf = []; // Updated to store filtered players
+
+  List<Player> get nameOf => _nameOf;
+
+  void filterNameOF({required String nameOf}) {
+    final List<Player> allPlayers = sl<PlayerProvider>().players;
+
+    _nameOf = allPlayers.where((player) => player.name == nameOf).toList();
+    notifyListeners();
+  }
+
+  List<Player> _viewAllPlayers = []; 
+
+
+
+
+
+
+fillViewAllPlayers() {
+        sl<PlayerProvider>().fetchPlayerss();
+
+    _viewAllPlayers = players;
+    print("filled " + _viewAllPlayers.length.toString());
+    notifyListeners();
+  }
+
+
+
+
+  List<Player> get viewAllPlayers => _viewAllPlayers;
+  void filterPlayersByName(String name) async {
+    if (name.isEmpty) {
+      // If the search query is empty, show all players
+
+      _viewAllPlayers = sl<PlayerProvider>().players;
+      print("fifi elenth" + _viewAllPlayers.length.toString());
+    } else {
+      // Filter players whose name contains the search query
+      _viewAllPlayers = players
+          .where((player) =>
+              player.name.toLowerCase().contains(name.toLowerCase()))
+          .toList();
+      print("fifi elenth" + _viewAllPlayers.length.toString());
+    }
+    notifyListeners();
+  }
 }

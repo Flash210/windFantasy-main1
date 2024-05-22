@@ -55,10 +55,10 @@
   "AreYouSure": "Are you sure you want to log out?",
   "Cancel": "Cancel",
   "Langue": "Language",
-  "Filter":"Filter",
-  "NameOfPlayer":"Name: ",
+  "Filter": "Filter",
+  "NameOfPlayer": "Name: ",
   "Team1": "Team: ",
-  "Budget":"Budget",
-  "kNameContainsSymbolError": "Name should not contain a symbol"
-  
+  "Budget": "Budget",
+  "kNameContainsSymbolError": "Name should not contain a symbol",
+  "kResetText": "Réinitialiser"
 }

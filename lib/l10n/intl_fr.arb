@@ -47,7 +47,7 @@
   "Apply": "Appliquer",
   "Team": "Equipe",
   "PriceRange": "Prix",
-  "Reset": "Réinitialiser ",
+  "Reset": "Résintialiser ",
   "PersonalInfo": "Informations personnelles",
   "Notif": "Notifications",
   "LogOut": "Déconnexion",
@@ -57,6 +57,6 @@
   "Filter": "Filtrer",
   "NameOfPlayer": "Nom: ",
   "Team1": "Equipe: ",
-  "kNameContainsSymbolError": "Le nom ne doit pas contenir de symboles"
-  
+  "kNameContainsSymbolError": "Le nom ne doit pas contenir de symboles",
+  "kResetText": "Reset"
 }

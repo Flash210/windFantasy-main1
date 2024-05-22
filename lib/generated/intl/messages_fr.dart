@@ -61,7 +61,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "PriceRange": MessageLookupByLibrary.simpleMessage("Prix"),
         "RememberMe":
             MessageLookupByLibrary.simpleMessage("Se souvenir de moi"),
-        "Reset": MessageLookupByLibrary.simpleMessage("Réinitialiser "),
+        "Reset": MessageLookupByLibrary.simpleMessage("Résintialiser "),
         "Send": MessageLookupByLibrary.simpleMessage("Envoyer"),
         "SignIn": MessageLookupByLibrary.simpleMessage("Se connecter"),
         "SignUp": MessageLookupByLibrary.simpleMessage("S\'inscrire"),
@@ -104,6 +104,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Le numéro de téléphone doit comporter 8 chiffres"),
         "kPhoneStartsWithZeroError": MessageLookupByLibrary.simpleMessage(
             "Le numéro de téléphone ne doit pas commencer par 0"),
+        "kResetText": MessageLookupByLibrary.simpleMessage("Reset"),
         "kTeamNameContainsNumberError": MessageLookupByLibrary.simpleMessage(
             "Le nom de l\'\'équipe ne doit pas contenir de chiffres"),
         "kTeamNameEmptyError": MessageLookupByLibrary.simpleMessage(

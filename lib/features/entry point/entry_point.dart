@@ -44,8 +44,9 @@ class EntryPointScreen extends StatelessWidget {
             ),
             // sign up button
             CustomOrangeButton(
+                backgroundColor: MyColors.kPrimaryColor,
                 customWidh: width * 0.6,
-                textColor: MyColors.kPrimaryColor,
+                textColor: MyColors.kWhite,
                 text: S.of(context).SignUp,
                 onTap: () {
                   Navigator.of(context).pushNamed(MyRes.kSignUpPage);

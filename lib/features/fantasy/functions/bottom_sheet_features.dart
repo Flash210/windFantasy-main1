@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:front/core/common_functions/extract_player_name.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/app_constants.dart';
+import 'package:front/core/constants/colors.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/team.dart';
@@ -45,6 +46,15 @@ ListTile buildBottomSheetListTitle(Team team, Player player,
         sl<ShowTeamProvider>().saveTeamShirtF(
             playerName: extractLastName(player.name),
             teamShirt: getTeamShirtName(teamName: teamName.name!));
+
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          duration: Duration(seconds: 1),
+          backgroundColor: MyColors.kGreen,
+          content: MyCustomText(
+            text: "Player Added :)",
+            style: TextStyle(color: Colors.black),
+          ),
+        ));
 
         Navigator.pop(context);
       } else {

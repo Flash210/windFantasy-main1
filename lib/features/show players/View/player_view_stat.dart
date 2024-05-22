@@ -26,7 +26,14 @@ class PlayerViewStat extends StatelessWidget {
     return Scaffold(
         backgroundColor: const Color.fromARGB(240, 255, 255, 255),
         appBar: AppBar(
-          title: Center(child: MyCustomText(text: teamName)),
+          backgroundColor: Colors.white,
+          shadowColor: Colors.black,
+          elevation: 3,
+          surfaceTintColor: Colors.black,
+          foregroundColor: Colors.black,
+          title: MyCustomText(
+            text: teamName,
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),

@@ -43,12 +43,12 @@ Column buildbenchedPlayerContainer(
   ]);
 }
 
-Column buildPlayerContainer({
-  required String playerName,
-  required String playerPosition,
-  required String teamName,
-  required BuildContext context,
-}) {
+Column buildPlayerContainer(
+    {required String playerName,
+    required String playerPosition,
+    required String teamName,
+    required BuildContext context,
+   }) {
   return Column(
     children: [
       Image.asset(

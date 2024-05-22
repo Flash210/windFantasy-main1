@@ -203,4 +203,17 @@ class FilterProvider with ChangeNotifier {
     _isGoalkeeperSelected = value;
     notifyListeners();
   }
+
+
+
+
+bool show=false;
+
+showIcon({required bool value}){
+  show=value;
+}
+
+
+
+
 }
