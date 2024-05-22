@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front/core/common_functions/extract_player_name.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/common_widget/show_player_widget.dart';
 import 'package:front/core/constants/app_constants.dart';
@@ -15,6 +14,7 @@ import 'package:front/features/player%20card/functions/player_statistics.dart';
 import 'package:front/features/show%20team/Functions/commun_functions.dart';
 import 'package:front/generated/l10n.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ShowFantasyTeam extends StatelessWidget {
   final List<Player> allPlayers;
@@ -37,29 +37,10 @@ class ShowFantasyTeam extends StatelessWidget {
         MySizedBox(
           height: ScreenUtils.getHeight(context) * 0.02,
         ),
-        // ElevatedButton(
-        //     onPressed: () async {
-        //       retrievedMap = await sl<TokenManager>().getMap();
-
-        //       List<String> listOfSwitch = sl<ShowTeamProvider>().listOfSwitch;
-        //       retrievedMap[listOfSwitch[0]] = listOfSwitch[3];
-        //       retrievedMap[listOfSwitch[2]] = listOfSwitch[1];
-
-        //       sl<ShowTeamProvider>().resetSwitchList();
-        //       print("retrievedMap: $retrievedMap");
-
-        //          sl<TokenManager>().savePlayerPositionToMap(map: retrievedMap);
-        //     },
-        //     child: Text("Switch")),
-        // MySizedBox(
-        //   height: ScreenUtils.getHeight(context) * 0.06,
-        // ),
 
         // ! Goal Keeper  ***************
         buildPlayerIcon(
           onLongPress: () {
-         
-
             navigateToPlayerCard(
               context,
               allPlayers,
@@ -89,6 +70,15 @@ class ShowFantasyTeam extends StatelessWidget {
           playerPosition: MyRes.kGoalKepper1,
           isItBenched: "No",
           onTap: () async {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              duration: Duration(seconds: 1),
+              backgroundColor: MyColors.kWhite,
+              content: MyCustomText(
+                text: getTextToShow(listOfFantasyPlayers, allPlayers,
+                    myMapOfPlayersName, MyRes.kGoalKepper1),
+                style: TextStyle(color: Colors.black),
+              ),
+            ));
             //13
             setPlayerInOrOutGameWeek(
                 listOfFantasyPlayers: listOfFantasyPlayers,
@@ -108,6 +98,15 @@ class ShowFantasyTeam extends StatelessWidget {
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           buildPlayerIcon(
             onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                duration: Duration(seconds: 1),
+                backgroundColor: MyColors.kWhite,
+                content: MyCustomText(
+                  text: getTextToShow(listOfFantasyPlayers, allPlayers,
+                      myMapOfPlayersName, MyRes.kGoalKepper1),
+                  style: TextStyle(color: Colors.black),
+                ),
+              ));
               setPlayerInOrOutGameWeek(
                   listOfFantasyPlayers: listOfFantasyPlayers,
                   numberOfPlayerInList: 9,
@@ -148,9 +147,18 @@ class ShowFantasyTeam extends StatelessWidget {
             },
           ),
 
-//? -------------------------------------------------------
+          //? -------------------------------------------------------
           buildPlayerIcon(
             onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                duration: Duration(seconds: 1),
+                backgroundColor: MyColors.kWhite,
+                content: MyCustomText(
+                  text: getTextToShow(listOfFantasyPlayers, allPlayers,
+                      myMapOfPlayersName, MyRes.kDefenders[1]),
+                  style: TextStyle(color: Colors.black),
+                ),
+              ));
               setPlayerInOrOutGameWeek(
                   listOfFantasyPlayers: listOfFantasyPlayers,
                   numberOfPlayerInList: 10,
@@ -191,9 +199,18 @@ class ShowFantasyTeam extends StatelessWidget {
             },
           ),
 
-//? --------------------------
+          //? --------------------------
           buildPlayerIcon(
               onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  duration: Duration(seconds: 1),
+                  backgroundColor: MyColors.kWhite,
+                  content: MyCustomText(
+                    text: getTextToShow(listOfFantasyPlayers, allPlayers,
+                        myMapOfPlayersName, MyRes.kDefenders[2]),
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ));
                 setPlayerInOrOutGameWeek(
                     listOfFantasyPlayers: listOfFantasyPlayers,
                     numberOfPlayerInList: 11,
@@ -236,6 +253,15 @@ class ShowFantasyTeam extends StatelessWidget {
           //? ------------------------
           buildPlayerIcon(
               onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  duration: Duration(seconds: 1),
+                  backgroundColor: MyColors.kWhite,
+                  content: MyCustomText(
+                    text: getTextToShow(listOfFantasyPlayers, allPlayers,
+                        myMapOfPlayersName, MyRes.kDefenders[3]),
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ));
                 setPlayerInOrOutGameWeek(
                     listOfFantasyPlayers: listOfFantasyPlayers,
                     numberOfPlayerInList: 12,
@@ -280,6 +306,15 @@ class ShowFantasyTeam extends StatelessWidget {
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           buildPlayerIcon(
               onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  duration: Duration(seconds: 1),
+                  backgroundColor: MyColors.kWhite,
+                  content: MyCustomText(
+                    text: getTextToShow(listOfFantasyPlayers, allPlayers,
+                        myMapOfPlayersName, MyRes.kMidfielders[0]),
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ));
                 setPlayerInOrOutGameWeek(
                     listOfFantasyPlayers: listOfFantasyPlayers,
                     numberOfPlayerInList: 4,
@@ -322,6 +357,15 @@ class ShowFantasyTeam extends StatelessWidget {
           //? --------------------------------------------------
           buildPlayerIcon(
               onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  duration: Duration(seconds: 1),
+                  backgroundColor: MyColors.kWhite,
+                  content: MyCustomText(
+                    text: getTextToShow(listOfFantasyPlayers, allPlayers,
+                        myMapOfPlayersName, MyRes.kMidfielders[1]),
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ));
                 setPlayerInOrOutGameWeek(
                     listOfFantasyPlayers: listOfFantasyPlayers,
                     numberOfPlayerInList: 5,
@@ -365,6 +409,15 @@ class ShowFantasyTeam extends StatelessWidget {
 
           buildPlayerIcon(
               onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  duration: Duration(seconds: 1),
+                  backgroundColor: MyColors.kWhite,
+                  content: MyCustomText(
+                    text: getTextToShow(listOfFantasyPlayers, allPlayers,
+                        myMapOfPlayersName, MyRes.kMidfielders[2]),
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ));
                 setPlayerInOrOutGameWeek(
                     listOfFantasyPlayers: listOfFantasyPlayers,
                     numberOfPlayerInList: 6,
@@ -408,6 +461,15 @@ class ShowFantasyTeam extends StatelessWidget {
 
           buildPlayerIcon(
               onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  duration: Duration(seconds: 1),
+                  backgroundColor: MyColors.kWhite,
+                  content: MyCustomText(
+                    text: getTextToShow(listOfFantasyPlayers, allPlayers,
+                        myMapOfPlayersName, MyRes.kMidfielders[3]),
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ));
                 setPlayerInOrOutGameWeek(
                     listOfFantasyPlayers: listOfFantasyPlayers,
                     numberOfPlayerInList: 7,
@@ -453,6 +515,15 @@ class ShowFantasyTeam extends StatelessWidget {
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           buildPlayerIcon(
               onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  duration: Duration(seconds: 1),
+                  backgroundColor: MyColors.kWhite,
+                  content: MyCustomText(
+                    text: getTextToShow(listOfFantasyPlayers, allPlayers,
+                        myMapOfPlayersName, MyRes.kForwards[0]),
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ));
                 setPlayerInOrOutGameWeek(
                     listOfFantasyPlayers: listOfFantasyPlayers,
                     numberOfPlayerInList: 0,
@@ -493,6 +564,15 @@ class ShowFantasyTeam extends StatelessWidget {
               isItBenched: "No"),
           buildPlayerIcon(
               onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  duration: Duration(seconds: 1),
+                  backgroundColor: MyColors.kWhite,
+                  content: MyCustomText(
+                    text: getTextToShow(listOfFantasyPlayers, allPlayers,
+                        myMapOfPlayersName, MyRes.kForwards[1]),
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ));
                 setPlayerInOrOutGameWeek(
                     listOfFantasyPlayers: listOfFantasyPlayers,
                     numberOfPlayerInList: 2,
@@ -572,13 +652,18 @@ class ShowFantasyTeam extends StatelessWidget {
                       retrievedMap[listOfSwitch[0]] = listOfSwitch[3];
                       retrievedMap[listOfSwitch[2]] = listOfSwitch[1];
 
-                      print(sl<ShowTeamProvider>().listOfSwitch);
-
                       sl<ShowTeamProvider>().resetSwitchList();
-
                       sl<TokenManager>()
                           .savePlayerPositionToMap(map: retrievedMap);
                       sl<ShowTeamProvider>().resetSwitchList();
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        duration: Duration(seconds: 1),
+                        backgroundColor: MyColors.kWhite,
+                        content: MyCustomText(
+                          text: "Players Switched :)",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ));
                     },
                     icon: Image.asset(
                       "assets/switch.png",
@@ -598,6 +683,15 @@ class ShowFantasyTeam extends StatelessWidget {
                   playerPosition: "A0",
                   isItBenched: "Yes",
                   onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      duration: Duration(seconds: 1),
+                      backgroundColor: MyColors.kWhite,
+                      content: MyCustomText(
+                        text: getTextToShow(listOfFantasyPlayers, allPlayers,
+                            myMapOfPlayersName, MyRes.kBencheds[0]),
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ));
                     setPlayerInOrOutGameWeek(
                         listOfFantasyPlayers: listOfFantasyPlayers,
                         numberOfPlayerInList: 1,
@@ -617,6 +711,15 @@ class ShowFantasyTeam extends StatelessWidget {
                   playerPosition: "M",
                   isItBenched: "Yes",
                   onTap: () async {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      duration: Duration(seconds: 1),
+                      backgroundColor: MyColors.kWhite,
+                      content: MyCustomText(
+                        text: getTextToShow(listOfFantasyPlayers, allPlayers,
+                            myMapOfPlayersName, MyRes.kBencheds[1]),
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ));
                     setPlayerInOrOutGameWeek(
                         listOfFantasyPlayers: listOfFantasyPlayers,
                         numberOfPlayerInList: 3,
@@ -636,6 +739,15 @@ class ShowFantasyTeam extends StatelessWidget {
                   playerPosition: "D",
                   isItBenched: "Yes",
                   onTap: () async {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      duration: Duration(seconds: 1),
+                      backgroundColor: MyColors.kWhite,
+                      content: MyCustomText(
+                        text: getTextToShow(listOfFantasyPlayers, allPlayers,
+                            myMapOfPlayersName, MyRes.kBencheds[2]),
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ));
                     setPlayerInOrOutGameWeek(
                         listOfFantasyPlayers: listOfFantasyPlayers,
                         numberOfPlayerInList: 8,
@@ -655,6 +767,15 @@ class ShowFantasyTeam extends StatelessWidget {
                   playerPosition: "G",
                   isItBenched: "Yes",
                   onTap: () async {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      duration: Duration(seconds: 1),
+                      backgroundColor: MyColors.kWhite,
+                      content: MyCustomText(
+                        text: getTextToShow(listOfFantasyPlayers, allPlayers,
+                            myMapOfPlayersName, MyRes.kBencheds[3]),
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ));
                     //bench 4
                     //14
                     setPlayerInOrOutGameWeek(

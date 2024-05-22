@@ -14,8 +14,9 @@ import 'package:front/features/fantasy/ViewModel/player_provider.dart';
 import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
 import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-Column buildTeamSection(
+ buildTeamSection(
     Map<String, Player> slectedPlayerFromMap,
     Map<String, int> playerPositions,
     BuildContext context,
@@ -25,82 +26,86 @@ Column buildTeamSection(
     List<int> goalkeepers,
     int playersSelected,
     {required List<ShowTeam> listOfFantasyPlayers}) {
-  return Column(children: [
-    MySizedBox(height: ScreenUtils.getHeight(context) * 0.020),
-
-    buildPlayerPositionInTheStatdium(MyRes.kGoalKepper, slectedPlayerFromMap,
-        playerPositions, context, playersSelected),
-    MySizedBox(height: ScreenUtils.getHeight(context) * 0.020),
-
-    // ! Defenders Row
-    buildPlayerPositionInTheStatdium(MyRes.kDefender, slectedPlayerFromMap,
-        playerPositions, context, playersSelected),
-
-    MySizedBox(height: ScreenUtils.getHeight(context) * 0.020),
-    // ! midfilders Row
-    buildPlayerPositionInTheStatdium(MyRes.kMidfilder, slectedPlayerFromMap,
-        playerPositions, context, playersSelected),
-    // ! Strikers Row
-    MySizedBox(height: ScreenUtils.getHeight(context) * 0.020),
-    buildPlayerPositionInTheStatdium(MyRes.kForward, slectedPlayerFromMap,
-        playerPositions, context, playersSelected),
-
-    MySizedBox(height: ScreenUtils.getHeight(context) * 0.08),
-    // ! Bench Row
-    Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: MyColors.greyF,
+  return Consumer<TeamEditProvider>(
+    builder:(context, teamEditProvider, _) => 
+     Column(children: [
+      MySizedBox(height: ScreenUtils.getHeight(context) * 0.020),
+    
+      buildPlayerPositionInTheStatdium(MyRes.kGoalKepper, slectedPlayerFromMap,
+          playerPositions, context, playersSelected),
+      MySizedBox(height: ScreenUtils.getHeight(context) * 0.020),
+    
+      // ! Defenders Row
+      buildPlayerPositionInTheStatdium(MyRes.kDefender, slectedPlayerFromMap,
+          playerPositions, context, playersSelected),
+    
+      MySizedBox(height: ScreenUtils.getHeight(context) * 0.020),
+      // ! midfilders Row
+      buildPlayerPositionInTheStatdium(MyRes.kMidfilder, slectedPlayerFromMap,
+          playerPositions, context, playersSelected),
+      // ! Strikers Row
+      MySizedBox(height: ScreenUtils.getHeight(context) * 0.020),
+      buildPlayerPositionInTheStatdium(MyRes.kForward, slectedPlayerFromMap,
+          playerPositions, context, playersSelected),
+    
+      MySizedBox(height: ScreenUtils.getHeight(context) * 0.08),
+      // ! Bench Row
+      Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: MyColors.greyF,
+        ),
+        width: ScreenUtils.getWidth(context) * 0.9,
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('Benched Players',
+                style: GoogleFonts.rubik(
+                  textStyle: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                )),
+            MySizedBox(height: ScreenUtils.getHeight(context) * 0.01),
+            // ! the place where the benched players will be shown
+            buildBenchedPlayerPositionInSatduim("bench", slectedPlayerFromMap,
+                playerPositions, context, playersSelected),
+          ],
+        ),
       ),
-      width: ScreenUtils.getWidth(context) * 0.9,
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text('Benched Players',
-              style: GoogleFonts.rubik(
-                textStyle: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600),
-              )),
-          MySizedBox(height: ScreenUtils.getHeight(context) * 0.01),
-          // ! the place where the benched players will be shown
-          buildBenchedPlayerPositionInSatduim("bench", slectedPlayerFromMap,
-              playerPositions, context, playersSelected),
-        ],
-      ),
-    ),
-
-    const MySizedBox(height: 10),
-
-    IconButton(
-        onPressed: () {
-          sl<TokenManager>()
-            ..savePlayerPositionToMap(
-                map: sl<ShowTeamProvider>().savePlayerPostion)
-            ..saveTshirtTeamToMap(map: sl<ShowTeamProvider>().saveTeamShirt);
-
-            
-
-          sl<TeamEditProvider>()
-              .createUserTeam(
-                TeamEdit(
-                  forwards: forwards,
-                  midfielders: midfielders,
-                  defenders: defenders,
-                  goalkeepers: goalkeepers,
-                  moneyRemaining: sl<PlayerProvider>().amount,
-                  playersSelected: 15,
-                ),
-              )
-              .then((value) => print("team created successfully"));
-        },
-        icon: Image.asset(
-          "assets/TeamDone.png",
-          width: 50,
-          height: 50,
-        )),
-
-  ]);
+    
+      const MySizedBox(height: 10),
+    
+      IconButton(
+          onPressed: () {
+            sl<TokenManager>()
+              ..savePlayerPositionToMap(
+                  map: sl<ShowTeamProvider>().savePlayerPostion)
+              ..saveTshirtTeamToMap(map: sl<ShowTeamProvider>().saveTeamShirt);
+    
+              
+    
+           // sl<TeamEditProvider>()
+           teamEditProvider
+                .createUserTeam(
+                  TeamEdit(
+                    forwards: forwards,
+                    midfielders: midfielders,
+                    defenders: defenders,
+                    goalkeepers: goalkeepers,
+                    moneyRemaining: sl<PlayerProvider>().amount,
+                    playersSelected: 15,
+                  ),
+                )
+                .then((value) => print("team created successfully"));
+          },
+          icon: Image.asset(
+            "assets/TeamDone.png",
+            width: 50,
+            height: 50,
+          )),
+    
+    ]),
+  );
 }

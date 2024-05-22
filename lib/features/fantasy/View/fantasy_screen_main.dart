@@ -37,7 +37,7 @@ class _FantasyScreenState extends State<FantasyScreen> {
       body: Column(
           // padding: const EdgeInsets.only(top: 20, left: 5, right: 5),
           children: [
-            buildAppBard(context, playerSelected != 15),
+            buildAppBard(context),
             Expanded(
               child: SingleChildScrollView(
                 child: FutureBuilder<void>(
@@ -112,144 +112,69 @@ class _FantasyScreenState extends State<FantasyScreen> {
   }
 }
 
-Container buildAppBard(BuildContext context, bool budget) {
+Container buildAppBard(BuildContext context) {
   return Container(
+    margin: EdgeInsets.only(
+        top: ScreenUtils.getHeight(context) * 0.02,
+        left: ScreenUtils.getWidth(context) * 0.04,
+        right: ScreenUtils.getWidth(context) * 0.04),
     padding: const EdgeInsets.only(top: 20, bottom: 20, right: 5, left: 5),
     decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         color: MyColors.kSecondaryColor),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        RichText(
-          text: TextSpan(
-            style: const TextStyle(color: Colors.white, fontSize: 11),
-            children: [
-              const TextSpan(text: "Team Name: "),
-              TextSpan(
-                text: sl<AuthProvider>().userDataa!.teamName,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            children: [
-              const MyCustomText(
-                  text: "Budget:",
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.black,
-                  )),
-              Consumer<PlayerProvider>(
-                builder: (context, value, child) => MyCustomText(
-                  text: budget
-                      ? "${value.amount} \$"
-                      : "${sl<AuthProvider>().userDataa!.bank} \$",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.green,
-                    fontFamily: GoogleFonts.roboto().fontFamily,
+    child: FutureBuilder(
+      future: sl<AuthProvider>().getUserInfo(),
+      builder: (context, snapshot) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          RichText(
+            text: TextSpan(
+              style: const TextStyle(color: Colors.white, fontSize: 11),
+              children: [
+                const TextSpan(text: "Team Name: "),
+                TextSpan(
+                  text: sl<AuthProvider>().userDataa!.teamName,
+                  style: const TextStyle(
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        )
-      ],
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              children: [
+                const MyCustomText(
+                    text: "Budget:",
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.black,
+                    )),
+                Consumer<PlayerProvider>(
+                  builder: (context, value, child) => MyCustomText(
+                    text: snapshot.data!.data.playersSelected != 15
+                        ? "${value.amount} \$"
+                        : "${sl<AuthProvider>().userDataa!.bank} \$",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.green,
+                      fontFamily: GoogleFonts.roboto().fontFamily,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     ),
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-  //   return Scaffold(
-  //     backgroundColor: Color.fromARGB(255, 238, 238, 232),
-  //     appBar: AppBar(
-  //       title: Center(
-  //         child: MyCustomText(
-  //           text: "Squad Page",
-  //           style: GoogleFonts.blackOpsOne(),
-  //         ),
-  //       ),
-  //     ),
-  //     body: Padding(
-  //       padding: const EdgeInsets.only(top: 20, left: 5, right: 5),
-  //       child: SingleChildScrollView(
-  //         child:
-  //          Column(
-  //           children: [
-  //             MySizedBox(
-  //               height: ScreenUtils.getHeight(context) * 0.01,
-  //             ),
-  //             buildAppBard(context),
-  //             MySizedBox(
-  //               height: ScreenUtils.getHeight(context) * 0.033,
-  //             ),
-  //             Stack(children: [
-  //               Image.asset(
-  //                 "assets/halff.png",
-  //                 height: ScreenUtils.getHeight(context) * 1.01,
-  //                 // width: ScreenUtils.getWidth(context),
-  //                 fit: BoxFit.cover,
-  //               ),
-  //               FutureBuilder<void>(
-  //                 future: setPlayerList(),
-  //                 builder: (context, snapshot) {
-  //                   if (snapshot.connectionState == ConnectionState.waiting) {
-  //                     return const CircularProgressIndicator(); // Show loading indicator
-  //                   } else if (snapshot.hasError) {
-  //                     return Container(
-  //                         child: Text('Error fetching data')); // Handle error
-  //                   } else {
-  //                     return playerSelected != 15
-  //                         ? buildCreationTeam(
-  //                             playerSelected: playerSelected,
-  //                             listOfFantasyPlayers: listOfFantasyPlayers)
-  //                         : ShowFantasyTeam(
-  //                             allPlayers: allPlayers,
-  //                             listOfFantasyPlayers: listOfFantasyPlayers,
-  //                             myMapOfPlayersName: myMapOfPlayersName,
-  //                             myTshirtMap: myMapOfTshirt);
-
-  //                     // buildShowFantasyTeam(
-  //                     //     context: context,
-  //                     //     allPlayers: allPlayers,
-  //                     //     listOfFantasyPlayers: listOfFantasyPlayers,
-  //                     //     myMapOfPlayersName: myMapOfPlayersName,
-  //                     //     myTshirtMap: myMapOfTshirt,
-  //                     //   );
-  //                   }
-  //                 },
-  //               ),
-  //             ]),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-
-
-

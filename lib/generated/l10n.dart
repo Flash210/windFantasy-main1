@@ -659,6 +659,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Réinitialiser`
+  String get kResetText {
+    return Intl.message(
+      'Réinitialiser',
+      name: 'kResetText',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

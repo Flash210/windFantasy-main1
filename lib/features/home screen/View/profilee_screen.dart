@@ -66,7 +66,7 @@ class _ProfileScreeenState extends State<ProfileScreeen> {
                         builder: (context) {
                           return Container(
                             height: 100,
-                             color: Colors.white,
+                            color: Colors.white,
                             child: Center(
                               child: Column(
                                 children: [
@@ -86,7 +86,7 @@ class _ProfileScreeenState extends State<ProfileScreeen> {
                                       ElevatedButton(
                                         onPressed: () {
                                           sl<TokenManager>().clearToken();
-                                         // sl<TokenManager>().clearMap();
+                                          // sl<TokenManager>().clearMap();
 
                                           // Navigator.pushNamedAndRemoveUntil(
                                           //     context,

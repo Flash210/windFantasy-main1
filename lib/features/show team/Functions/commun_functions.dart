@@ -61,10 +61,10 @@ bool buildCaptainOrVice(
       .firstWhere((element) => element.playerId == playerId);
 
   return isCaptain
-      ? playerData.captain!.contains("36")
+      ? playerData.captain!.contains("38")
           ? true
           : false
-      : playerData.viceCaptain!.contains("36")
+      : playerData.viceCaptain!.contains("38")
           ? true
           : false;
 }
@@ -89,17 +89,17 @@ setPlayerInOrOutGameWeek(
     required int numberOfPlayerInList,
     required bool inOrOut}) async {
   bool captainValue =
-      listOfFantasyPlayers[numberOfPlayerInList].captain!.contains("36");
+      listOfFantasyPlayers[numberOfPlayerInList].captain!.contains("38");
   bool viceCaptainValue =
-      listOfFantasyPlayers[numberOfPlayerInList].viceCaptain!.contains("36");
+      listOfFantasyPlayers[numberOfPlayerInList].viceCaptain!.contains("38");
 
   var x = UpdateTeam(
     id: listOfFantasyPlayers[numberOfPlayerInList].id!,
     playerId: listOfFantasyPlayers[numberOfPlayerInList].playerId!,
     userId: listOfFantasyPlayers[numberOfPlayerInList].userId!,
-    playingInGameweeks: inOrOut ? "36" : "",
-    captain: captainValue ? "36" : "",
-    viceCaptain: viceCaptainValue ? "36" : "",
+    playingInGameweeks: inOrOut ? "38" : "",
+    captain: captainValue ? "38" : "",
+    viceCaptain: viceCaptainValue ? "38" : "",
   );
   List<UpdateTeam> updateTeam = [x];
   await sl<ShowTeamProvider>().updateUserTeam(updateTeam);
@@ -127,8 +127,3 @@ showAllPlayersDetails({required List<Player> allPlayers}) async {
     },
   );
 }
-
-
-
-
-

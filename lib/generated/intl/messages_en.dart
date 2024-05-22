@@ -108,6 +108,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Phone number must be 8 digits"),
         "kPhoneStartsWithZeroError": MessageLookupByLibrary.simpleMessage(
             "Phone number must not start with 0"),
+        "kResetText": MessageLookupByLibrary.simpleMessage("Réinitialiser"),
         "kTeamNameContainsNumberError": MessageLookupByLibrary.simpleMessage(
             "Team Name should not contain a number"),
         "kTeamNameEmptyError":

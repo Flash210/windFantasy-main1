@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/constants/colors.dart';
+import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/team.dart';
 import 'package:front/features/fantasy/ViewModel/player_provider.dart';
@@ -13,21 +15,23 @@ import 'package:front/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 //! the bottom button witch will apply the 3 filters
-Container buildApplyFilterBtn({required String positon}) {
+Container buildApplyFilterBtn(
+    {required String positon, required BuildContext context}) {
   return Container(
-    margin: const EdgeInsets.only(top: 50.0),
+    margin: const EdgeInsets.only(top: 30.0),
     alignment: Alignment.bottomCenter,
     padding: const EdgeInsets.all(10.0),
-    width: double.infinity,
+    width: ScreenUtils.getWidth(context) * 0.4,
     decoration: const BoxDecoration(
       color: MyColors.kSecondaryColor,
+      borderRadius: BorderRadius.all(Radius.circular(10.0)),
     ),
     child: Consumer<FilterProvider>(builder: (context, provider, _) {
       return InkWell(
         onTap: () {
           provider.filterByThreeLists(provider.filteredPlayerByPosition,
               provider.filteredPlayerByTeams, provider.filteredPlayerByPrice,
-              position: changePositonFrom(position:positon));
+              position: changePositonFrom(position: positon));
         },
         child: MyCustomText(
           text: provider.filtredByThreeLists.isNotEmpty
@@ -61,7 +65,8 @@ Container buildFilterByTeam(BuildContext context, {required String position}) {
         IconButton(
             onPressed: () async {
               final List<Team> teams = await sl<PlayerProvider>().fetchTeams();
-              showTeamDialog(context, teams,position:changePositonFrom(position: position));
+              showTeamDialog(context, teams,
+                  position: changePositonFrom(position: position));
             },
             icon: const Icon(Icons.arrow_forward))
       ],
@@ -165,7 +170,8 @@ Container buildFilterByPrice({required String postion}) {
               provider.values = newValues;
 
               sl<FilterProvider>().filterPlayerByPriceF(
-                  provider.values.start.toInt(), provider.values.end.toInt(),position: changePositonFrom(position: postion));
+                  provider.values.start.toInt(), provider.values.end.toInt(),
+                  position: changePositonFrom(position: postion));
             },
             labels: RangeLabels(
               provider.values.start.round().toString(),

@@ -21,8 +21,10 @@ class _HomeyState extends State<Homey> {
   final List<Widget> pages = [
     //FantasyScreen(),
     GameWeekDashboard(),
+        const FixturesScreen(),
+
     //const RankingScreen(),
-    const FixturesScreen(),
+
     const ProfileScreeen()
   ];
   @override
