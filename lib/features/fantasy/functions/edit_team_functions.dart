@@ -4,7 +4,7 @@ import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/team.dart';
 import 'package:front/features/fantasy/Model/team_edit.dart';
-import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
+import 'package:front/features/fantasy/Controller/team_edit_provider.dart';
 
 // ! create team
 Future<void> createTeam(

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/team.dart';
-import 'package:front/features/fantasy/ViewModel/player_provider.dart';
+import 'package:front/features/fantasy/Controller/player_provider.dart';
 import 'package:front/features/fixtures/Model/fixture.dart';
-import 'package:front/features/fixtures/ViewModel/fixture_provider.dart';
+import 'package:front/features/fixtures/Controller/fixture_provider.dart';
 
 // ! get team abbreviation
 

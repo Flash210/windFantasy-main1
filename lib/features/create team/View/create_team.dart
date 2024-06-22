@@ -1,7 +1,7 @@
 import 'package:front/core/constants/app_constants.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
 import 'package:front/features/fantasy/View/widgets/team_section.dart';
-import 'package:front/features/fantasy/ViewModel/player_provider.dart';
+import 'package:front/features/fantasy/Controller/player_provider.dart';
 import 'package:provider/provider.dart';
 
 buildCreationTeam({required int playerSelected, required List<ShowTeam> listOfFantasyPlayers}) {

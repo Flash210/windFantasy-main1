@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/screen_utils.dart';
-import 'package:front/features/fantasy/ViewModel/player_provider.dart';
+import 'package:front/features/fantasy/Controller/player_provider.dart';
 import 'package:provider/provider.dart';
 
 class ShowAllTeams extends StatelessWidget {

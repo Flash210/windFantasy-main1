@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:front/core/constants/app_constants.dart';
+import 'package:front/features/auth/View/auth_screen.dart';
 import 'package:front/features/entry%20point/entry_point.dart';
 import 'package:front/features/langauge/lanaguge_screen.dart';
 
@@ -36,8 +38,11 @@ class OnboardingScreenState extends State<OnboardingScreen> {
             },
             children:  const <Widget>[
 
-              LanguageScreen(),
-           EntryPointScreen(),
+AuthenticationScreenT(
+                    pageType: MyRes.kSignIn,
+                  )
+          //     LanguageScreen(),
+          //  EntryPointScreen(),
 
             ],
           ),

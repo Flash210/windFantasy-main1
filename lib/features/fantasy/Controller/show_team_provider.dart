@@ -9,7 +9,7 @@ import 'package:front/core/services/token_manager.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
 import 'package:front/features/fantasy/Model/update_team.dart';
-import 'package:front/features/fantasy/ViewModel/player_provider.dart';
+import 'package:front/features/fantasy/Controller/player_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
@@ -21,7 +21,7 @@ class ShowTeamProvider extends ChangeNotifier {
   Future<List<ShowTeam>> fetchTeams() async {
     final String? token = await sl<TokenManager>().getToken();
     final response = await http.get(
-      Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/38"),
+      Uri.parse("${AppConfig.kUserBaseUrl}getUserTeam/39"),
       headers: {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',
@@ -42,6 +42,7 @@ class ShowTeamProvider extends ChangeNotifier {
 
         // Notify listeners to update UI
         notifyListeners();
+        print("Good");
 
         return showTeam;
       } catch (e) {
@@ -128,6 +129,7 @@ class ShowTeamProvider extends ChangeNotifier {
         gameWeek = showGameWeek;
 
         logger.i("GameWeek: Good ${showGameWeek[0].gameWeek}");
+        logger.i("points*: Good ${showGameWeek[0].points}");
 
         notifyListeners();
         return showGameWeek;

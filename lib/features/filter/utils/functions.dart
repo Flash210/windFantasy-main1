@@ -6,10 +6,10 @@ import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/team.dart';
-import 'package:front/features/fantasy/ViewModel/player_provider.dart';
+import 'package:front/features/fantasy/Controller/player_provider.dart';
 import 'package:front/features/filter/View/widgets/teams_dialog_widget.dart';
 import 'package:front/features/filter/View/widgets/widgets.dart';
-import 'package:front/features/filter/ViewModel/filter_provider.dart';
+import 'package:front/features/filter/Controller/filter_provider.dart';
 import 'package:front/features/filter/utils/functions2.dart';
 import 'package:front/generated/l10n.dart';
 import 'package:provider/provider.dart';
@@ -145,6 +145,46 @@ Container builFilterByPositions({required position}) {
           : Container());
 }
 
+// Container buildFilterByPrice({required String postion}) {
+//   return Container(
+//     decoration: const BoxDecoration(
+//       color: MyColors.kWhite,
+//     ),
+//     child: Column(
+//       mainAxisAlignment: MainAxisAlignment.start,
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         const MyCustomText(
+//           text: "Price Range",
+//           textAlign: TextAlign.start,
+//         ),
+//         Consumer<FilterProvider>(builder: (context, provider, _) {
+//           return RangeSlider(
+//             overlayColor: MaterialStateProperty.all(Colors.green),
+//             activeColor: MyColors.kSecondaryColor,
+//             values: provider.values,
+//             min: 4,
+//             max: 12,
+//             divisions: 12 - 4,
+//             onChanged: (newValues) {
+//               provider.values = newValues;
+
+//               sl<FilterProvider>().filterPlayerByPriceF(
+//                   provider.values.start.toInt(), provider.values.end.toInt(),
+//                   position: changePositonFrom(position: postion));
+//             },
+//             labels: RangeLabels(
+//               provider.values.start.round().toString(),
+//               provider.values.end.round().toString(),
+//             ),
+//           );
+//         }),
+//         const SizedBox(height: 5.0),
+//       ],
+//     ),
+//   );
+// }
+
 Container buildFilterByPrice({required String postion}) {
   return Container(
     decoration: const BoxDecoration(
@@ -159,27 +199,36 @@ Container buildFilterByPrice({required String postion}) {
           textAlign: TextAlign.start,
         ),
         Consumer<FilterProvider>(builder: (context, provider, _) {
-          return RangeSlider(
-            overlayColor: MaterialStateProperty.all(Colors.green),
-            activeColor: MyColors.kSecondaryColor,
-            values: provider.values,
-            min: 4,
-            max: 12,
-            divisions: 12 - 4,
-            onChanged: (newValues) {
-              provider.values = newValues;
+          return Column(
+            children: [
+              RangeSlider(
+                overlayColor: MaterialStateProperty.all(Colors.green),
+                activeColor: MyColors.kSecondaryColor,
+                values: provider.values,
+                min: 4,
+                max: 12,
+                divisions: 12 - 4,
+                onChanged: (newValues) {
+                  provider.values = newValues;
 
-              sl<FilterProvider>().filterPlayerByPriceF(
-                  provider.values.start.toInt(), provider.values.end.toInt(),
-                  position: changePositonFrom(position: postion));
-            },
-            labels: RangeLabels(
-              provider.values.start.round().toString(),
-              provider.values.end.round().toString(),
-            ),
+                  sl<FilterProvider>().filterPlayerByPriceF(
+                      provider.values.start.toInt(),
+                      provider.values.end.toInt(),
+                      position: changePositonFrom(position: postion));
+                },
+                labels: RangeLabels(
+                  provider.values.start.round().toString(),
+                  provider.values.end.round().toString(),
+                ),
+              ),
+              const SizedBox(height: 5.0),
+              Text(
+                'Current range: ${provider.values.start.round()} - ${provider.values.end.round()}',
+                style: TextStyle(color: MyColors.kSecondaryColor),
+              ),
+            ],
           );
         }),
-        const SizedBox(height: 5.0),
       ],
     ),
   );

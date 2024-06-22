@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/services/injection_container.dart';
-import 'package:front/features/auth/ViewModel/auth_provider.dart';
-import 'package:front/features/fantasy/ViewModel/player_provider.dart';
+import 'package:front/features/auth/Controller/auth_provider.dart';
+import 'package:front/features/fantasy/Controller/player_provider.dart';
 import 'package:front/generated/l10n.dart';
 import 'package:provider/provider.dart';
 

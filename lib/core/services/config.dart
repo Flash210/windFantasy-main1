@@ -1,8 +1,9 @@
 class AppConfig {
-  static String kBaseUrl = "http://192.168.165.55:3001/api/";
+  static String kBaseUrl = "http://192.168.93.55:3001/api/";
   // ! user base url
 
   static String kUserBaseUrl = "${kBaseUrl}users/";
+
   // ! player base url
 
   static String kPlayerBaseUrl = "${kBaseUrl}players/";
@@ -17,6 +18,12 @@ class AppConfig {
   static String kUserPlayerBaseUrl = "${kBaseUrl}userPlay/";
 
 //  APi Endpoints
+  static String kkAddMap = "map/add";
+  static String kkAddMapT = "map/addT";
+
+  static String kGetTshirt = "map/getT/";
+
+  static String kGetTPlayerr = "map/get/";
 
   static String kSignUpEndPoint = "signup";
   static String kSignInEndPoint = "login";

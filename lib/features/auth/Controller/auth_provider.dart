@@ -15,6 +15,123 @@ import 'package:logger/logger.dart';
 import 'package:logger/web.dart';
 
 class AuthProvider extends ChangeNotifier {
+// !! get t shirt
+  Future<Map<String, dynamic>> getMapDataPlayers() async {
+    final url = Uri.parse(AppConfig.kUserBaseUrl +
+        AppConfig.kGetTPlayerr +
+        userDataa!.id.toString());
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final responseBody = json.decode(response.body);
+        final mapData = json.decode(responseBody['mapData']);
+        //print('Map Players  data: $mapData');
+        return mapData;
+      } else {
+        print('Failed to get map data. Status code: ${response.statusCode}');
+        return {};
+      }
+    } catch (error) {
+      print('Error getting map Tshirt  data: $error');
+
+      return {};
+    }
+  }
+
+// !! get t shirt
+  Future<Map<String, dynamic>> getMapData() async {
+    final url = Uri.parse(AppConfig.kUserBaseUrl +
+        AppConfig.kGetTshirt +
+        userDataa!.id.toString());
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final responseBody = json.decode(response.body);
+        final mapData = json.decode(responseBody['mapTshirt']);
+        //print('Map data: $mapData');
+        return mapData;
+      } else {
+        print('Failed to get map data. Status code: ${response.statusCode}');
+        return {};
+      }
+    } catch (error) {
+      print('Error getting map Tshirt  data: $error');
+
+      return {};
+    }
+  }
+
+  // ! add tchisrt
+  Future<void> addMapTshirt(Map<String, String> mapData) async {
+    final url = Uri.parse(AppConfig.kUserBaseUrl + AppConfig.kkAddMapT);
+
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+    final body = jsonEncode({
+      'userId': userDataa!.id,
+      'mapTshirt': mapData,
+    });
+
+    try {
+      final response = await http.post(
+        url,
+        headers: headers,
+        body: body,
+      );
+
+      if (response.statusCode == 201) {
+        print('Map Of Tshsirt  saved successfully');
+       // print('Response: ${response.body}');
+        notifyListeners();
+      } else {
+        print('Failed to add map. Status code: ${response.statusCode}');
+        print('Response: ${response.body}');
+      }
+    } catch (error) {
+      print('Error adding map: $error');
+    }
+  }
+
+// ! save player map to db
+  Future<void> addMap(Map<String, String> mapData) async {
+  //  Future<void> addMap(Map<String, dynamic> mapData) async {
+
+    final url = Uri.parse(AppConfig.kUserBaseUrl + AppConfig.kkAddMap);
+
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+    final body = jsonEncode({
+      'userId': userDataa!.id,
+      'mapData': mapData,
+    });
+
+    try {
+      final response = await http.post(
+        url,
+        headers: headers,
+        body: body,
+      );
+
+      if (response.statusCode == 201) {
+        print('Map added   successfully');
+        notifyListeners();
+      } else {
+        print('Failed to add map. Status code: ${response.statusCode}');
+        print('Response: ${response.body}');
+      }
+    } catch (error) {
+      print('Error adding map: $error');
+    }
+  }
+
   final AuthRepository _authRepository;
   final AuthentificationRepository authentificationRepository;
   bool _isAuthenticated = false;
@@ -167,14 +284,10 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-
-
   Future<void> resetPassword({required String newPassword}) async {
     try {
-
-
       final String? token = await sl<TokenManager>().getToken();
-logger.i('Reset PAssword: Token is $token');
+      logger.i('Reset PAssword: Token is $token');
       final String baseUrl = AppConfig.kUserBaseUrl;
       final String resetPasswordEndpoint = AppConfig.kResetPasswordEndPoint;
       final Uri url = Uri.parse(baseUrl + resetPasswordEndpoint);
@@ -183,8 +296,9 @@ logger.i('Reset PAssword: Token is $token');
         'Content-Type': 'application/json',
       };
       final Map<String, dynamic> requestBody = {
-        'sentToken':token,
-        'newPassword': newPassword};
+        'sentToken': token,
+        'newPassword': newPassword
+      };
       logger.i('Reset PAssword: headers is $headers');
 
       final http.Response response = await http.post(
@@ -208,7 +322,6 @@ logger.i('Reset PAssword: Token is $token');
     }
   }
 
-
   // ! password visibility
   bool _obscureText = true;
 
@@ -229,42 +342,38 @@ logger.i('Reset PAssword: Token is $token');
     notifyListeners();
   }
 
+  Future<void> updateUser({
+    required String userId,
+    String? name,
+    String? phone,
+    String? teamName,
+  }) async {
+    try {
+      final Uri url = Uri.parse("${AppConfig.kUserBaseUrl}Update/$userId");
+      final Map<String, dynamic> requestBody = {
+        if (name != null) 'name': name,
+        if (phone != null) 'phone': phone,
+        if (teamName != null) 'teamName': teamName,
+      };
 
+      final http.Response response = await http.put(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(requestBody),
+      );
 
-
-  
-Future<void> updateUser({
-  required String userId,
-  String? name,
-  String? phone,
-  String? teamName,
-}) async {
-  try {
-    final Uri url = Uri.parse("${AppConfig.kUserBaseUrl}Update/$userId");
-    final Map<String, dynamic> requestBody = {
-      if (name != null) 'name': name,
-      if (phone != null) 'phone': phone,
-      if (teamName != null) 'teamName': teamName,
-    };
-
-    final http.Response response = await http.put(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(requestBody),
-    );
-
-    if (response.statusCode == 200) {
-      print('User updated successfully');
-      // Handle success
-    } else {
-      print('Failed to update user: ${response.body}');
-      // Handle failure
+      if (response.statusCode == 200) {
+        print('User updated successfully');
+        // Handle success
+      } else {
+        print('Failed to update user: ${response.body}');
+        // Handle failure
+      }
+    } catch (error) {
+      print('Error updating user: $error');
+      // Handle error
     }
-  } catch (error) {
-    print('Error updating user: $error');
-    // Handle error
   }
-}
 }

@@ -6,17 +6,18 @@ import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/core/services/token_manager.dart';
+import 'package:front/features/auth/Controller/auth_provider.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/show_team.dart';
 import 'package:front/features/fantasy/Model/team_edit.dart';
 import 'package:front/features/fantasy/View/widgets/create_player_icon.dart';
-import 'package:front/features/fantasy/ViewModel/player_provider.dart';
-import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
-import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
+import 'package:front/features/fantasy/Controller/player_provider.dart';
+import 'package:front/features/fantasy/Controller/show_team_provider.dart';
+import 'package:front/features/fantasy/Controller/team_edit_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
- buildTeamSection(
+buildTeamSection(
     Map<String, Player> slectedPlayerFromMap,
     Map<String, int> playerPositions,
     BuildContext context,
@@ -27,18 +28,17 @@ import 'package:provider/provider.dart';
     int playersSelected,
     {required List<ShowTeam> listOfFantasyPlayers}) {
   return Consumer<TeamEditProvider>(
-    builder:(context, teamEditProvider, _) => 
-     Column(children: [
+    builder: (context, teamEditProvider, _) => Column(children: [
       MySizedBox(height: ScreenUtils.getHeight(context) * 0.020),
-    
+
       buildPlayerPositionInTheStatdium(MyRes.kGoalKepper, slectedPlayerFromMap,
           playerPositions, context, playersSelected),
       MySizedBox(height: ScreenUtils.getHeight(context) * 0.020),
-    
+
       // ! Defenders Row
       buildPlayerPositionInTheStatdium(MyRes.kDefender, slectedPlayerFromMap,
           playerPositions, context, playersSelected),
-    
+
       MySizedBox(height: ScreenUtils.getHeight(context) * 0.020),
       // ! midfilders Row
       buildPlayerPositionInTheStatdium(MyRes.kMidfilder, slectedPlayerFromMap,
@@ -47,7 +47,7 @@ import 'package:provider/provider.dart';
       MySizedBox(height: ScreenUtils.getHeight(context) * 0.020),
       buildPlayerPositionInTheStatdium(MyRes.kForward, slectedPlayerFromMap,
           playerPositions, context, playersSelected),
-    
+
       MySizedBox(height: ScreenUtils.getHeight(context) * 0.08),
       // ! Bench Row
       Container(
@@ -74,20 +74,22 @@ import 'package:provider/provider.dart';
           ],
         ),
       ),
-    
+
       const MySizedBox(height: 10),
-    
+
       IconButton(
           onPressed: () {
-            sl<TokenManager>()
-              ..savePlayerPositionToMap(
-                  map: sl<ShowTeamProvider>().savePlayerPostion)
-              ..saveTshirtTeamToMap(map: sl<ShowTeamProvider>().saveTeamShirt);
-    
-              
-    
-           // sl<TeamEditProvider>()
-           teamEditProvider
+            // sl<TokenManager>()
+            //   ..savePlayerPositionToMap(
+            //       map: sl<ShowTeamProvider>().savePlayerPostion)
+            //   ..saveTshirtTeamToMap(map: sl<ShowTeamProvider>().saveTeamShirt);
+
+            // sl<TeamEditProvider>()
+            sl<AuthProvider>().addMap(sl<ShowTeamProvider>().savePlayerPostion);
+            sl<AuthProvider>()
+                .addMapTshirt(sl<ShowTeamProvider>().saveTeamShirt);
+
+            teamEditProvider
                 .createUserTeam(
                   TeamEdit(
                     forwards: forwards,
@@ -98,14 +100,18 @@ import 'package:provider/provider.dart';
                     playersSelected: 15,
                   ),
                 )
-                .then((value) => print("team created successfully"));
+                .then((value) => ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const MyCustomText(text: 'Team Created  :)'),
+                        backgroundColor: MyColors.kGreen,
+                      ),
+                    ));
           },
           icon: Image.asset(
             "assets/TeamDone.png",
             width: 50,
             height: 50,
           )),
-    
     ]),
   );
 }

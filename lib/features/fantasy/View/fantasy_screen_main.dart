@@ -93,8 +93,12 @@ class _FantasyScreenState extends State<FantasyScreen> {
   Future<void> setPlayerList() async {
     allPlayers = await sl<PlayerProvider>().fetchPlayerss();
     listOfFantasyPlayers = await sl<ShowTeamProvider>().fetchTeams();
-    myMapOfPlayersName = await sl<TokenManager>().getMap();
-    myMapOfTshirt = await sl<TokenManager>().getTshirtMap();
+    myMapOfPlayersName = await sl<AuthProvider>().getMapDataPlayers();
+    //  print("myMapOfPlayersName: $myMapOfPlayersName");
+    // await sl<TokenManager>().getMap();
+    myMapOfTshirt = await sl<AuthProvider>().getMapData();
+    // print("myMapOfTshirt: $myMapOfTshirt");
+    //await sl<TokenManager>().getTshirtMap();
     await sl<AuthProvider>().getUserInfo();
     playerSelected = sl<AuthProvider>().userDataa!.playersSelected;
 
