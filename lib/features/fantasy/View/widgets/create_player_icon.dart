@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:front/core/common_functions/extract_player_name.dart';
+import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/common_widget/show_player_widget.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/team.dart';
-import 'package:front/features/fantasy/ViewModel/player_provider.dart';
-import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
+import 'package:front/features/fantasy/Controller/player_provider.dart';
+import 'package:front/features/fantasy/Controller/team_edit_provider.dart';
 import 'package:front/features/fantasy/View/widgets/bottom_sheet_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -33,6 +34,13 @@ buildPlayer(
                 ? sl<PlayerProvider>().amountSubstraction(
                     value: sl<TeamEditProvider>().playerPrice, longPress: true)
                 : null;
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const MyCustomText(text: 'Player Deleted :)'),
+                backgroundColor: Colors.red,
+              ),
+            );
           },
           onTap: () {
             showListOfPlayers222(context: context, positionPlayer: position);

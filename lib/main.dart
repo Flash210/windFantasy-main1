@@ -2,20 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/core/services/router.dart';
-import 'package:front/features/auth/ViewModel/auth_provider.dart';
-import 'package:front/features/fantasy/ViewModel/player_provider.dart';
-import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
-import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
-import 'package:front/features/filter/ViewModel/filter_provider.dart';
+import 'package:front/features/auth/Controller/auth_provider.dart';
+import 'package:front/features/fantasy/Controller/player_provider.dart';
+import 'package:front/features/fantasy/Controller/show_team_provider.dart';
+import 'package:front/features/fantasy/Controller/team_edit_provider.dart';
+import 'package:front/features/filter/Controller/filter_provider.dart';
 import 'package:front/features/langauge/provider.dart';
-import 'package:front/features/ranking/ViewModel/ranking_provider.dart';
+import 'package:front/features/ranking/Controller/ranking_provider.dart';
 import 'package:front/generated/l10n.dart';
+import 'package:front/notification_service.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await init();
+  await NotificationService.initialize();
+  NotificationService.showNotification();
 
   runApp(const MyApp());
 }
@@ -57,6 +60,7 @@ class MyApp extends StatelessWidget {
               Locale('en', 'US'),
               Locale('fr', 'FR'),
             ],
+            //home: MapDataWidget(),
             onGenerateRoute: AppRouter.generateRoute,
           );
         },

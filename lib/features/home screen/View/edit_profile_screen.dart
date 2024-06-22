@@ -4,7 +4,7 @@ import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/auth/Model/user_model.dart';
-import 'package:front/features/auth/ViewModel/auth_provider.dart';
+import 'package:front/features/auth/Controller/auth_provider.dart';
 import 'package:quickalert/quickalert.dart';
 import '../../../core/common_widget/custom_input_field.dart';
 import '../../../generated/l10n.dart';
@@ -60,6 +60,21 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     const EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
                 child: Column(
                   children: [
+                    Container(
+                        padding: const EdgeInsets.all(20.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Text("Your budget is ${userData.bank} \$")),
                     MySizedBox(
                       height: ScreenUtils.getHeight(context) * 0.11,
                     ),
@@ -118,35 +133,35 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                             .currentState!
                             .validate()) {
                           if (_phoneKey.currentState!.validate()) {
-                          sl<AuthProvider>()
-                              .updateUser(
-                                  userId: userData.id.toString(),
-                                  name: nameController.text.trim(),
-                                  phone: phoneController.text.trim(),
-                                  teamName: teamNameController.text.trim())
-                              .then((value) => QuickAlert.show(
-                                    context: context,
-                                    type: QuickAlertType.success,
-                                    //text: 'Information Updated !',
-                                    confirmBtnColor:
-                                        Color.fromARGB(255, 33, 146, 41),
-                                    confirmBtnText: 'Information Updated',
-                                    onConfirmBtnTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ))
-                              .onError((error, stackTrace) => QuickAlert.show(
-                                    context: context,
-                                    confirmBtnColor: MyColors.kRed2,
-                                    type: QuickAlertType.error,
-                                    title: 'Oops...',
-                                    confirmBtnText: 'Try again',
-                                    text: 'Sorry, something went wrong',
-                                    onConfirmBtnTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ));
-                        }
+                            sl<AuthProvider>()
+                                .updateUser(
+                                    userId: userData.id.toString(),
+                                    name: nameController.text.trim(),
+                                    phone: phoneController.text.trim(),
+                                    teamName: teamNameController.text.trim())
+                                .then((value) => QuickAlert.show(
+                                      context: context,
+                                      type: QuickAlertType.success,
+                                      //text: 'Information Updated !',
+                                      confirmBtnColor:
+                                          Color.fromARGB(255, 33, 146, 41),
+                                      confirmBtnText: 'Information Updated',
+                                      onConfirmBtnTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ))
+                                .onError((error, stackTrace) => QuickAlert.show(
+                                      context: context,
+                                      confirmBtnColor: MyColors.kRed2,
+                                      type: QuickAlertType.error,
+                                      title: 'Oops...',
+                                      confirmBtnText: 'Try again',
+                                      text: 'Sorry, something went wrong',
+                                      onConfirmBtnTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ));
+                          }
                         }
                       },
                       child: Container(

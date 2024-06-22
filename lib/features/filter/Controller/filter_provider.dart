@@ -3,7 +3,7 @@ import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/team.dart';
-import 'package:front/features/fantasy/ViewModel/player_provider.dart';
+import 'package:front/features/fantasy/Controller/player_provider.dart';
 
 class FilterProvider with ChangeNotifier {
 //! Ranage Price

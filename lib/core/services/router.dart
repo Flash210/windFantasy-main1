@@ -19,7 +19,9 @@ class AppRouter {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasData && snapshot.data != null) {
-                  return const Homey();
+                  return const AuthenticationScreenT(
+                    pageType: MyRes.kSignIn,
+                  );;
                 } else {
                   // Token doesn't exist, navigate to entry point screen
                   return const SplashScreen();

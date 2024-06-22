@@ -6,7 +6,7 @@ import 'package:front/core/constants/screen_utils.dart';
 
 import '../../../core/constants/colors.dart';
 import '../../../core/services/injection_container.dart';
-import '../ViewModel/ranking_provider.dart';
+import '../Controller/ranking_provider.dart';
 import '../model/top_user_gameweek.dart';
 
 class RankingScreen extends StatefulWidget {

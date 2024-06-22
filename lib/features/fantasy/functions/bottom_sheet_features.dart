@@ -6,9 +6,9 @@ import 'package:front/core/constants/colors.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/team.dart';
-import 'package:front/features/fantasy/ViewModel/player_provider.dart';
-import 'package:front/features/fantasy/ViewModel/show_team_provider.dart';
-import 'package:front/features/fantasy/ViewModel/team_edit_provider.dart';
+import 'package:front/features/fantasy/Controller/player_provider.dart';
+import 'package:front/features/fantasy/Controller/show_team_provider.dart';
+import 'package:front/features/fantasy/Controller/team_edit_provider.dart';
 import 'package:provider/provider.dart';
 
 ListTile buildBottomSheetListTitle(Team team, Player player,

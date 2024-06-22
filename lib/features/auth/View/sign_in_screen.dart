@@ -5,7 +5,7 @@ import 'package:front/core/constants/app_constants.dart';
 import 'package:front/core/constants/colors.dart';
 import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/features/auth/View/auth_screen.dart';
-import 'package:front/features/auth/ViewModel/auth_provider.dart';
+import 'package:front/features/auth/Controller/auth_provider.dart';
 import 'package:front/features/auth/utils/validate_fields.dart';
 import 'package:front/features/auth/View/widgets/welcome_text.dart';
 
@@ -125,6 +125,17 @@ class SignInScreenT extends StatelessWidget {
               )
             ],
           ),
+          SizedBox(height: ScreenUtils.getHeight(context) * 0.0),
+          GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return const AuthenticationScreenT(
+                        pageType: MyRes.kSignUpPage);
+                  },
+                ));
+              },
+              child: Text("Create an account?")),
           SizedBox(
             height: ScreenUtils.getHeight(context) * 0.15,
           ),

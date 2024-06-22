@@ -2,6 +2,9 @@
 
 
 <uses-permission android:name="android.permission.INTERNET" />
+
+
+
     <application
         android:label="front"
         android:name="${applicationName}"
@@ -41,6 +44,9 @@
                     android:scheme="front"
                     android:host="validateUser"/>
             </intent-filter>
+
+
+
 
             <intent-filter android:autoVerify="true">
     <action android:name="android.intent.action.VIEW" />

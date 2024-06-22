@@ -8,7 +8,7 @@ import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/player.dart';
 import 'package:front/features/fantasy/Model/team.dart';
 
-import 'package:front/features/fantasy/ViewModel/player_provider.dart';
+import 'package:front/features/fantasy/Controller/player_provider.dart';
 import 'package:front/features/show%20players/View/player_view_stat.dart';
 import 'package:provider/provider.dart';
 

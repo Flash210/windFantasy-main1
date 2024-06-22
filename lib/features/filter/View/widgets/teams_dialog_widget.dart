@@ -4,7 +4,7 @@ import 'package:front/core/common_widget/custom_text.dart';
 import 'package:front/core/constants/screen_utils.dart';
 import 'package:front/core/services/injection_container.dart';
 import 'package:front/features/fantasy/Model/team.dart';
-import 'package:front/features/filter/ViewModel/filter_provider.dart';
+import 'package:front/features/filter/Controller/filter_provider.dart';
 import 'package:provider/provider.dart';
 
 Future<void> showTeamDialog(BuildContext context, List<Team> teams,

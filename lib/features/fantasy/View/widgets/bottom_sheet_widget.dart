@@ -6,7 +6,7 @@ import 'package:front/features/fantasy/Model/team.dart';
 import 'package:front/features/fantasy/functions/bottom_sheet_features.dart';
 import 'package:front/features/fantasy/functions/edit_team_functions.dart';
 import 'package:front/features/filter/View/filtred_screen.dart';
-import 'package:front/features/fantasy/ViewModel/player_provider.dart';
+import 'package:front/features/fantasy/Controller/player_provider.dart';
 import 'package:provider/provider.dart';
 
 void showListOfPlayers222(
